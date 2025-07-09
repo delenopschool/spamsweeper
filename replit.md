@@ -1,8 +1,8 @@
-# SpamClean - AI-Powered Email Spam Management
+# SpamSweeper - AI-Powered Email Spam Management
 
 ## Overview
 
-SpamClean is a full-stack web application that helps users clean up their email inboxes by using AI to identify spam emails and automatically find unsubscribe links. The application integrates with Microsoft Outlook/Graph API to scan user emails, uses OpenAI's GPT-4o model for intelligent spam classification, and provides a clean React-based dashboard for email management.
+SpamSweeper is a full-stack web application that helps users clean up their email inboxes by using AI to identify spam emails and automatically find unsubscribe links. The application integrates with Microsoft Outlook/Graph API to scan user emails, uses OpenAI's GPT-4o model for intelligent spam classification, and provides a clean React-based dashboard for email management.
 
 ## User Preferences
 
@@ -95,7 +95,7 @@ The application is designed to be easily deployable on platforms like Replit, Ve
 
 ## Recent Changes
 
-- **January 2025**: Complete SpamClean application implemented with:
+- **January 2025**: Complete SpamSweeper application implemented with:
   - Full Microsoft OAuth integration for Outlook email access
   - AI-powered spam classification using OpenAI GPT-4o
   - Unsubscribe link detection and automated processing

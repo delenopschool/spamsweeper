@@ -101,6 +101,7 @@ export class MicrosoftGraphService {
     authUrl.searchParams.append('redirect_uri', redirectUri);
     authUrl.searchParams.append('scope', 'https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/User.Read');
     authUrl.searchParams.append('response_mode', 'query');
+    authUrl.searchParams.append('prompt', 'select_account');
 
     return authUrl.toString();
   }
