@@ -1,8 +1,8 @@
-# SpamSweeper - AI-Powered Email Spam Management
+# Spam Sweeper - AI-Powered Email Spam Management
 
 ## Overview
 
-SpamSweeper is a full-stack web application that helps users clean up their email inboxes by using AI to identify spam emails and automatically find unsubscribe links. The application integrates with Microsoft Outlook/Graph API to access emails and uses OpenAI's GPT-4o model for intelligent spam detection.
+Spam Sweeper is a full-stack web application that helps users clean up their email inboxes by using AI to identify spam emails and automatically find unsubscribe links. The application integrates with Microsoft Outlook/Graph API to access emails and uses OpenAI's GPT-4o model for intelligent spam detection.
 
 ## User Preferences
 
