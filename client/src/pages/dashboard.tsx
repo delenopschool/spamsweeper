@@ -26,7 +26,13 @@ export default function Dashboard() {
   const { data: scanData, isLoading: scanLoading, refetch: refetchScan } = useQuery({
     queryKey: ["/api/scan", currentScanId],
     enabled: !!currentScanId,
-    refetchInterval: currentScanId && scanData?.scan?.status === "processing" ? 2000 : false,
+    refetchInterval: false, // Simplified for debugging
+    onSuccess: (data) => {
+      console.log("Scan data received:", data);
+    },
+    onError: (error) => {
+      console.error("Scan query error:", error);
+    }
   });
 
   const handleSignOut = () => {
@@ -39,6 +45,7 @@ export default function Dashboard() {
     try {
       const response = await apiRequest("POST", `/api/scan/${userId}`);
       const data = await response.json();
+      console.log("Scan created:", data);
       setCurrentScanId(data.scanId);
     } catch (error) {
       console.error("Scan error:", error);
@@ -114,7 +121,20 @@ export default function Dashboard() {
         </div>
 
         {/* Status Cards */}
-        <StatusCards scanData={scanData} />
+        {scanLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="animate-pulse">
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                  <div className="h-8 bg-gray-200 rounded w-1/2"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <StatusCards scanData={scanData} />
+        )}
 
         {/* Action Panel */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
