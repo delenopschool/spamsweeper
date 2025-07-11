@@ -88,6 +88,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Create email scan record
       const scan = await storage.createEmailScan({
         userId,
+        totalScanned: 0,
+        detectedSpam: 0,
+        unsubscribeLinks: 0,
+        processed: 0,
         status: "pending"
       });
 
@@ -240,6 +244,7 @@ async function processEmailScan(scanId: number, accessToken: string) {
     await storage.updateEmailScan(scanId, {
       detectedSpam,
       unsubscribeLinks: unsubscribeLinksFound,
+      processed: 0, // Will be updated when unsubscribes are processed
       status: "completed"
     });
   } catch (error) {

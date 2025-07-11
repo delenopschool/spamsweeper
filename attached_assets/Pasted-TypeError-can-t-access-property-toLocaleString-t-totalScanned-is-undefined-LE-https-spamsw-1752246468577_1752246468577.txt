@@ -1,0 +1,96 @@
+TypeError: can't access property "toLocaleString", t.totalScanned is undefined
+    LE https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:173
+    cc https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    Qa https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Dm https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    _m https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Lx https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Ui https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    ru https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    xf https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Fn https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    We https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    We https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    vt https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    em https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    Zh https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    batchCalls https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    n https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    i https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    i https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    r https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    i https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    setTimeout handler*o https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    i https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    batch https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    Ft https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    setData https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    onSuccess https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    d https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    promise callback*C https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    start https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    fetch https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    Lo https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    setOptions https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    r1 https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    il https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Lr https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    xf https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Fn https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    Ix https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Un https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    jm https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    k https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:25
+    D https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:25
+    EventHandlerNonNull* https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:25
+    <anonymous> https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:25
+index-Dcazj2TB.js:40:161
+Uncaught TypeError: can't access property "toLocaleString", t.totalScanned is undefined
+    LE https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:173
+    cc https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    Qa https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Dm https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    _m https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Lx https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Ui https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    ru https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    xf https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Fn https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    We https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    We https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    vt https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    em https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    Zh https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    batchCalls https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    n https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    i https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    i https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    r https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    i https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    setTimeout handler*o https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    i https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    batch https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    Ft https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    setData https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    onSuccess https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    d https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    promise callback*C https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    start https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    fetch https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    Lo https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    setOptions https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    r1 https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:48
+    il https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Lr https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    xf https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Fn https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:38
+    Ix https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    Un https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    jm https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:40
+    k https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:25
+    D https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:25
+    EventHandlerNonNull* https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:25
+    <anonymous> https://spamsweeper.onrender.com/assets/index-Dcazj2TB.js:25
+index-Dcazj2TB.js:173:64680
+
+​

@@ -26,6 +26,7 @@ export default function Dashboard() {
   const { data: scanData, isLoading: scanLoading, refetch: refetchScan } = useQuery({
     queryKey: ["/api/scan", currentScanId],
     enabled: !!currentScanId,
+    refetchInterval: currentScanId && scanData?.scan?.status === "processing" ? 2000 : false,
   });
 
   const handleSignOut = () => {

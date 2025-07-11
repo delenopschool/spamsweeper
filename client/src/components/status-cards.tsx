@@ -13,11 +13,11 @@ interface StatusCardsProps {
 }
 
 export default function StatusCards({ scanData }: StatusCardsProps) {
-  const stats = scanData?.scan || {
-    totalScanned: 0,
-    detectedSpam: 0,
-    unsubscribeLinks: 0,
-    processed: 0,
+  const stats = {
+    totalScanned: scanData?.scan?.totalScanned ?? 0,
+    detectedSpam: scanData?.scan?.detectedSpam ?? 0,
+    unsubscribeLinks: scanData?.scan?.unsubscribeLinks ?? 0,
+    processed: scanData?.scan?.processed ?? 0,
   };
 
   return (

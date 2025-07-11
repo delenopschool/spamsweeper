@@ -77,7 +77,12 @@ export class MemStorage implements IStorage {
   async createEmailScan(insertScan: InsertEmailScan): Promise<EmailScan> {
     const id = this.currentScanId++;
     const scan: EmailScan = {
-      ...insertScan,
+      userId: insertScan.userId,
+      totalScanned: insertScan.totalScanned ?? 0,
+      detectedSpam: insertScan.detectedSpam ?? 0,
+      unsubscribeLinks: insertScan.unsubscribeLinks ?? 0,
+      processed: insertScan.processed ?? 0,
+      status: insertScan.status ?? "pending",
       id,
       createdAt: new Date(),
     };
