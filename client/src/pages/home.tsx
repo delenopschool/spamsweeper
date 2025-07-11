@@ -29,7 +29,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-8 w-8 mr-2" />
+              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-8 w-8 mr-2 rounded-lg" style={{ borderRadius: '7px' }} />
               <h1 className="text-xl font-medium text-gray-900">Spam Sweeper</h1>
             </div>
           </div>
@@ -96,7 +96,7 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <img src={logoUrl} alt="Smart Review" className="h-8 w-8 mb-2" />
+              <img src={logoUrl} alt="Smart Review" className="h-8 w-8 mb-2 rounded-lg" style={{ borderRadius: '7px' }} />
               <CardTitle>Smart Review Process</CardTitle>
             </CardHeader>
             <CardContent>

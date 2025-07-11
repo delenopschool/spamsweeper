@@ -84,7 +84,7 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-8 w-8 mr-2" />
+              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-8 w-8 mr-2 rounded-lg" style={{ borderRadius: '7px' }} />
               <h1 className="text-xl font-medium text-gray-900">Spam Sweeper</h1>
             </div>
             <div className="flex items-center space-x-4">
