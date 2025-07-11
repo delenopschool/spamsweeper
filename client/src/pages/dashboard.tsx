@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
 import { WashingMachine, LogOut, UserRound } from "lucide-react";
+import logoUrl from "@/assets/spam-sweeper-logo.png";
 import StatusCards from "@/components/status-cards";
 import EmailReviewTable from "@/components/email-review-table";
 import ProcessingModal from "@/components/processing-modal";
@@ -83,7 +84,7 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <WashingMachine className="text-primary text-2xl mr-2" />
+              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-8 w-8 mr-2" />
               <h1 className="text-xl font-medium text-gray-900">Spam Sweeper</h1>
             </div>
             <div className="flex items-center space-x-4">

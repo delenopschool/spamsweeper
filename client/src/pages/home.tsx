@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { WashingMachine, Mail, Shield, Zap } from "lucide-react";
+import { Mail, Shield, Zap } from "lucide-react";
+import logoUrl from "@/assets/spam-sweeper-logo.png";
 import { apiRequest } from "@/lib/queryClient";
 
 export default function Home() {
@@ -28,7 +29,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <WashingMachine className="text-primary text-2xl mr-2" />
+              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-8 w-8 mr-2" />
               <h1 className="text-xl font-medium text-gray-900">Spam Sweeper</h1>
             </div>
           </div>
@@ -95,7 +96,7 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <WashingMachine className="h-8 w-8 text-success mb-2" />
+              <img src={logoUrl} alt="Smart Review" className="h-8 w-8 mb-2" />
               <CardTitle>Smart Review Process</CardTitle>
             </CardHeader>
             <CardContent>
