@@ -75,7 +75,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/scan/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
-      const user = await storage.getUser(userId);
+      let user = await storage.getUser(userId);
+      
+      // Create a test user if none exists (for development)
+      if (!user && process.env.NODE_ENV === "development") {
+        console.log("Creating test user for development");
+        user = await storage.createUser({
+          email: "test@example.com",
+          microsoftId: "test_id"
+        });
+        user = await storage.updateUser(user.id, {
+          accessToken: "test_token",
+          refreshToken: "test_refresh",
+          tokenExpiry: new Date(Date.now() + 3600000) // 1 hour from now
+        });
+        console.log("Test user created:", user.id);
+      }
       
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -95,8 +110,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         status: "pending"
       });
 
-      // Start background processing
-      processEmailScan(scan.id, user.accessToken).catch(console.error);
+      // Start background processing (skip for test users)
+      if (user.accessToken !== "test_token") {
+        processEmailScan(scan.id, user.accessToken).catch(console.error);
+      } else {
+        // Simulate processing for test user
+        setTimeout(async () => {
+          await storage.updateEmailScan(scan.id, {
+            totalScanned: 50,
+            detectedSpam: 12,
+            unsubscribeLinks: 8,
+            processed: 0,
+            status: "completed"
+          });
+        }, 2000);
+      }
 
       res.json({ scanId: scan.id });
     } catch (error) {
