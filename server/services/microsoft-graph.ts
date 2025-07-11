@@ -89,7 +89,7 @@ export class MicrosoftGraphService {
 
   getAuthUrl(): string {
     const clientId = process.env.MICROSOFT_CLIENT_ID;
-    const redirectUri = process.env.MICROSOFT_REDIRECT_URI || `${process.env.REPLIT_DOMAINS?.split(',')[0] || 'http://localhost:5000'}/auth/callback`;
+    const redirectUri = process.env.MICROSOFT_REDIRECT_URI || 'https://spamsweeper.onrender.com/auth/callback';
     
     if (!clientId) {
       throw new Error('Microsoft Client ID not configured');
@@ -109,7 +109,7 @@ export class MicrosoftGraphService {
   async exchangeCodeForTokens(code: string): Promise<{ accessToken: string; refreshToken: string; expiresIn: number }> {
     const clientId = process.env.MICROSOFT_CLIENT_ID;
     const clientSecret = process.env.MICROSOFT_CLIENT_SECRET;
-    const redirectUri = process.env.MICROSOFT_REDIRECT_URI || `${process.env.REPLIT_DOMAINS?.split(',')[0] || 'http://localhost:5000'}/auth/callback`;
+    const redirectUri = process.env.MICROSOFT_REDIRECT_URI || 'https://spamsweeper.onrender.com/auth/callback';
     
     if (!clientId || !clientSecret) {
       throw new Error('Microsoft OAuth credentials not configured');

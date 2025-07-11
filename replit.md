@@ -8,6 +8,11 @@ Spam Sweeper is a full-stack web application that helps users clean up their ema
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+- **January 10, 2025**: Logo updated to custom Spam Sweeper logo with 7px border-radius
+- **January 10, 2025**: Redirect URI configured for Render deployment: https://spamsweeper.onrender.com/auth/callback
+
 ## System Architecture
 
 The application follows a modern full-stack architecture with clear separation between frontend, backend, and data layers:
