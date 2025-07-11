@@ -28,7 +28,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <img src="https://i.ibb.co/bpdqV7Z/Spam-Sweeper-Logo.png" style="border-radius: 7px;">
+              <WashingMachine className="" />
+              <img src="https://i.ibb.co/bpdqV7Z/Spam-Sweeper-Logo.png" style="border-radius: 7px;"></img>
               <h1 className="text-xl font-medium text-gray-900">Spam Sweeper</h1>
             </div>
           </div>
