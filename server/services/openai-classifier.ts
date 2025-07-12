@@ -1,9 +1,34 @@
-import OpenAI from "openai";
+// Using OpenRouter with free models for spam classification
+interface OpenRouterResponse {
+  choices: Array<{
+    message: {
+      content: string;
+    };
+  }>;
+}
 
-// the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY_ENV_VAR || "default_key" 
-});
+async function callOpenRouter(messages: Array<{ role: string; content: string }>): Promise<OpenRouterResponse> {
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      'Content-Type': 'application/json',
+      'HTTP-Referer': 'https://spamsweeper.onrender.com', // Your site URL
+      'X-Title': 'Spam Sweeper', // Your app name
+    },
+    body: JSON.stringify({
+      model: 'meta-llama/llama-3.1-8b-instruct:free', // Free Llama model
+      messages: messages,
+      temperature: 0.1,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
+  }
+
+  return response.json();
+}
 
 export interface SpamClassificationResult {
   isSpam: boolean;
@@ -40,23 +65,36 @@ Respond with JSON in this exact format:
 }
       `;
 
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content: "You are an expert email spam classifier. Analyze emails and provide structured responses in JSON format."
-          },
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        response_format: { type: "json_object" },
-        temperature: 0.1, // Low temperature for consistent results
-      });
+      const response = await callOpenRouter([
+        {
+          role: "system",
+          content: "You are an expert email spam classifier. Analyze emails and provide structured responses in JSON format."
+        },
+        {
+          role: "user",
+          content: prompt
+        }
+      ]);
 
-      const result = JSON.parse(response.choices[0].message.content || '{}');
+      const content = response.choices[0].message.content || '{}';
+      let result;
+      
+      try {
+        // Extract JSON from response if it's wrapped in markdown
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        const jsonStr = jsonMatch ? jsonMatch[0] : content;
+        result = JSON.parse(jsonStr);
+      } catch (parseError) {
+        console.error('Error parsing OpenRouter response:', parseError);
+        // Fallback: try to extract info manually
+        const isSpam = content.toLowerCase().includes('"isspam": true') || 
+                      content.toLowerCase().includes('spam') && !content.toLowerCase().includes('not spam');
+        return {
+          isSpam,
+          confidence: isSpam ? 75 : 25,
+          reasoning: 'AI response parsing failed, fallback classification used'
+        };
+      }
       
       return {
         isSpam: Boolean(result.isSpam),
@@ -64,7 +102,7 @@ Respond with JSON in this exact format:
         reasoning: String(result.reasoning || 'No reasoning provided')
       };
     } catch (error) {
-      console.error('Error classifying email with OpenAI:', error);
+      console.error('Error classifying email with OpenRouter:', error);
       throw new Error('Failed to classify email: ' + (error as Error).message);
     }
   }
