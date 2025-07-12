@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -17,20 +17,28 @@ export default function Dashboard() {
   const [currentScanId, setCurrentScanId] = useState<number | null>(null);
   const [isProcessingModalOpen, setIsProcessingModalOpen] = useState(false);
   const [previewEmailId, setPreviewEmailId] = useState<number | null>(null);
+  const [scanData, setScanData] = useState<any>(null);
+  const [isScanning, setIsScanning] = useState(false);
 
   const { data: user, isLoading: userLoading } = useQuery({
     queryKey: ["/api/user", userId],
     enabled: !!userId,
   });
 
-  const { data: scanData, isLoading: scanLoading, refetch: refetchScan } = useQuery({
-    queryKey: ["/api/scan", currentScanId],
-    enabled: !!currentScanId,
-    refetchInterval: scanData?.scan?.status === "processing" ? 2000 : false,
-  });
+  // Simple fetch function for scan data
+  const fetchScanData = async (scanId: number) => {
+    try {
+      const response = await apiRequest("GET", `/api/scan/${scanId}`);
+      const data = await response.json();
+      setScanData(data);
+      return data;
+    } catch (error) {
+      console.error("Failed to fetch scan data:", error);
+      return null;
+    }
+  };
 
-  // Debug logging
-  console.log("Current scan state:", { currentScanId, scanData, scanLoading });
+
 
   const handleSignOut = () => {
     window.location.href = '/';
@@ -40,15 +48,45 @@ export default function Dashboard() {
     if (!userId) return;
     
     try {
+      setIsScanning(true);
       const response = await apiRequest("POST", `/api/scan/${userId}`);
       const data = await response.json();
-      console.log("Scan created:", data);
       setCurrentScanId(data.scanId);
       
-      // Invalidate and refetch the scan query immediately
-      queryClient.invalidateQueries({ queryKey: ["/api/scan", data.scanId] });
+      // Start polling for results
+      pollScanResults(data.scanId);
     } catch (error) {
       console.error("Scan error:", error);
+      setIsScanning(false);
+    }
+  };
+
+  const pollScanResults = async (scanId: number) => {
+    let attempts = 0;
+    const maxAttempts = 60; // 2 minutes max
+    
+    const poll = async () => {
+      const data = await fetchScanData(scanId);
+      
+      if (data && data.scan.status === "completed") {
+        setIsScanning(false);
+        return;
+      }
+      
+      if (attempts < maxAttempts && data && data.scan.status === "processing") {
+        attempts++;
+        setTimeout(poll, 2000);
+      } else {
+        setIsScanning(false);
+      }
+    };
+    
+    poll();
+  };
+
+  const handleRefresh = () => {
+    if (currentScanId) {
+      fetchScanData(currentScanId);
     }
   };
 
@@ -121,20 +159,7 @@ export default function Dashboard() {
         </div>
 
         {/* Status Cards */}
-        {scanLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div className="animate-pulse">
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                  <div className="h-8 bg-gray-200 rounded w-1/2"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <StatusCards scanData={scanData} />
-        )}
+        <StatusCards scanData={scanData} />
 
         {/* Action Panel */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
@@ -146,14 +171,14 @@ export default function Dashboard() {
               <Button 
                 onClick={handleScanEmails}
                 className="btn-primary flex items-center justify-center px-4 py-3"
-                disabled={scanLoading || scanData?.scan?.status === "processing"}
+                disabled={isScanning}
               >
                 <WashingMachine className="mr-2" />
-                {scanData?.scan?.status === "processing" ? 'AI Processing...' : scanLoading ? 'Starting Scan...' : 'Scan Spam Folder'}
+                {isScanning ? 'AI Processing...' : 'Scan Spam Folder'}
               </Button>
               
               <Button 
-                onClick={() => refetchScan()}
+                onClick={handleRefresh}
                 className="btn-success flex items-center justify-center px-4 py-3"
                 disabled={!currentScanId}
               >
