@@ -213,7 +213,7 @@ export default function Dashboard() {
               <EmailReviewTable 
                 scanData={scanData} 
                 onPreviewEmail={setPreviewEmailId}
-                onRefresh={refetchScan}
+                onRefresh={handleRefresh}
               />
             ) : (
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
