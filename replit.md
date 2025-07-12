@@ -10,6 +10,9 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+- **July 12, 2025**: Migrated from OpenAI to OpenRouter AI for spam classification using free Llama 3.1 8B model
+- **July 12, 2025**: Fixed React Query scope errors causing white screen issues on dashboard
+- **July 12, 2025**: Simplified dashboard state management for better stability
 - **January 10, 2025**: Logo updated to custom Spam Sweeper logo with 7px border-radius
 - **January 10, 2025**: Redirect URI configured for Render deployment: https://spamsweeper.onrender.com/auth/callback
 
@@ -41,7 +44,7 @@ The application follows a modern full-stack architecture with clear separation b
 
 ### Email Processing Pipeline
 1. **Email Fetching**: Retrieves emails from Microsoft Graph API (specifically from Junk Email folder)
-2. **AI Classification**: Uses OpenAI GPT-4o model to analyze emails for spam indicators with confidence scoring
+2. **AI Classification**: Uses OpenRouter with Llama 3.1 8B model to analyze emails for spam indicators with confidence scoring
 3. **Link Extraction**: Parses email content to find unsubscribe links using regex patterns and heuristics
 4. **Batch Processing**: Handles large volumes of emails efficiently with progress tracking
 
@@ -61,7 +64,7 @@ The application follows a modern full-stack architecture with clear separation b
 
 ### Third-Party Services
 - **Microsoft Graph API**: For OAuth authentication and email access
-- **OpenAI API**: For AI-powered spam classification using GPT-4o model
+- **OpenRouter API**: For AI-powered spam classification using free Llama 3.1 8B Instruct model
 - **Neon Database**: PostgreSQL database hosting (based on @neondatabase/serverless dependency)
 
 ### Key Libraries
@@ -89,7 +92,7 @@ The application follows a modern full-stack architecture with clear separation b
 2. **UI Framework**: Radix UI + shadcn/ui selected for accessibility and consistent design system
 3. **State Management**: React Query chosen over Redux for server state management simplicity
 4. **Routing**: Wouter selected as lightweight alternative to React Router
-5. **AI Integration**: OpenAI GPT-4o chosen for advanced natural language processing capabilities
+5. **AI Integration**: OpenRouter with free Llama 3.1 8B model chosen for cost-effective spam classification
 6. **Email Integration**: Microsoft Graph API chosen for robust enterprise email access
 
 The system prioritizes type safety, developer experience, and scalable architecture while maintaining simplicity in the codebase.
