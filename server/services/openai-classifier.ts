@@ -17,7 +17,7 @@ async function callOpenRouter(messages: Array<{ role: string; content: string }>
       'X-Title': 'Spam Sweeper', // Your app name
     },
     body: JSON.stringify({
-      model: 'meta-llama/llama-3.1-8b-instruct:free', // Free Llama model
+      model: 'deepseek/deepseek-chat-v3-0324:free', // Free Deepseek model
       messages: messages,
       temperature: 0.1,
     }),
