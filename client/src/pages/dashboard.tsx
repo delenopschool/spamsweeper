@@ -8,7 +8,7 @@ import StatusCards from "@/components/status-cards";
 import EmailReviewTable from "@/components/email-review-table";
 import ProcessingModal from "@/components/processing-modal";
 import EmailPreviewModal from "@/components/email-preview-modal";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export default function Dashboard() {
   const [match, params] = useRoute("/dashboard/:userId");
@@ -26,14 +26,11 @@ export default function Dashboard() {
   const { data: scanData, isLoading: scanLoading, refetch: refetchScan } = useQuery({
     queryKey: ["/api/scan", currentScanId],
     enabled: !!currentScanId,
-    refetchInterval: false, // Simplified for debugging
-    onSuccess: (data) => {
-      console.log("Scan data received:", data);
-    },
-    onError: (error) => {
-      console.error("Scan query error:", error);
-    }
+    refetchInterval: currentScanId && scanData?.scan?.status === "processing" ? 2000 : false,
   });
+
+  // Debug logging
+  console.log("Current scan state:", { currentScanId, scanData, scanLoading });
 
   const handleSignOut = () => {
     window.location.href = '/';
@@ -47,6 +44,9 @@ export default function Dashboard() {
       const data = await response.json();
       console.log("Scan created:", data);
       setCurrentScanId(data.scanId);
+      
+      // Invalidate and refetch the scan query immediately
+      queryClient.invalidateQueries({ queryKey: ["/api/scan", data.scanId] });
     } catch (error) {
       console.error("Scan error:", error);
     }
@@ -158,7 +158,7 @@ export default function Dashboard() {
                 disabled={!currentScanId}
               >
                 <UserRound className="mr-2" />
-                Review AI Results
+                Refresh Results
               </Button>
               
               <Button 
