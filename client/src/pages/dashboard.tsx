@@ -26,7 +26,7 @@ export default function Dashboard() {
   const { data: scanData, isLoading: scanLoading, refetch: refetchScan } = useQuery({
     queryKey: ["/api/scan", currentScanId],
     enabled: !!currentScanId,
-    refetchInterval: currentScanId && scanData?.scan?.status === "processing" ? 2000 : false,
+    refetchInterval: scanData?.scan?.status === "processing" ? 2000 : false,
   });
 
   // Debug logging
@@ -146,10 +146,10 @@ export default function Dashboard() {
               <Button 
                 onClick={handleScanEmails}
                 className="btn-primary flex items-center justify-center px-4 py-3"
-                disabled={scanLoading}
+                disabled={scanLoading || scanData?.scan?.status === "processing"}
               >
                 <WashingMachine className="mr-2" />
-                {scanLoading ? 'Scanning...' : 'Scan Spam Folder'}
+                {scanData?.scan?.status === "processing" ? 'AI Processing...' : scanLoading ? 'Starting Scan...' : 'Scan Spam Folder'}
               </Button>
               
               <Button 
@@ -174,12 +174,29 @@ export default function Dashboard() {
         </div>
 
         {/* Email Review Table */}
-        {scanData && (
-          <EmailReviewTable 
-            scanData={scanData} 
-            onPreviewEmail={setPreviewEmailId}
-            onRefresh={refetchScan}
-          />
+        {scanData && scanData.scan.status === "processing" && (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">AI Processing Emails...</h3>
+            <p className="text-gray-600">Analyzing {scanData.scan.totalScanned} emails for spam patterns</p>
+          </div>
+        )}
+        
+        {scanData && scanData.scan.status === "completed" && (
+          <>
+            {scanData.emails.length > 0 ? (
+              <EmailReviewTable 
+                scanData={scanData} 
+                onPreviewEmail={setPreviewEmailId}
+                onRefresh={refetchScan}
+              />
+            ) : (
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Great News!</h3>
+                <p className="text-gray-600">No spam emails detected in your {scanData.scan.totalScanned} scanned messages. Your inbox is clean!</p>
+              </div>
+            )}
+          </>
         )}
 
         {/* Modals */}

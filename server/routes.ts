@@ -214,7 +214,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 // Background processing functions
 async function processEmailScan(scanId: number, accessToken: string) {
   try {
+    console.log(`Starting email scan for scanId: ${scanId}`);
     const emails = await microsoftGraphService.getSpamEmails(accessToken);
+    console.log(`Fetched ${emails.length} emails from spam folder`);
     
     await storage.updateEmailScan(scanId, {
       totalScanned: emails.length,
@@ -224,13 +226,18 @@ async function processEmailScan(scanId: number, accessToken: string) {
     let detectedSpam = 0;
     let unsubscribeLinksFound = 0;
 
-    for (const email of emails) {
+    for (let i = 0; i < emails.length; i++) {
+      const email = emails[i];
+      console.log(`Processing email ${i + 1}/${emails.length}: "${email.subject}" from ${email.sender.emailAddress.address}`);
+      
       const textBody = emailParserService.extractTextFromHtml(email.body.content);
       const classification = await openaiClassifierService.classifyEmail(
         email.sender.emailAddress.address,
         email.subject,
         textBody
       );
+
+      console.log(`AI Classification: isSpam=${classification.isSpam}, confidence=${classification.confidence}%, reason="${classification.reasoning}"`);
 
       if (classification.isSpam) {
         detectedSpam++;
@@ -256,6 +263,7 @@ async function processEmailScan(scanId: number, accessToken: string) {
       }
     }
 
+    console.log(`Scan completed: ${detectedSpam}/${emails.length} emails classified as spam`);
     await storage.updateEmailScan(scanId, {
       detectedSpam,
       unsubscribeLinks: unsubscribeLinksFound,
