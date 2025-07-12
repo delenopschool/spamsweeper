@@ -110,21 +110,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         status: "pending"
       });
 
-      // Start background processing (skip for test users)
-      if (user.accessToken !== "test_token") {
-        processEmailScan(scan.id, user.accessToken).catch(console.error);
-      } else {
-        // Simulate processing for test user
-        setTimeout(async () => {
-          await storage.updateEmailScan(scan.id, {
-            totalScanned: 50,
-            detectedSpam: 12,
-            unsubscribeLinks: 8,
-            processed: 0,
-            status: "completed"
-          });
-        }, 2000);
-      }
+      // Start background processing
+      processEmailScan(scan.id, user.accessToken).catch(console.error);
 
       res.json({ scanId: scan.id });
     } catch (error) {
