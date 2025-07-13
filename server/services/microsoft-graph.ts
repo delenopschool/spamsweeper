@@ -34,6 +34,9 @@ export class MicrosoftGraphService {
     const client = this.getClient(accessToken);
     
     try {
+      console.log(`📫 [Graph] Starting to fetch emails from junk folder...`);
+      const startTime = Date.now();
+      
       // Get emails from the Junk Email folder
       const response = await client
         .api('/me/mailFolders/JunkEmail/messages')
@@ -41,9 +44,12 @@ export class MicrosoftGraphService {
         .top(1000)
         .get();
 
+      const fetchTime = Date.now() - startTime;
+      console.log(`📫 [Graph] Fetched ${response.value?.length || 0} emails from Microsoft Graph in ${fetchTime}ms`);
+
       return response.value || [];
     } catch (error) {
-      console.error('Error fetching spam emails:', error);
+      console.error('❌ [Graph] Error fetching spam emails:', error);
       throw new Error('Failed to fetch spam emails from Outlook');
     }
   }

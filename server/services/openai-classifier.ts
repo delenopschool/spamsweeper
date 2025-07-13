@@ -8,6 +8,9 @@ interface OpenRouterResponse {
 }
 
 async function callOpenRouter(messages: Array<{ role: string; content: string }>): Promise<OpenRouterResponse> {
+  const startTime = Date.now();
+  console.log(`🔄 [OpenRouter] Starting API call at ${new Date().toISOString()}`);
+  
   const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -23,11 +26,18 @@ async function callOpenRouter(messages: Array<{ role: string; content: string }>
     }),
   });
 
+  const responseTime = Date.now() - startTime;
+  console.log(`📡 [OpenRouter] API response received in ${responseTime}ms`);
+
   if (!response.ok) {
+    console.error(`❌ [OpenRouter] API error: ${response.status} ${response.statusText}`);
     throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
   }
 
-  return response.json();
+  const jsonResponse = await response.json();
+  console.log(`✅ [OpenRouter] JSON parsed successfully in ${Date.now() - startTime}ms total`);
+  
+  return jsonResponse;
 }
 
 export interface SpamClassificationResult {
@@ -38,6 +48,9 @@ export interface SpamClassificationResult {
 
 export class OpenAIClassifierService {
   async classifyEmail(sender: string, subject: string, body: string): Promise<SpamClassificationResult> {
+    const classificationStartTime = Date.now();
+    console.log(`🧠 [AI] Starting classification for email: "${subject}" from ${sender}`);
+    
     try {
       const prompt = `
 You are an expert email spam classifier. Analyze the following email and determine if it's spam or legitimate.
@@ -65,6 +78,7 @@ Respond with JSON in this exact format:
 }
       `;
 
+      console.log(`📤 [AI] Sending request to OpenRouter...`);
       const response = await callOpenRouter([
         {
           role: "system",
@@ -77,6 +91,8 @@ Respond with JSON in this exact format:
       ]);
 
       const content = response.choices[0].message.content || '{}';
+      console.log(`📥 [AI] Received response: ${content.substring(0, 200)}...`);
+      
       let result;
       
       try {
@@ -84,11 +100,14 @@ Respond with JSON in this exact format:
         const jsonMatch = content.match(/\{[\s\S]*\}/);
         const jsonStr = jsonMatch ? jsonMatch[0] : content;
         result = JSON.parse(jsonStr);
+        console.log(`✅ [AI] Successfully parsed JSON response`);
       } catch (parseError) {
-        console.error('Error parsing OpenRouter response:', parseError);
+        console.error('❌ [AI] Error parsing OpenRouter response:', parseError);
+        console.error('❌ [AI] Raw response content:', content);
         // Fallback: try to extract info manually
         const isSpam = content.toLowerCase().includes('"isspam": true') || 
                       content.toLowerCase().includes('spam') && !content.toLowerCase().includes('not spam');
+        console.log(`🔄 [AI] Using fallback classification: isSpam=${isSpam}`);
         return {
           isSpam,
           confidence: isSpam ? 75 : 25,
@@ -96,23 +115,37 @@ Respond with JSON in this exact format:
         };
       }
       
-      return {
+      const finalResult = {
         isSpam: Boolean(result.isSpam),
         confidence: Math.max(0, Math.min(100, Number(result.confidence) || 0)),
         reasoning: String(result.reasoning || 'No reasoning provided')
       };
+      
+      const totalTime = Date.now() - classificationStartTime;
+      console.log(`🎯 [AI] Classification completed in ${totalTime}ms: isSpam=${finalResult.isSpam}, confidence=${finalResult.confidence}%`);
+      
+      return finalResult;
     } catch (error) {
-      console.error('Error classifying email with OpenRouter:', error);
+      const totalTime = Date.now() - classificationStartTime;
+      console.error(`❌ [AI] Error classifying email after ${totalTime}ms:`, error);
       throw new Error('Failed to classify email: ' + (error as Error).message);
     }
   }
 
   async batchClassifyEmails(emails: Array<{ sender: string; subject: string; body: string }>): Promise<SpamClassificationResult[]> {
+    const batchStartTime = Date.now();
+    console.log(`🔄 [Batch] Starting batch classification of ${emails.length} emails`);
+    
     const results: SpamClassificationResult[] = [];
     
     // Process emails in batches to avoid rate limits
     const batchSize = 5;
     for (let i = 0; i < emails.length; i += batchSize) {
+      const batchNumber = Math.floor(i / batchSize) + 1;
+      const totalBatches = Math.ceil(emails.length / batchSize);
+      
+      console.log(`📦 [Batch ${batchNumber}/${totalBatches}] Processing emails ${i + 1} to ${Math.min(i + batchSize, emails.length)}`);
+      
       const batch = emails.slice(i, i + batchSize);
       const batchPromises = batch.map(email => 
         this.classifyEmail(email.sender, email.subject, email.body)
@@ -121,8 +154,9 @@ Respond with JSON in this exact format:
       try {
         const batchResults = await Promise.all(batchPromises);
         results.push(...batchResults);
+        console.log(`✅ [Batch ${batchNumber}/${totalBatches}] Completed successfully`);
       } catch (error) {
-        console.error(`Error processing batch ${i / batchSize + 1}:`, error);
+        console.error(`❌ [Batch ${batchNumber}/${totalBatches}] Error processing batch:`, error);
         // Add fallback results for failed batch
         const fallbackResults = batch.map(() => ({
           isSpam: false,
@@ -134,9 +168,13 @@ Respond with JSON in this exact format:
       
       // Add delay between batches to respect rate limits
       if (i + batchSize < emails.length) {
+        console.log(`⏱️ [Batch] Waiting 1 second before next batch...`);
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
+    
+    const totalTime = Date.now() - batchStartTime;
+    console.log(`🎯 [Batch] All batches completed in ${totalTime}ms (${(totalTime / 1000).toFixed(1)}s)`);
     
     return results;
   }

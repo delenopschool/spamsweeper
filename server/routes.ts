@@ -213,10 +213,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 // Background processing functions
 async function processEmailScan(scanId: number, accessToken: string) {
+  const scanStartTime = Date.now();
   try {
-    console.log(`Starting email scan for scanId: ${scanId}`);
+    console.log(`🚀 [Scan] Starting email scan for scanId: ${scanId} at ${new Date().toISOString()}`);
+    
+    const fetchStartTime = Date.now();
     const emails = await microsoftGraphService.getSpamEmails(accessToken);
-    console.log(`Fetched ${emails.length} emails from spam folder`);
+    const fetchTime = Date.now() - fetchStartTime;
+    console.log(`📧 [Scan] Fetched ${emails.length} emails from spam folder in ${fetchTime}ms`);
     
     await storage.updateEmailScan(scanId, {
       totalScanned: emails.length,
@@ -226,29 +230,43 @@ async function processEmailScan(scanId: number, accessToken: string) {
     let detectedSpam = 0;
     let unsubscribeLinksFound = 0;
 
+    console.log(`🔄 [Scan] Starting individual email processing...`);
+    
     for (let i = 0; i < emails.length; i++) {
       const email = emails[i];
-      console.log(`Processing email ${i + 1}/${emails.length}: "${email.subject}" from ${email.sender.emailAddress.address}`);
+      const emailStartTime = Date.now();
+      
+      console.log(`📨 [Email ${i + 1}/${emails.length}] Processing: "${email.subject}" from ${email.sender.emailAddress.address}`);
       
       const textBody = emailParserService.extractTextFromHtml(email.body.content);
+      const bodyExtractionTime = Date.now() - emailStartTime;
+      console.log(`📝 [Email ${i + 1}/${emails.length}] Text extracted in ${bodyExtractionTime}ms`);
+      
+      const classificationStartTime = Date.now();
       const classification = await openaiClassifierService.classifyEmail(
         email.sender.emailAddress.address,
         email.subject,
         textBody
       );
+      const classificationTime = Date.now() - classificationStartTime;
 
-      console.log(`AI Classification: isSpam=${classification.isSpam}, confidence=${classification.confidence}%, reason="${classification.reasoning}"`);
+      console.log(`🎯 [Email ${i + 1}/${emails.length}] AI Classification completed in ${classificationTime}ms: isSpam=${classification.isSpam}, confidence=${classification.confidence}%, reason="${classification.reasoning}"`);
 
       if (classification.isSpam) {
         detectedSpam++;
         
+        const linkSearchStartTime = Date.now();
         const unsubscribeLinks = emailParserService.findUnsubscribeLinks(email.body.content);
+        const linkSearchTime = Date.now() - linkSearchStartTime;
+        
         const hasUnsubscribeLink = unsubscribeLinks.length > 0;
+        console.log(`🔗 [Email ${i + 1}/${emails.length}] Found ${unsubscribeLinks.length} unsubscribe links in ${linkSearchTime}ms`);
         
         if (hasUnsubscribeLink) {
           unsubscribeLinksFound++;
         }
 
+        const storageStartTime = Date.now();
         await storage.createSpamEmail({
           scanId,
           messageId: email.id,
@@ -260,10 +278,17 @@ async function processEmailScan(scanId: number, accessToken: string) {
           unsubscribeUrl: unsubscribeLinks[0]?.url || null,
           receivedDate: new Date(email.receivedDateTime)
         });
+        const storageTime = Date.now() - storageStartTime;
+        console.log(`💾 [Email ${i + 1}/${emails.length}] Stored in database in ${storageTime}ms`);
       }
+      
+      const totalEmailTime = Date.now() - emailStartTime;
+      console.log(`✅ [Email ${i + 1}/${emails.length}] Completed in ${totalEmailTime}ms total`);
     }
 
-    console.log(`Scan completed: ${detectedSpam}/${emails.length} emails classified as spam`);
+    const totalScanTime = Date.now() - scanStartTime;
+    console.log(`🎯 [Scan] Completed: ${detectedSpam}/${emails.length} emails classified as spam in ${totalScanTime}ms (${(totalScanTime / 1000).toFixed(1)}s)`);
+    
     await storage.updateEmailScan(scanId, {
       detectedSpam,
       unsubscribeLinks: unsubscribeLinksFound,
@@ -271,7 +296,8 @@ async function processEmailScan(scanId: number, accessToken: string) {
       status: "completed"
     });
   } catch (error) {
-    console.error("Email scan processing error:", error);
+    const totalScanTime = Date.now() - scanStartTime;
+    console.error(`❌ [Scan] Error after ${totalScanTime}ms:`, error);
     await storage.updateEmailScan(scanId, {
       status: "failed"
     });
