@@ -1,4 +1,6 @@
 import { users, emailScans, spamEmails, type User, type InsertUser, type EmailScan, type InsertEmailScan, type SpamEmail, type InsertSpamEmail } from "@shared/schema";
+import { db } from "./db";
+import { eq, inArray } from "drizzle-orm";
 
 export interface IStorage {
   // User management
@@ -111,10 +113,19 @@ export class MemStorage implements IStorage {
   async createSpamEmail(insertEmail: InsertSpamEmail): Promise<SpamEmail> {
     const id = this.currentEmailId++;
     const email: SpamEmail = {
-      ...insertEmail,
       id,
+      scanId: insertEmail.scanId,
+      messageId: insertEmail.messageId,
+      sender: insertEmail.sender,
+      subject: insertEmail.subject,
+      body: insertEmail.body || null,
+      aiConfidence: insertEmail.aiConfidence || null,
+      hasUnsubscribeLink: insertEmail.hasUnsubscribeLink || false,
+      unsubscribeUrl: insertEmail.unsubscribeUrl || null,
+      isSelected: insertEmail.isSelected || true,
       isProcessed: false,
-      createdAt: new Date(),
+      receivedDate: insertEmail.receivedDate || null,
+      createdAt: new Date()
     };
     this.spamEmails.set(id, email);
     return email;
@@ -145,4 +156,93 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Database Storage Implementation
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user || undefined;
+  }
+
+  async getUserByMicrosoftId(microsoftId: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.microsoftId, microsoftId));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  async updateUser(id: number, updates: Partial<User>): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set(updates)
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+
+  async createEmailScan(insertScan: InsertEmailScan): Promise<EmailScan> {
+    const [scan] = await db
+      .insert(emailScans)
+      .values(insertScan)
+      .returning();
+    return scan;
+  }
+
+  async getEmailScan(id: number): Promise<EmailScan | undefined> {
+    const [scan] = await db.select().from(emailScans).where(eq(emailScans.id, id));
+    return scan || undefined;
+  }
+
+  async getEmailScansByUser(userId: number): Promise<EmailScan[]> {
+    return await db.select().from(emailScans).where(eq(emailScans.userId, userId));
+  }
+
+  async updateEmailScan(id: number, updates: Partial<EmailScan>): Promise<EmailScan> {
+    const [scan] = await db
+      .update(emailScans)
+      .set(updates)
+      .where(eq(emailScans.id, id))
+      .returning();
+    return scan;
+  }
+
+  async createSpamEmail(insertEmail: InsertSpamEmail): Promise<SpamEmail> {
+    const [email] = await db
+      .insert(spamEmails)
+      .values(insertEmail)
+      .returning();
+    return email;
+  }
+
+  async getSpamEmailsByScan(scanId: number): Promise<SpamEmail[]> {
+    return await db.select().from(spamEmails).where(eq(spamEmails.scanId, scanId));
+  }
+
+  async updateSpamEmail(id: number, updates: Partial<SpamEmail>): Promise<SpamEmail> {
+    const [email] = await db
+      .update(spamEmails)
+      .set(updates)
+      .where(eq(spamEmails.id, id))
+      .returning();
+    return email;
+  }
+
+  async bulkUpdateSpamEmails(ids: number[], updates: Partial<SpamEmail>): Promise<void> {
+    await db
+      .update(spamEmails)
+      .set(updates)
+      .where(inArray(spamEmails.id, ids));
+  }
+}
+
+export const storage = new DatabaseStorage();

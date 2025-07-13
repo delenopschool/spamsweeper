@@ -10,6 +10,8 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+- **July 13, 2025**: Migrated from in-memory storage to PostgreSQL database using Drizzle ORM
+- **July 13, 2025**: Added comprehensive debugging logging to AI classification process for performance monitoring
 - **July 12, 2025**: Migrated from OpenAI to OpenRouter AI for spam classification using free Llama 3.1 8B model
 - **July 12, 2025**: Fixed React Query scope errors causing white screen issues on dashboard
 - **July 12, 2025**: Simplified dashboard state management for better stability
