@@ -26,6 +26,26 @@ export default function Dashboard() {
     enabled: !!userId,
   });
 
+  // Load latest scan data when dashboard loads
+  const { data: latestScanData, isLoading: latestScanLoading } = useQuery({
+    queryKey: ["/api/user", userId, "latest-scan"],
+    queryFn: async () => {
+      const response = await apiRequest("GET", `/api/user/${userId}/latest-scan`);
+      return response.json();
+    },
+    enabled: !!userId,
+  });
+
+  // Update scanData when latest scan loads
+  useEffect(() => {
+    if (latestScanData && !currentScanId) {
+      setScanData(latestScanData);
+      if (latestScanData.scan) {
+        setCurrentScanId(latestScanData.scan.id);
+      }
+    }
+  }, [latestScanData, currentScanId]);
+
   // Simple fetch function for scan data
   const fetchScanData = async (scanId: number) => {
     try {
@@ -89,6 +109,8 @@ export default function Dashboard() {
     if (currentScanId) {
       fetchScanData(currentScanId);
     }
+    // Also invalidate the latest scan cache
+    queryClient.invalidateQueries({ queryKey: ["/api/user", userId, "latest-scan"] });
   };
 
   const handleProcessUnsubscribes = async () => {
@@ -108,7 +130,7 @@ export default function Dashboard() {
     return <div>Invalid URL</div>;
   }
 
-  if (userLoading) {
+  if (userLoading || latestScanLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>

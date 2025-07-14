@@ -15,6 +15,9 @@ Preferred communication style: Simple, everyday language.
 - **January 14, 2025**: Added full responsive design support for mobile devices
 - **January 14, 2025**: Implemented dark/light mode functionality with theme toggle
 - **January 14, 2025**: User customized feature card icons - these customizations should be preserved
+- **January 14, 2025**: Fixed OAuth authentication for Render deployment with automatic domain detection
+- **January 14, 2025**: Added persistent scan history - dashboard now shows last scan results on login
+- **January 14, 2025**: Implemented latest scan endpoint to preserve status cards data between sessions
 
 ## System Architecture
 

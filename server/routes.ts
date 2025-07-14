@@ -149,6 +149,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get latest scan for user
+  app.get("/api/user/:userId/latest-scan", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const scan = await storage.getLatestEmailScan(userId);
+      
+      if (!scan) {
+        return res.json({ scan: null, emails: [] });
+      }
+
+      const emails = await storage.getSpamEmailsByScan(scan.id);
+
+      res.json({
+        scan,
+        emails: emails.map(email => ({
+          id: email.id,
+          sender: email.sender,
+          subject: email.subject,
+          aiConfidence: email.aiConfidence,
+          hasUnsubscribeLink: email.hasUnsubscribeLink,
+          isSelected: email.isSelected,
+          receivedDate: email.receivedDate
+        }))
+      });
+    } catch (error) {
+      console.error("Failed to get latest scan:", error);
+      res.status(500).json({ message: "Failed to get latest scan" });
+    }
+  });
+
   // Get email details
   app.get("/api/email/:emailId", async (req, res) => {
     try {

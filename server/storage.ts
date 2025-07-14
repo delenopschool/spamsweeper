@@ -1,6 +1,6 @@
 import { users, emailScans, spamEmails, type User, type InsertUser, type EmailScan, type InsertEmailScan, type SpamEmail, type InsertSpamEmail } from "@shared/schema";
 import { db } from "./db";
-import { eq, inArray } from "drizzle-orm";
+import { eq, inArray, desc } from "drizzle-orm";
 
 export interface IStorage {
   // User management
@@ -14,6 +14,7 @@ export interface IStorage {
   createEmailScan(scan: InsertEmailScan): Promise<EmailScan>;
   getEmailScan(id: number): Promise<EmailScan | undefined>;
   getEmailScansByUser(userId: number): Promise<EmailScan[]>;
+  getLatestEmailScan(userId: number): Promise<EmailScan | undefined>;
   updateEmailScan(id: number, updates: Partial<EmailScan>): Promise<EmailScan>;
 
   // Spam email management
@@ -98,6 +99,13 @@ export class MemStorage implements IStorage {
 
   async getEmailScansByUser(userId: number): Promise<EmailScan[]> {
     return Array.from(this.emailScans.values()).filter(scan => scan.userId === userId);
+  }
+
+  async getLatestEmailScan(userId: number): Promise<EmailScan | undefined> {
+    const userScans = Array.from(this.emailScans.values())
+      .filter(scan => scan.userId === userId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    return userScans[0];
   }
 
   async updateEmailScan(id: number, updates: Partial<EmailScan>): Promise<EmailScan> {
@@ -205,6 +213,16 @@ export class DatabaseStorage implements IStorage {
 
   async getEmailScansByUser(userId: number): Promise<EmailScan[]> {
     return await db.select().from(emailScans).where(eq(emailScans.userId, userId));
+  }
+
+  async getLatestEmailScan(userId: number): Promise<EmailScan | undefined> {
+    const [latestScan] = await db
+      .select()
+      .from(emailScans)
+      .where(eq(emailScans.userId, userId))
+      .orderBy(desc(emailScans.createdAt))
+      .limit(1);
+    return latestScan;
   }
 
   async updateEmailScan(id: number, updates: Partial<EmailScan>): Promise<EmailScan> {
