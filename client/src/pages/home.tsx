@@ -74,7 +74,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12 sm:mb-16">
           <Card className="bg-card dark:bg-card border-border">
             <CardHeader className="text-center">
-              <Shield className="h-12 w-12 text-primary mx-auto mb-2" />
+              <img src={automaticUnsubscribeIcon} alt="Smart Review" className="h-12 w-12 mx-auto mb-2" />
               <CardTitle className="text-foreground">AI Spam Detection</CardTitle>
             </CardHeader>
             <CardContent>
@@ -87,7 +87,7 @@ export default function Home() {
 
           <Card className="bg-card dark:bg-card border-border">
             <CardHeader className="text-center">
-              <Zap className="h-12 w-12 text-warning mx-auto mb-2" />
+              <img src={smartReviewIcon} alt="Smart Review" className="h-12 w-12 mx-auto mb-2" />
               <CardTitle className="text-foreground">Automatic Unsubscribe</CardTitle>
             </CardHeader>
             <CardContent>
@@ -100,7 +100,7 @@ export default function Home() {
 
           <Card className="bg-card dark:bg-card border-border">
             <CardHeader className="text-center">
-              <img src={smartReviewIcon} alt="Smart Review" className="h-12 w-12 mx-auto mb-2 rounded-lg" style={{ borderRadius: '7px' }} />
+              <Zap className="h-12 w-12 text-warning mx-auto mb-2" />
               <CardTitle className="text-foreground">Smart Review Process</CardTitle>
             </CardHeader>
             <CardContent>

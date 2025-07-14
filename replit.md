@@ -8,6 +8,14 @@ Spam Sweeper is a full-stack web application that helps users clean up their ema
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+- **January 14, 2025**: Successfully migrated project from Replit Agent to Replit environment
+- **January 14, 2025**: Replaced Smart Review Process logo with custom green SVG icon
+- **January 14, 2025**: Added full responsive design support for mobile devices
+- **January 14, 2025**: Implemented dark/light mode functionality with theme toggle
+- **January 14, 2025**: User customized feature card icons - these customizations should be preserved
+
 ## System Architecture
 
 The application follows a modern full-stack architecture with clear separation between frontend, backend, and data layers:
