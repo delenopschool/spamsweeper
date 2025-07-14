@@ -21,50 +21,50 @@ export default function StatusCards({ scanData }: StatusCardsProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <Card>
-        <CardContent className="p-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+      <Card className="bg-card dark:bg-card border-border">
+        <CardContent className="p-4 sm:p-6">
           <div className="flex items-center">
-            <Mail className="text-primary text-2xl mr-3" />
-            <div>
-              <p className="text-sm font-medium text-gray-600">Total Emails Scanned</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.totalScanned.toLocaleString()}</p>
+            <Mail className="text-primary text-xl sm:text-2xl mr-3 flex-shrink-0" />
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-muted-foreground">Total Emails Scanned</p>
+              <p className="text-xl sm:text-2xl font-semibold text-foreground">{stats.totalScanned.toLocaleString()}</p>
             </div>
           </div>
         </CardContent>
       </Card>
       
-      <Card>
-        <CardContent className="p-6">
+      <Card className="bg-card dark:bg-card border-border">
+        <CardContent className="p-4 sm:p-6">
           <div className="flex items-center">
-            <AlertTriangle className="text-error text-2xl mr-3" />
-            <div>
-              <p className="text-sm font-medium text-gray-600">AI Detected Spam</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.detectedSpam.toLocaleString()}</p>
+            <AlertTriangle className="text-error text-xl sm:text-2xl mr-3 flex-shrink-0" />
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-muted-foreground">AI Detected Spam</p>
+              <p className="text-xl sm:text-2xl font-semibold text-foreground">{stats.detectedSpam.toLocaleString()}</p>
             </div>
           </div>
         </CardContent>
       </Card>
       
-      <Card>
-        <CardContent className="p-6">
+      <Card className="bg-card dark:bg-card border-border">
+        <CardContent className="p-4 sm:p-6">
           <div className="flex items-center">
-            <Link2Off className="text-warning text-2xl mr-3" />
-            <div>
-              <p className="text-sm font-medium text-gray-600">Unsubscribe Links</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.unsubscribeLinks.toLocaleString()}</p>
+            <Link2Off className="text-warning text-xl sm:text-2xl mr-3 flex-shrink-0" />
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-muted-foreground">Unsubscribe Links</p>
+              <p className="text-xl sm:text-2xl font-semibold text-foreground">{stats.unsubscribeLinks.toLocaleString()}</p>
             </div>
           </div>
         </CardContent>
       </Card>
       
-      <Card>
-        <CardContent className="p-6">
+      <Card className="bg-card dark:bg-card border-border">
+        <CardContent className="p-4 sm:p-6">
           <div className="flex items-center">
-            <CheckCircle className="text-success text-2xl mr-3" />
-            <div>
-              <p className="text-sm font-medium text-gray-600">Successfully Processed</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.processed.toLocaleString()}</p>
+            <CheckCircle className="text-success text-xl sm:text-2xl mr-3 flex-shrink-0" />
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-muted-foreground">Successfully Processed</p>
+              <p className="text-xl sm:text-2xl font-semibold text-foreground">{stats.processed.toLocaleString()}</p>
             </div>
           </div>
         </CardContent>

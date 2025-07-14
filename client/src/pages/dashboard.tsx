@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { WashingMachine, LogOut, UserRound } from "lucide-react";
 import logoUrl from "@/assets/spam-sweeper-logo.png";
 import StatusCards from "@/components/status-cards";
@@ -124,50 +125,52 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b border-gray-200">
+      <nav className="bg-card shadow-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-12 w-12 mr-3 rounded-lg" style={{ borderRadius: '7px' }} />
-              <h1 className="text-xl font-medium text-gray-900">Spam Sweeper</h1>
+              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-10 w-10 sm:h-12 sm:w-12 mr-3 rounded-lg" style={{ borderRadius: '7px' }} />
+              <h1 className="text-lg sm:text-xl font-medium text-foreground">Spam Sweeper</h1>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center text-sm text-gray-600">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <div className="hidden sm:flex items-center text-sm text-muted-foreground">
                 <UserRound className="text-success text-lg mr-1" />
-                <span>{user.email}</span>
+                <span className="truncate max-w-32 lg:max-w-none">{user.email}</span>
               </div>
+              <ThemeToggle />
               <Button 
                 onClick={handleSignOut}
                 variant="outline"
                 className="flex items-center"
+                size="sm"
               >
                 <LogOut className="mr-1 h-4 w-4" />
-                Sign Out
+                <span className="hidden sm:inline">Sign Out</span>
               </Button>
             </div>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Dashboard Header */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-medium text-gray-900 mb-2">Email Spam Management</h2>
-          <p className="text-gray-600">Review AI-classified spam emails and manage your subscriptions automatically</p>
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-xl sm:text-2xl font-medium text-foreground mb-2">Email Spam Management</h2>
+          <p className="text-muted-foreground">Review AI-classified spam emails and manage your subscriptions automatically</p>
         </div>
 
         {/* Status Cards */}
         <StatusCards scanData={scanData} />
 
         {/* Action Panel */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Quick Actions</h3>
+        <div className="bg-card rounded-lg shadow-sm border border-border mb-6 sm:mb-8">
+          <div className="px-4 sm:px-6 py-4 border-b border-border">
+            <h3 className="text-lg font-medium text-foreground">Quick Actions</h3>
           </div>
-          <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 sm:p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Button 
                 onClick={handleScanEmails}
                 className="btn-primary flex items-center justify-center px-4 py-3"
@@ -200,10 +203,10 @@ export default function Dashboard() {
 
         {/* Email Review Table */}
         {scanData && scanData.scan.status === "processing" && (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+          <div className="bg-card rounded-lg shadow-sm border border-border p-6 sm:p-8 text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">AI Processing Emails...</h3>
-            <p className="text-gray-600">Analyzing {scanData.scan.totalScanned} emails for spam patterns</p>
+            <h3 className="text-lg font-medium text-foreground mb-2">AI Processing Emails...</h3>
+            <p className="text-muted-foreground">Analyzing {scanData.scan.totalScanned} emails for spam patterns</p>
           </div>
         )}
         
@@ -216,9 +219,9 @@ export default function Dashboard() {
                 onRefresh={handleRefresh}
               />
             ) : (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Great News!</h3>
-                <p className="text-gray-600">No spam emails detected in your {scanData.scan.totalScanned} scanned messages. Your inbox is clean!</p>
+              <div className="bg-card rounded-lg shadow-sm border border-border p-6 sm:p-8 text-center">
+                <h3 className="text-lg font-medium text-foreground mb-2">Great News!</h3>
+                <p className="text-muted-foreground">No spam emails detected in your {scanData.scan.totalScanned} scanned messages. Your inbox is clean!</p>
               </div>
             )}
           </>

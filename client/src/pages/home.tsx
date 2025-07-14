@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Mail, Shield, Zap } from "lucide-react";
 import logoUrl from "@/assets/spam-sweeper-logo.png";
-import smartReviewIcon from "@/assets/smart-review-icon.svg";
+import smartReviewIcon from "@/assets/broom-svgrepo-com.png";
+import automaticUnsubscribeIcon from "@/assets/ai-svgrepo-com.png";
 import { apiRequest } from "@/lib/queryClient";
 
 export default function Home() {
@@ -24,26 +26,27 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b border-gray-200">
+      <nav className="bg-card shadow-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-12 w-12 mr-3 rounded-lg" style={{ borderRadius: '7px' }} />
-              <h1 className="text-xl font-medium text-gray-900">Spam Sweeper</h1>
+              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-10 w-10 sm:h-12 sm:w-12 mr-3 rounded-lg" style={{ borderRadius: '7px' }} />
+              <h1 className="text-lg sm:text-xl font-medium text-foreground">Spam Sweeper</h1>
             </div>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
         {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-12 sm:mb-16">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             AI-Powered Email Spam Management
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto px-4">
             Connect your Outlook account and let AI automatically identify spam emails, 
             find unsubscribe links, and clean up your inbox with intelligent automation.
           </p>
@@ -51,7 +54,7 @@ export default function Home() {
           <Button 
             onClick={handleMicrosoftAuth}
             disabled={isAuthenticating}
-            className="btn-primary px-8 py-3 text-lg"
+            className="btn-primary px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg"
           >
             {isAuthenticating ? (
               <>
@@ -60,7 +63,7 @@ export default function Home() {
               </>
             ) : (
               <>
-                <Mail className="mr-2" />
+                <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                 Connect Outlook Account
               </>
             )}
@@ -68,40 +71,40 @@ export default function Home() {
         </div>
 
         {/* Features */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <Card>
-            <CardHeader>
-              <Shield className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>AI Spam Detection</CardTitle>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12 sm:mb-16">
+          <Card className="bg-card dark:bg-card border-border">
+            <CardHeader className="text-center">
+              <Shield className="h-12 w-12 text-primary mx-auto mb-2" />
+              <CardTitle className="text-foreground">AI Spam Detection</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription>
+              <CardDescription className="text-muted-foreground">
                 Advanced AI analyzes your spam folder and identifies genuine spam with high accuracy, 
                 reducing false positives and protecting important emails.
               </CardDescription>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <Zap className="h-8 w-8 text-warning mb-2" />
-              <CardTitle>Automatic Unsubscribe</CardTitle>
+          <Card className="bg-card dark:bg-card border-border">
+            <CardHeader className="text-center">
+              <Zap className="h-12 w-12 text-warning mx-auto mb-2" />
+              <CardTitle className="text-foreground">Automatic Unsubscribe</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription>
+              <CardDescription className="text-muted-foreground">
                 Automatically detects and processes unsubscribe links in spam emails, 
                 helping you get removed from unwanted mailing lists effortlessly.
               </CardDescription>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <img src={smartReviewIcon} alt="Smart Review" className="h-12 w-12 mb-2 rounded-lg" style={{ borderRadius: '7px' }} />
-              <CardTitle>Smart Review Process</CardTitle>
+          <Card className="bg-card dark:bg-card border-border">
+            <CardHeader className="text-center">
+              <img src={smartReviewIcon} alt="Smart Review" className="h-12 w-12 mx-auto mb-2 rounded-lg" style={{ borderRadius: '7px' }} />
+              <CardTitle className="text-foreground">Smart Review Process</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription>
+              <CardDescription className="text-muted-foreground">
                 Review AI classifications before processing, with confidence scores and 
                 detailed analysis to ensure important emails are never lost.
               </CardDescription>
@@ -110,12 +113,12 @@ export default function Home() {
         </div>
 
         {/* Security Notice */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
+        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 text-center">
           <Shield className="h-8 w-8 text-primary mx-auto mb-2" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <h3 className="text-lg font-medium text-foreground mb-2">
             Your Privacy is Protected
           </h3>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             We use Microsoft's official Graph API with secure OAuth 2.0 authentication. 
             Your emails are processed securely and we never store your email content permanently.
           </p>
