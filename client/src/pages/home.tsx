@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Shield, Zap } from "lucide-react";
 import logoUrl from "@/assets/spam-sweeper-logo.png";
+import smartReviewIcon from "@/assets/smart-review-icon.svg";
 import { apiRequest } from "@/lib/queryClient";
 
 export default function Home() {
@@ -96,7 +97,7 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <img src={logoUrl} alt="Smart Review" className="h-12 w-12 mb-2 rounded-lg" style={{ borderRadius: '7px' }} />
+              <img src={smartReviewIcon} alt="Smart Review" className="h-12 w-12 mb-2 rounded-lg" style={{ borderRadius: '7px' }} />
               <CardTitle>Smart Review Process</CardTitle>
             </CardHeader>
             <CardContent>
