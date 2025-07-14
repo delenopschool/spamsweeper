@@ -95,8 +95,20 @@ export class MicrosoftGraphService {
 
   getAuthUrl(): string {
     const clientId = process.env.MICROSOFT_CLIENT_ID;
-    const redirectUri = process.env.MICROSOFT_REDIRECT_URI || 
-      (process.env.NODE_ENV === 'development' ? 'http://localhost:5000/auth/callback' : 'https://spamsweeper.onrender.com/auth/callback');
+    
+    // Auto-detect the redirect URI based on environment
+    let redirectUri = process.env.MICROSOFT_REDIRECT_URI;
+    if (!redirectUri) {
+      if (process.env.NODE_ENV === 'development') {
+        redirectUri = 'http://localhost:5000/auth/callback';
+      } else if (process.env.RENDER_EXTERNAL_URL) {
+        redirectUri = `${process.env.RENDER_EXTERNAL_URL}/auth/callback`;
+      } else {
+        redirectUri = 'https://spamsweeper.onrender.com/auth/callback';
+      }
+    }
+    
+    console.log(`🔐 [Auth] Using redirect URI: ${redirectUri}`);
     
     if (!clientId) {
       throw new Error('Microsoft Client ID not configured');
@@ -116,8 +128,20 @@ export class MicrosoftGraphService {
   async exchangeCodeForTokens(code: string): Promise<{ accessToken: string; refreshToken: string; expiresIn: number }> {
     const clientId = process.env.MICROSOFT_CLIENT_ID;
     const clientSecret = process.env.MICROSOFT_CLIENT_SECRET;
-    const redirectUri = process.env.MICROSOFT_REDIRECT_URI || 
-      (process.env.NODE_ENV === 'development' ? 'http://localhost:5000/auth/callback' : 'https://spamsweeper.onrender.com/auth/callback');
+    
+    // Auto-detect the redirect URI based on environment
+    let redirectUri = process.env.MICROSOFT_REDIRECT_URI;
+    if (!redirectUri) {
+      if (process.env.NODE_ENV === 'development') {
+        redirectUri = 'http://localhost:5000/auth/callback';
+      } else if (process.env.RENDER_EXTERNAL_URL) {
+        redirectUri = `${process.env.RENDER_EXTERNAL_URL}/auth/callback`;
+      } else {
+        redirectUri = 'https://spamsweeper.onrender.com/auth/callback';
+      }
+    }
+    
+    console.log(`🔐 [Auth] Exchanging code with redirect URI: ${redirectUri}`);
     
     if (!clientId || !clientSecret) {
       throw new Error('Microsoft OAuth credentials not configured');
@@ -143,7 +167,14 @@ export class MicrosoftGraphService {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Failed to exchange code for tokens: ${errorText}`);
+      console.error(`❌ [Auth] Token exchange failed:`, {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText,
+        redirectUri,
+        clientId: clientId?.substring(0, 8) + '...'
+      });
+      throw new Error(`Failed to exchange code for tokens: ${response.status} ${errorText}`);
     }
 
     const data = await response.json();
