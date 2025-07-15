@@ -1,3 +1,4 @@
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +9,7 @@ interface LearningDashboardProps {
   userId: number;
 }
 
-export default function LearningDashboard({ userId }: LearningDashboardProps) {
+const LearningDashboard = React.memo(function LearningDashboard({ userId }: LearningDashboardProps) {
   const { data: learningData, isLoading } = useQuery({
     queryKey: ["/api/user", userId, "learning"],
     queryFn: async () => {
@@ -16,6 +17,8 @@ export default function LearningDashboard({ userId }: LearningDashboardProps) {
       return response.json();
     },
     enabled: !!userId,
+    staleTime: 120000, // Cache learning data for 2 minutes
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading) {
@@ -129,4 +132,6 @@ export default function LearningDashboard({ userId }: LearningDashboardProps) {
       </CardContent>
     </Card>
   );
-}
+});
+
+export default LearningDashboard;

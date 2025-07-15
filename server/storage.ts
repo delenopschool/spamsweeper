@@ -282,7 +282,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getSpamEmailsByScan(scanId: number): Promise<SpamEmail[]> {
-    return await db.select().from(spamEmails).where(eq(spamEmails.scanId, scanId));
+    return await db
+      .select()
+      .from(spamEmails)
+      .where(eq(spamEmails.scanId, scanId))
+      .orderBy(desc(spamEmails.aiConfidence));
   }
 
   async updateSpamEmail(id: number, updates: Partial<SpamEmail>): Promise<SpamEmail> {
@@ -303,7 +307,12 @@ export class DatabaseStorage implements IStorage {
 
   async searchSpamEmails(scanId: number, query: string): Promise<SpamEmail[]> {
     if (!query.trim()) {
-      return await db.select().from(spamEmails).where(eq(spamEmails.scanId, scanId));
+      return await db
+        .select()
+        .from(spamEmails)
+        .where(eq(spamEmails.scanId, scanId))
+        .orderBy(desc(spamEmails.aiConfidence))
+        .limit(100);
     }
     
     const lowerQuery = `%${query.toLowerCase()}%`;
@@ -311,12 +320,17 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(spamEmails)
       .where(
-        or(
-          ilike(spamEmails.sender, lowerQuery),
-          ilike(spamEmails.subject, lowerQuery),
-          ilike(spamEmails.body, lowerQuery)
+        and(
+          eq(spamEmails.scanId, scanId),
+          or(
+            ilike(spamEmails.sender, lowerQuery),
+            ilike(spamEmails.subject, lowerQuery),
+            ilike(spamEmails.body, lowerQuery)
+          )
         )
-      );
+      )
+      .orderBy(desc(spamEmails.aiConfidence))
+      .limit(100);
   }
 
   async createUserLearningData(data: InsertUserLearningData): Promise<UserLearningData> {

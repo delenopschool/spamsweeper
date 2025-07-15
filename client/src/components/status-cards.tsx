@@ -1,3 +1,4 @@
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, AlertTriangle, Link2Off, CheckCircle } from "lucide-react";
 
@@ -12,7 +13,7 @@ interface StatusCardsProps {
   };
 }
 
-export default function StatusCards({ scanData }: StatusCardsProps) {
+const StatusCards = React.memo(function StatusCards({ scanData }: StatusCardsProps) {
   const stats = {
     totalScanned: scanData?.scan?.totalScanned ?? 0,
     detectedSpam: scanData?.scan?.detectedSpam ?? 0,
@@ -71,4 +72,6 @@ export default function StatusCards({ scanData }: StatusCardsProps) {
       </Card>
     </div>
   );
-}
+});
+
+export default StatusCards;

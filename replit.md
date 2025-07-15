@@ -96,6 +96,14 @@ The application follows a modern full-stack architecture with clear separation b
 - **Mobile Optimization**: Full responsive design implementation
 - **Theme Support**: Dark/light mode with system preference detection
 - **Error Handling**: Comprehensive error boundaries and user feedback
-- **Performance**: Optimized API calls and caching strategies
+- **Performance Optimizations**: Multiple performance improvements implemented (Jan 2025)
+  - Search debouncing (300ms) to reduce API calls during typing
+  - React.memo for components to prevent unnecessary re-renders
+  - useMemo/useCallback for expensive calculations and functions
+  - Query caching with staleTime (30s-5min) to reduce server requests
+  - Database query optimizations with ordering and limits
+  - Optimized search queries with proper filtering and result limits
+- **Learning System**: AI learns from user feedback via thumbs up/down buttons
+- **Search Functionality**: Real-time search through emails by sender, subject, and content
 
 The application is designed to be easily deployable to platforms like Render, Vercel, or similar services with minimal configuration changes.

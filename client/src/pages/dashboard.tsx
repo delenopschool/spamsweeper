@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,7 @@ export default function Dashboard() {
   const { data: user, isLoading: userLoading } = useQuery({
     queryKey: ["/api/user", userId],
     enabled: !!userId,
+    staleTime: 300000, // Cache user data for 5 minutes
   });
 
   // Load latest scan data when dashboard loads
@@ -35,6 +36,8 @@ export default function Dashboard() {
       return response.json();
     },
     enabled: !!userId,
+    staleTime: 60000, // Cache latest scan for 1 minute
+    refetchOnWindowFocus: false, // Don't refetch on window focus
   });
 
   // Update scanData when latest scan loads
@@ -62,11 +65,11 @@ export default function Dashboard() {
 
 
 
-  const handleSignOut = () => {
+  const handleSignOut = useCallback(() => {
     window.location.href = '/';
-  };
+  }, []);
 
-  const handleScanEmails = async () => {
+  const handleScanEmails = useCallback(async () => {
     if (!userId) return;
     
     try {
@@ -81,7 +84,7 @@ export default function Dashboard() {
       console.error("Scan error:", error);
       setIsScanning(false);
     }
-  };
+  }, [userId]);
 
   const pollScanResults = async (scanId: number) => {
     let attempts = 0;

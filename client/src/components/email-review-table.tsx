@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -29,10 +29,20 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
   const [currentPage, setCurrentPage] = useState(1);
   const [selectAll, setSelectAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const itemsPerPage = 10;
   
   const queryClient = useQueryClient();
   const { toast } = useToast();
+
+  // Debounce search query for better performance
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
+    
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
 
   // User feedback mutation
   const userFeedbackMutation = useMutation({
@@ -59,26 +69,33 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
     },
   });
 
-  const handleUserFeedback = (emailId: number, feedback: "spam" | "not_spam") => {
-    userFeedbackMutation.mutate({ emailId, feedback });
-  };
+
   
-  // Use search query or fall back to original emails
+  // Use debounced search query for better performance
   const { data: searchResults } = useQuery({
-    queryKey: ["/api/scan", scanData.scan.id, "search", searchQuery],
+    queryKey: ["/api/scan", scanData.scan.id, "search", debouncedQuery],
     queryFn: async () => {
-      const response = await apiRequest("GET", `/api/scan/${scanData.scan.id}/search?q=${encodeURIComponent(searchQuery)}`);
+      if (!debouncedQuery.trim()) return null;
+      const response = await apiRequest("GET", `/api/scan/${scanData.scan.id}/search?q=${encodeURIComponent(debouncedQuery)}`);
       return response.json();
     },
-    enabled: !!scanData.scan.id,
+    enabled: !!scanData.scan.id && !!debouncedQuery.trim(),
+    staleTime: 30000, // Cache results for 30 seconds
   });
   
-  const emails = searchResults?.emails || scanData.emails || [];
+  // Memoize expensive calculations
+  const emails = useMemo(() => {
+    return searchResults?.emails || scanData.emails || [];
+  }, [searchResults?.emails, scanData.emails]);
   
-  const totalPages = Math.ceil(emails.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentEmails = emails.slice(startIndex, startIndex + itemsPerPage);
-  const selectedCount = emails.filter((email: any) => email.isSelected).length;
+  const { totalPages, startIndex, currentEmails, selectedCount } = useMemo(() => {
+    const totalPages = Math.ceil(emails.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentEmails = emails.slice(startIndex, startIndex + itemsPerPage);
+    const selectedCount = emails.filter((email: any) => email.isSelected).length;
+    
+    return { totalPages, startIndex, currentEmails, selectedCount };
+  }, [emails, currentPage, itemsPerPage]);
 
   const updateEmailMutation = useMutation({
     mutationFn: async ({ emailId, updates }: { emailId: number; updates: any }) => {
@@ -98,11 +115,16 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
     },
   });
 
-  const handleSelectEmail = (emailId: number, isSelected: boolean) => {
+  // Memoize callback functions to prevent unnecessary re-renders
+  const handleSelectEmail = useCallback((emailId: number, isSelected: boolean) => {
     updateEmailMutation.mutate({ emailId, updates: { isSelected } });
-  };
+  }, [updateEmailMutation]);
 
-  const handleSelectAll = () => {
+  const handleUserFeedbackMemo = useCallback((emailId: number, feedback: "spam" | "not_spam") => {
+    userFeedbackMutation.mutate({ emailId, feedback });
+  }, [userFeedbackMutation]);
+
+  const handleSelectAll = useCallback(() => {
     const newSelectAll = !selectAll;
     setSelectAll(newSelectAll);
     
@@ -111,28 +133,29 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
       emailIds, 
       updates: { isSelected: newSelectAll } 
     });
-  };
+  }, [selectAll, emails, bulkUpdateMutation]);
 
-  const handleDeselectAll = () => {
+  const handleDeselectAll = useCallback(() => {
     setSelectAll(false);
     const emailIds = emails.map(email => email.id);
     bulkUpdateMutation.mutate({ 
       emailIds, 
       updates: { isSelected: false } 
     });
-  };
+  }, [emails, bulkUpdateMutation]);
 
-  const getConfidenceColor = (confidence: number) => {
+  // Memoize color calculation functions
+  const getConfidenceColor = useCallback((confidence: number) => {
     if (confidence >= 80) return "bg-red-500";
     if (confidence >= 60) return "bg-orange-500";
     return "bg-yellow-500";
-  };
+  }, []);
 
-  const getConfidenceTextColor = (confidence: number) => {
+  const getConfidenceTextColor = useCallback((confidence: number) => {
     if (confidence >= 80) return "text-red-700";
     if (confidence >= 60) return "text-orange-700";
     return "text-yellow-700";
-  };
+  }, []);
 
   if (!emails.length) {
     return (
@@ -278,7 +301,7 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleUserFeedback(email.id, "spam")}
+                      onClick={() => handleUserFeedbackMemo(email.id, "spam")}
                       className="text-red-500 hover:text-red-700"
                       title="Mark as spam (helps AI learn)"
                     >
@@ -287,7 +310,7 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleUserFeedback(email.id, "not_spam")}
+                      onClick={() => handleUserFeedbackMemo(email.id, "not_spam")}
                       className="text-green-500 hover:text-green-700"
                       title="Mark as not spam (helps AI learn)"
                     >
