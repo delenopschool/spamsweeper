@@ -90,12 +90,12 @@ export default function Dashboard() {
     const poll = async () => {
       const data = await fetchScanData(scanId);
       
-      if (data && data.scan.status === "completed") {
+      if (data && data.scan && data.scan.status === "completed") {
         setIsScanning(false);
         return;
       }
       
-      if (attempts < maxAttempts && data && data.scan.status === "processing") {
+      if (attempts < maxAttempts && data && data.scan && data.scan.status === "processing") {
         attempts++;
         setTimeout(poll, 2000);
       } else {
@@ -228,7 +228,7 @@ export default function Dashboard() {
         </div>
 
         {/* Email Review Table */}
-        {scanData && scanData.scan.status === "processing" && (
+        {scanData && scanData.scan && scanData.scan.status === "processing" && (
           <div className="bg-card rounded-lg shadow-sm border border-border p-6 sm:p-8 text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
             <h3 className="text-lg font-medium text-foreground mb-2">AI Processing Emails...</h3>
@@ -236,9 +236,9 @@ export default function Dashboard() {
           </div>
         )}
         
-        {scanData && scanData.scan.status === "completed" && (
+        {scanData && scanData.scan && scanData.scan.status === "completed" && (
           <>
-            {scanData.emails.length > 0 ? (
+            {scanData.emails && scanData.emails.length > 0 ? (
               <EmailReviewTable 
                 scanData={scanData} 
                 onPreviewEmail={setPreviewEmailId}
@@ -251,6 +251,21 @@ export default function Dashboard() {
               </div>
             )}
           </>
+        )}
+
+        {/* Default state when no scan data */}
+        {!scanData && !isScanning && !latestScanLoading && (
+          <div className="bg-card rounded-lg shadow-sm border border-border p-6 sm:p-8 text-center">
+            <h3 className="text-lg font-medium text-foreground mb-2">Welcome to Spam Sweeper!</h3>
+            <p className="text-muted-foreground mb-4">Start by scanning your spam folder to detect unwanted emails and find unsubscribe links.</p>
+            <Button 
+              onClick={handleScanEmails}
+              className="btn-primary flex items-center justify-center"
+            >
+              <WashingMachine className="mr-2" />
+              Start Your First Scan
+            </Button>
+          </div>
         )}
 
         {/* Modals */}

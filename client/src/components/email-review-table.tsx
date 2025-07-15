@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Eye, RotateCcw, Trash2, ChevronLeft, ChevronRight, Search, ThumbsUp, ThumbsDown } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface EmailReviewTableProps {
   scanData: {
@@ -31,6 +32,36 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
   const itemsPerPage = 10;
   
   const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  // User feedback mutation
+  const userFeedbackMutation = useMutation({
+    mutationFn: async ({ emailId, feedback }: { emailId: number; feedback: "spam" | "not_spam" }) => {
+      const response = await apiRequest("POST", `/api/spam-email/${emailId}/feedback`, {
+        userFeedback: feedback
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Feedback opgeslagen",
+        description: "Het systeem heeft jouw feedback ontvangen en leert hiervan!",
+      });
+      // Refresh learning data
+      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Er ging iets mis bij het opslaan van je feedback.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleUserFeedback = (emailId: number, feedback: "spam" | "not_spam") => {
+    userFeedbackMutation.mutate({ emailId, feedback });
+  };
   
   // Use search query or fall back to original emails
   const { data: searchResults } = useQuery({
@@ -69,10 +100,6 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
 
   const handleSelectEmail = (emailId: number, isSelected: boolean) => {
     updateEmailMutation.mutate({ emailId, updates: { isSelected } });
-  };
-
-  const handleUserFeedback = (emailId: number, feedback: string) => {
-    updateEmailMutation.mutate({ emailId, updates: { userFeedback: feedback } });
   };
 
   const handleSelectAll = () => {

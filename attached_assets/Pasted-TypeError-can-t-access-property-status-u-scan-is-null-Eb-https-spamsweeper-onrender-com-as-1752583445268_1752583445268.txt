@@ -1,0 +1,48 @@
+TypeError: can't access property "status", u.scan is null
+    Eb https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:252
+    uc https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:38
+    Ka https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Lm https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Am https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    zx https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Vi https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    ou https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Rm https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    k https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:25
+    I https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:25
+index-CWEMSua3.js:40:161
+    Qa https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    callback https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Jd https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:38
+    gf https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    jm https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Ix https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Ux https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Wn https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Rm https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    k https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:25
+    I https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:25
+Uncaught TypeError: can't access property "status", u.scan is null
+    Eb https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:252
+    uc https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:38
+    Ka https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Lm https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Am https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    zx https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Vi https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    ou https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Rm https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    k https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:25
+    I https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:25
+index-CWEMSua3.js:252:12164
+    Eb https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:252
+    uc https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:38
+    Ka https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Lm https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Am https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    zx https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Vi https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    ou https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    Rm https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:40
+    k https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:25
+    I https://spamsweeper.onrender.com/assets/index-CWEMSua3.js:25
