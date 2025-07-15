@@ -460,14 +460,29 @@ async function processEmailScan(scanId: number, accessToken: string) {
 }
 
 async function processUnsubscribes(emails: any[]) {
+  const results: any[] = [];
   let processed = 0;
+  
+  console.log(`🔄 Starting unsubscribe processing for ${emails.length} emails`);
   
   for (const email of emails) {
     if (email.unsubscribeUrl) {
       try {
+        console.log(`📧 Processing unsubscribe for email ${email.id}: ${email.unsubscribeUrl}`);
         const result = await emailParserService.processUnsubscribeLink(email.unsubscribeUrl);
+        
+        results.push({
+          emailId: email.id,
+          sender: email.sender,
+          url: email.unsubscribeUrl,
+          ...result
+        });
+        
         if (result.success) {
           processed++;
+          console.log(`✅ Successfully processed unsubscribe for ${email.sender} via ${result.method}`);
+        } else {
+          console.log(`❌ Failed to process unsubscribe for ${email.sender}: ${result.message}`);
         }
         
         await storage.updateSpamEmail(email.id, {
@@ -475,9 +490,28 @@ async function processUnsubscribes(emails: any[]) {
         });
       } catch (error) {
         console.error(`Failed to process unsubscribe for email ${email.id}:`, error);
+        results.push({
+          emailId: email.id,
+          sender: email.sender,
+          url: email.unsubscribeUrl,
+          success: false,
+          message: `Error: ${(error as Error).message}`,
+          method: 'ERROR'
+        });
       }
+    } else {
+      console.log(`⚠️ Email ${email.id} from ${email.sender} has no unsubscribe URL`);
+      results.push({
+        emailId: email.id,
+        sender: email.sender,
+        url: null,
+        success: false,
+        message: 'No unsubscribe URL found',
+        method: 'NONE'
+      });
     }
   }
   
-  console.log(`Processed ${processed} unsubscribe requests`);
+  console.log(`🎯 Unsubscribe processing completed: ${processed}/${emails.length} successful`);
+  return results;
 }
