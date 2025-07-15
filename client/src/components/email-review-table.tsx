@@ -47,11 +47,15 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
   // User feedback mutation
   const userFeedbackMutation = useMutation({
     mutationFn: async ({ emailId, feedback }: { emailId: number; feedback: "spam" | "not_spam" }) => {
-      return apiRequest(`/api/email/${emailId}/feedback`, {
+      const response = await fetch(`/api/email/${emailId}/feedback`, {
         method: "POST",
         body: JSON.stringify({ feedback }),
         headers: { "Content-Type": "application/json" }
       });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
     },
     onSuccess: () => {
       toast({
@@ -72,11 +76,15 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
   // Process selected emails mutation
   const processSelectedMutation = useMutation({
     mutationFn: async () => {
-      return apiRequest("/api/emails/process", {
+      const response = await fetch("/api/emails/process", {
         method: "POST",
         body: JSON.stringify({ scanId: scanData.scan.id }),
         headers: { "Content-Type": "application/json" }
       });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
     },
     onSuccess: (data) => {
       toast({
@@ -101,7 +109,10 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
     queryKey: ["/api/scan", scanData.scan.id, "search", debouncedQuery],
     queryFn: async () => {
       if (!debouncedQuery.trim()) return null;
-      const response = await apiRequest("GET", `/api/scan/${scanData.scan.id}/search?q=${encodeURIComponent(debouncedQuery)}`);
+      const response = await fetch(`/api/scan/${scanData.scan.id}/search?q=${encodeURIComponent(debouncedQuery)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       return response.json();
     },
     enabled: !!scanData.scan.id && !!debouncedQuery.trim(),
@@ -124,7 +135,15 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
 
   const updateEmailMutation = useMutation({
     mutationFn: async ({ emailId, updates }: { emailId: number; updates: any }) => {
-      return apiRequest("PATCH", `/api/email/${emailId}`, updates);
+      const response = await fetch(`/api/email/${emailId}`, {
+        method: "PATCH",
+        body: JSON.stringify(updates),
+        headers: { "Content-Type": "application/json" }
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
     },
     onSuccess: () => {
       onRefresh();
@@ -133,7 +152,15 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
 
   const bulkUpdateMutation = useMutation({
     mutationFn: async ({ emailIds, updates }: { emailIds: number[]; updates: any }) => {
-      return apiRequest("PATCH", "/api/emails/bulk", { emailIds, updates });
+      const response = await fetch("/api/emails/bulk", {
+        method: "PATCH",
+        body: JSON.stringify({ emailIds, updates }),
+        headers: { "Content-Type": "application/json" }
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
     },
     onSuccess: () => {
       onRefresh();

@@ -23,11 +23,15 @@ export default function EmailPreviewModal({ emailId, isOpen, onClose }: EmailPre
 
   const feedbackMutation = useMutation({
     mutationFn: async (feedback: "spam" | "not_spam") => {
-      return apiRequest(`/api/email/${emailId}/feedback`, {
+      const response = await fetch(`/api/email/${emailId}/feedback`, {
         method: "POST",
         body: JSON.stringify({ feedback }),
         headers: { "Content-Type": "application/json" }
       });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
     },
     onSuccess: () => {
       toast({

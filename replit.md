@@ -7,6 +7,7 @@ Spam Sweeper is a full-stack web application that helps users clean up their ema
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Preferred language: Dutch (Nederlands)
 
 ## System Architecture
 
@@ -105,5 +106,12 @@ The application follows a modern full-stack architecture with clear separation b
   - Optimized search queries with proper filtering and result limits
 - **Learning System**: AI learns from user feedback via thumbs up/down buttons
 - **Search Functionality**: Real-time search through emails by sender, subject, and content
+- **Replit Migration (July 2025)**: Successfully migrated from Replit Agent to standard Replit environment
+  - Fixed email preview functionality to properly load email content
+  - Implemented working thumbs up/down feedback system for AI learning
+  - Added functional "Process selected emails" button for batch unsubscribe operations
+  - Fixed API request patterns throughout the frontend
+  - Added proper accessibility descriptions to dialog modals
+  - Updated all database connections and environment variable handling
 
 The application is designed to be easily deployable to platforms like Render, Vercel, or similar services with minimal configuration changes.
