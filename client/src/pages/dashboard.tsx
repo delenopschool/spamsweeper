@@ -9,6 +9,7 @@ import StatusCards from "@/components/status-cards";
 import EmailReviewTable from "@/components/email-review-table";
 import ProcessingModal from "@/components/processing-modal";
 import EmailPreviewModal from "@/components/email-preview-modal";
+import LearningDashboard from "@/components/learning-dashboard";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export default function Dashboard() {
@@ -185,6 +186,9 @@ export default function Dashboard() {
 
         {/* Status Cards */}
         <StatusCards scanData={scanData} />
+
+        {/* Learning Dashboard */}
+        <LearningDashboard userId={userId} />
 
         {/* Action Panel */}
         <div className="bg-card rounded-lg shadow-sm border border-border mb-6 sm:mb-8">

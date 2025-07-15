@@ -35,8 +35,22 @@ export const spamEmails = pgTable("spam_emails", {
   unsubscribeUrl: text("unsubscribe_url"),
   isSelected: boolean("is_selected").default(true),
   isProcessed: boolean("is_processed").default(false),
+  userFeedback: text("user_feedback"), // "spam", "not_spam", "uncertain"
   receivedDate: timestamp("received_date"),
   createdAt: timestamp("created_at").defaultNow(),
+});
+
+// New table for learning system
+export const userLearningData = pgTable("user_learning_data", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull(),
+  senderPattern: text("sender_pattern").notNull(),
+  subjectPattern: text("subject_pattern"),
+  bodyKeywords: text("body_keywords").array(),
+  userDecision: text("user_decision").notNull(), // "spam", "not_spam"
+  confidence: integer("confidence").default(50), // How confident the system is in this pattern
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -63,7 +77,17 @@ export const insertSpamEmailSchema = createInsertSchema(spamEmails).pick({
   hasUnsubscribeLink: true,
   unsubscribeUrl: true,
   isSelected: true,
+  userFeedback: true,
   receivedDate: true,
+});
+
+export const insertUserLearningDataSchema = createInsertSchema(userLearningData).pick({
+  userId: true,
+  senderPattern: true,
+  subjectPattern: true,
+  bodyKeywords: true,
+  userDecision: true,
+  confidence: true,
 });
 
 export type User = typeof users.$inferSelect;
@@ -72,3 +96,5 @@ export type EmailScan = typeof emailScans.$inferSelect;
 export type InsertEmailScan = z.infer<typeof insertEmailScanSchema>;
 export type SpamEmail = typeof spamEmails.$inferSelect;
 export type InsertSpamEmail = z.infer<typeof insertSpamEmailSchema>;
+export type UserLearningData = typeof userLearningData.$inferSelect;
+export type InsertUserLearningData = z.infer<typeof insertUserLearningDataSchema>;

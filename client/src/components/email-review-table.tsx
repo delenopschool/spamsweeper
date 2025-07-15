@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Eye, RotateCcw, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Eye, RotateCcw, Trash2, ChevronLeft, ChevronRight, Search, ThumbsUp, ThumbsDown } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 interface EmailReviewTableProps {
@@ -26,15 +27,27 @@ interface EmailReviewTableProps {
 export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }: EmailReviewTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectAll, setSelectAll] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const itemsPerPage = 10;
   
   const queryClient = useQueryClient();
-  const emails = scanData.emails || [];
+  
+  // Use search query or fall back to original emails
+  const { data: searchResults } = useQuery({
+    queryKey: ["/api/scan", scanData.scan.id, "search", searchQuery],
+    queryFn: async () => {
+      const response = await apiRequest("GET", `/api/scan/${scanData.scan.id}/search?q=${encodeURIComponent(searchQuery)}`);
+      return response.json();
+    },
+    enabled: !!scanData.scan.id,
+  });
+  
+  const emails = searchResults?.emails || scanData.emails || [];
   
   const totalPages = Math.ceil(emails.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentEmails = emails.slice(startIndex, startIndex + itemsPerPage);
-  const selectedCount = emails.filter(email => email.isSelected).length;
+  const selectedCount = emails.filter((email: any) => email.isSelected).length;
 
   const updateEmailMutation = useMutation({
     mutationFn: async ({ emailId, updates }: { emailId: number; updates: any }) => {
@@ -56,6 +69,10 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
 
   const handleSelectEmail = (emailId: number, isSelected: boolean) => {
     updateEmailMutation.mutate({ emailId, updates: { isSelected } });
+  };
+
+  const handleUserFeedback = (emailId: number, feedback: string) => {
+    updateEmailMutation.mutate({ emailId, updates: { userFeedback: feedback } });
   };
 
   const handleSelectAll = () => {
@@ -101,37 +118,51 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-      <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-        <div>
-          <h3 className="text-lg font-medium text-gray-900">AI Spam Classification Results</h3>
-          <p className="text-sm text-gray-600 mt-1">Review emails classified as spam by AI - uncheck any you want to keep</p>
+      <div className="px-6 py-4 border-b border-gray-200">
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h3 className="text-lg font-medium text-gray-900">AI Spam Classification Results</h3>
+            <p className="text-sm text-gray-600 mt-1">Review emails classified as spam by AI - uncheck any you want to keep</p>
+          </div>
+          <div className="flex items-center space-x-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleSelectAll}
+              className="text-primary hover:text-blue-700"
+            >
+              Select All
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleDeselectAll}
+              className="text-gray-600 hover:text-gray-800"
+            >
+              Deselect All
+            </Button>
+            <Button
+              className="btn-error flex items-center"
+              disabled={selectedCount === 0}
+            >
+              <Trash2 className="mr-1 h-4 w-4" />
+              Process Selected ({selectedCount})
+            </Button>
+          </div>
         </div>
-        <div className="flex items-center space-x-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleSelectAll}
-            className="text-primary hover:text-blue-700"
-          >
-            Select All
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleDeselectAll}
-            className="text-gray-600 hover:text-gray-800"
-          >
-            Deselect All
-          </Button>
-          <Button
-            className="btn-error flex items-center"
-            disabled={selectedCount === 0}
-          >
-            <Trash2 className="mr-1 h-4 w-4" />
-            Process Selected ({selectedCount})
-          </Button>
+        
+        {/* Search Bar */}
+        <div className="relative">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+          <Input
+            placeholder="Search emails by sender, subject, or content..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
         </div>
       </div>
+
       
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
@@ -147,7 +178,7 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AI Confidence</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unsubscribe</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feedback</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -208,22 +239,34 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onPreviewEmail(email.id)}
-                    className="text-primary hover:text-blue-700 mr-3"
-                  >
-                    <Eye className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleSelectEmail(email.id, false)}
-                    className="text-gray-400 hover:text-gray-600"
-                  >
-                    <RotateCcw className="h-4 w-4" />
-                  </Button>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onPreviewEmail(email.id)}
+                      className="text-primary hover:text-blue-700"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleUserFeedback(email.id, "spam")}
+                      className="text-red-500 hover:text-red-700"
+                      title="Mark as spam (helps AI learn)"
+                    >
+                      <ThumbsDown className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleUserFeedback(email.id, "not_spam")}
+                      className="text-green-500 hover:text-green-700"
+                      title="Mark as not spam (helps AI learn)"
+                    >
+                      <ThumbsUp className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}

@@ -1,6 +1,6 @@
-import { users, emailScans, spamEmails, type User, type InsertUser, type EmailScan, type InsertEmailScan, type SpamEmail, type InsertSpamEmail } from "@shared/schema";
+import { users, emailScans, spamEmails, userLearningData, type User, type InsertUser, type EmailScan, type InsertEmailScan, type SpamEmail, type InsertSpamEmail, type UserLearningData, type InsertUserLearningData } from "@shared/schema";
 import { db } from "./db";
-import { eq, inArray, desc } from "drizzle-orm";
+import { eq, inArray, desc, like, or, ilike } from "drizzle-orm";
 
 export interface IStorage {
   // User management
@@ -22,6 +22,12 @@ export interface IStorage {
   getSpamEmailsByScan(scanId: number): Promise<SpamEmail[]>;
   updateSpamEmail(id: number, updates: Partial<SpamEmail>): Promise<SpamEmail>;
   bulkUpdateSpamEmails(ids: number[], updates: Partial<SpamEmail>): Promise<void>;
+  searchSpamEmails(scanId: number, query: string): Promise<SpamEmail[]>;
+  
+  // User learning data management
+  createUserLearningData(data: InsertUserLearningData): Promise<UserLearningData>;
+  getUserLearningData(userId: number): Promise<UserLearningData[]>;
+  updateUserLearningData(id: number, updates: Partial<UserLearningData>): Promise<UserLearningData>;
 }
 
 export class MemStorage implements IStorage {
@@ -162,6 +168,39 @@ export class MemStorage implements IStorage {
       }
     }
   }
+
+  async searchSpamEmails(scanId: number, query: string): Promise<SpamEmail[]> {
+    const scanEmails = Array.from(this.spamEmails.values()).filter(email => email.scanId === scanId);
+    if (!query.trim()) return scanEmails;
+    
+    const lowerQuery = query.toLowerCase();
+    return scanEmails.filter(email => 
+      email.sender.toLowerCase().includes(lowerQuery) ||
+      email.subject.toLowerCase().includes(lowerQuery) ||
+      (email.body && email.body.toLowerCase().includes(lowerQuery))
+    );
+  }
+
+  async createUserLearningData(data: InsertUserLearningData): Promise<UserLearningData> {
+    // In-memory implementation - simplified for demo
+    const learningData: UserLearningData = {
+      id: Date.now(),
+      ...data,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    return learningData;
+  }
+
+  async getUserLearningData(userId: number): Promise<UserLearningData[]> {
+    // In-memory implementation - simplified for demo
+    return [];
+  }
+
+  async updateUserLearningData(id: number, updates: Partial<UserLearningData>): Promise<UserLearningData> {
+    // In-memory implementation - simplified for demo
+    throw new Error('Not implemented in memory storage');
+  }
 }
 
 // Database Storage Implementation
@@ -260,6 +299,49 @@ export class DatabaseStorage implements IStorage {
       .update(spamEmails)
       .set(updates)
       .where(inArray(spamEmails.id, ids));
+  }
+
+  async searchSpamEmails(scanId: number, query: string): Promise<SpamEmail[]> {
+    if (!query.trim()) {
+      return await db.select().from(spamEmails).where(eq(spamEmails.scanId, scanId));
+    }
+    
+    const lowerQuery = `%${query.toLowerCase()}%`;
+    return await db
+      .select()
+      .from(spamEmails)
+      .where(
+        or(
+          ilike(spamEmails.sender, lowerQuery),
+          ilike(spamEmails.subject, lowerQuery),
+          ilike(spamEmails.body, lowerQuery)
+        )
+      );
+  }
+
+  async createUserLearningData(data: InsertUserLearningData): Promise<UserLearningData> {
+    const [learningData] = await db
+      .insert(userLearningData)
+      .values(data)
+      .returning();
+    return learningData;
+  }
+
+  async getUserLearningData(userId: number): Promise<UserLearningData[]> {
+    return await db
+      .select()
+      .from(userLearningData)
+      .where(eq(userLearningData.userId, userId))
+      .orderBy(desc(userLearningData.updatedAt));
+  }
+
+  async updateUserLearningData(id: number, updates: Partial<UserLearningData>): Promise<UserLearningData> {
+    const [updated] = await db
+      .update(userLearningData)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(userLearningData.id, id))
+      .returning();
+    return updated;
   }
 }
 

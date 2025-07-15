@@ -196,13 +196,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Update email selection
+  // Update email selection and handle user feedback for learning
   app.patch("/api/email/:emailId", async (req, res) => {
     try {
       const emailId = parseInt(req.params.emailId);
-      const { isSelected } = req.body;
+      const { isSelected, userFeedback } = req.body;
       
-      const email = await storage.updateSpamEmail(emailId, { isSelected });
+      const email = await storage.updateSpamEmail(emailId, { isSelected, userFeedback });
+      
+      // If user provided feedback, update learning data
+      if (userFeedback && userFeedback !== "uncertain") {
+        const scan = await storage.getEmailScan(email.scanId);
+        if (scan) {
+          await storage.createUserLearningData({
+            userId: scan.userId,
+            senderPattern: email.sender,
+            subjectPattern: email.subject,
+            bodyKeywords: email.body ? email.body.toLowerCase().split(/\s+/).slice(0, 10) : [],
+            userDecision: userFeedback,
+            confidence: 75
+          });
+        }
+      }
+      
       res.json(email);
     } catch (error) {
       res.status(500).json({ message: "Failed to update email" });
@@ -218,6 +234,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true });
     } catch (error) {
       res.status(500).json({ message: "Failed to bulk update emails" });
+    }
+  });
+
+  // Search emails
+  app.get("/api/scan/:scanId/search", async (req, res) => {
+    try {
+      const scanId = parseInt(req.params.scanId);
+      const query = req.query.q as string || "";
+      
+      const emails = await storage.searchSpamEmails(scanId, query);
+      
+      res.json({
+        emails: emails.map(email => ({
+          id: email.id,
+          sender: email.sender,
+          subject: email.subject,
+          aiConfidence: email.aiConfidence,
+          hasUnsubscribeLink: email.hasUnsubscribeLink,
+          isSelected: email.isSelected,
+          userFeedback: email.userFeedback,
+          receivedDate: email.receivedDate
+        }))
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to search emails" });
+    }
+  });
+
+  // Get user learning data
+  app.get("/api/user/:userId/learning", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const learningData = await storage.getUserLearningData(userId);
+      
+      res.json({ learningData });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get learning data" });
     }
   });
 
