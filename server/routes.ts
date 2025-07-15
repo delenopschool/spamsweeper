@@ -183,8 +183,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/email/:emailId", async (req, res) => {
     try {
       const emailId = parseInt(req.params.emailId);
-      const emails = Array.from(storage.spamEmails.values());
-      const email = emails.find(e => e.id === emailId);
+      
+      // Get all spam emails and find the one with matching ID
+      const allScans = await storage.getEmailScansByUser(1); // We'll need to get this from session later
+      let email = null;
+      
+      for (const scan of allScans) {
+        const scanEmails = await storage.getSpamEmailsByScan(scan.id);
+        email = scanEmails.find(e => e.id === emailId);
+        if (email) break;
+      }
       
       if (!email) {
         return res.status(404).json({ message: "Email not found" });
@@ -192,6 +200,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json(email);
     } catch (error) {
+      console.error("Failed to get email details:", error);
       res.status(500).json({ message: "Failed to get email details" });
     }
   });
@@ -221,7 +230,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(email);
     } catch (error) {
+      console.error("Failed to update email:", error);
       res.status(500).json({ message: "Failed to update email" });
+    }
+  });
+
+  // Handle user feedback (thumbs up/down)
+  app.post("/api/email/:emailId/feedback", async (req, res) => {
+    try {
+      const emailId = parseInt(req.params.emailId);
+      const { feedback } = req.body; // "spam" or "not_spam"
+      
+      const email = await storage.updateSpamEmail(emailId, { 
+        userFeedback: feedback 
+      });
+      
+      // Save learning data
+      const scan = await storage.getEmailScan(email.scanId);
+      if (scan) {
+        await storage.createUserLearningData({
+          userId: scan.userId,
+          senderPattern: email.sender,
+          subjectPattern: email.subject,
+          bodyKeywords: email.body ? email.body.toLowerCase().split(/\s+/).slice(0, 10) : [],
+          userDecision: feedback,
+          confidence: 75
+        });
+      }
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to save feedback:", error);
+      res.status(500).json({ message: "Er ging iets mis bij het opslaan van je feedback" });
     }
   });
 
@@ -259,6 +299,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       res.status(500).json({ message: "Failed to search emails" });
+    }
+  });
+
+  // Process selected emails (unsubscribe)
+  app.post("/api/emails/process", async (req, res) => {
+    try {
+      const { scanId } = req.body;
+      
+      // Get all selected emails from the scan
+      const emails = await storage.getSpamEmailsByScan(scanId);
+      const selectedEmails = emails.filter(email => email.isSelected);
+      
+      if (selectedEmails.length === 0) {
+        return res.json({ message: "No emails selected for processing", processed: 0 });
+      }
+
+      // Process unsubscribe links
+      const results = await processUnsubscribes(selectedEmails);
+      
+      // Update the scan with processed count
+      await storage.updateEmailScan(scanId, {
+        processed: selectedEmails.length
+      });
+      
+      res.json({ 
+        message: `Processed ${selectedEmails.length} emails`, 
+        processed: selectedEmails.length,
+        results 
+      });
+    } catch (error) {
+      console.error("Failed to process emails:", error);
+      res.status(500).json({ message: "Failed to process selected emails" });
     }
   });
 

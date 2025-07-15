@@ -1,8 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { X, Shield, Link as LinkIcon } from "lucide-react";
+import { X, Shield, Link as LinkIcon, ThumbsUp, ThumbsDown } from "lucide-react";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface EmailPreviewModalProps {
   emailId: number | null;
@@ -11,9 +13,36 @@ interface EmailPreviewModalProps {
 }
 
 export default function EmailPreviewModal({ emailId, isOpen, onClose }: EmailPreviewModalProps) {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  
   const { data: email, isLoading } = useQuery({
     queryKey: ["/api/email", emailId],
     enabled: !!emailId && isOpen,
+  });
+
+  const feedbackMutation = useMutation({
+    mutationFn: async (feedback: "spam" | "not_spam") => {
+      return apiRequest(`/api/email/${emailId}/feedback`, {
+        method: "POST",
+        body: JSON.stringify({ feedback }),
+        headers: { "Content-Type": "application/json" }
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Feedback saved",
+        description: "Thank you for helping improve our AI!"
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/scan"] });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Er ging iets mis bij het opslaan van je feedback",
+        variant: "destructive"
+      });
+    }
   });
 
   if (!isOpen || !emailId) return null;
@@ -53,6 +82,9 @@ export default function EmailPreviewModal({ emailId, isOpen, onClose }: EmailPre
               <X className="h-4 w-4" />
             </Button>
           </DialogTitle>
+          <DialogDescription>
+            Review the email content and provide feedback to help improve our AI spam detection.
+          </DialogDescription>
         </DialogHeader>
         
         {isLoading ? (
@@ -100,25 +132,35 @@ export default function EmailPreviewModal({ emailId, isOpen, onClose }: EmailPre
               />
             </div>
 
-            {/* Actions */}
-            <div className="flex justify-end space-x-3 pt-4 border-t">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  // Handle mark as not spam
-                  onClose();
-                }}
-              >
-                Not Spam
-              </Button>
-              <Button
-                className="btn-error"
-                onClick={() => {
-                  // Handle confirm spam
-                  onClose();
-                }}
-              >
-                Confirm Spam
+            {/* Feedback Actions */}
+            <div className="flex justify-between items-center pt-4 border-t">
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-600">Is this spam?</span>
+                <div className="flex space-x-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => feedbackMutation.mutate("not_spam")}
+                    disabled={feedbackMutation.isPending}
+                    className="flex items-center space-x-1"
+                  >
+                    <ThumbsDown className="h-4 w-4" />
+                    <span>Not Spam</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => feedbackMutation.mutate("spam")}
+                    disabled={feedbackMutation.isPending}
+                    className="flex items-center space-x-1"
+                  >
+                    <ThumbsUp className="h-4 w-4" />
+                    <span>Is Spam</span>
+                  </Button>
+                </div>
+              </div>
+              <Button variant="outline" onClick={onClose}>
+                Close
               </Button>
             </div>
           </div>

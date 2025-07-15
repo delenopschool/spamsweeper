@@ -47,23 +47,48 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
   // User feedback mutation
   const userFeedbackMutation = useMutation({
     mutationFn: async ({ emailId, feedback }: { emailId: number; feedback: "spam" | "not_spam" }) => {
-      const response = await apiRequest("POST", `/api/spam-email/${emailId}/feedback`, {
-        userFeedback: feedback
+      return apiRequest(`/api/email/${emailId}/feedback`, {
+        method: "POST",
+        body: JSON.stringify({ feedback }),
+        headers: { "Content-Type": "application/json" }
       });
-      return response.json();
     },
     onSuccess: () => {
       toast({
         title: "Feedback opgeslagen",
         description: "Het systeem heeft jouw feedback ontvangen en leert hiervan!",
       });
-      // Refresh learning data
-      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      onRefresh();
     },
     onError: () => {
       toast({
         title: "Error",
         description: "Er ging iets mis bij het opslaan van je feedback.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Process selected emails mutation
+  const processSelectedMutation = useMutation({
+    mutationFn: async () => {
+      return apiRequest("/api/emails/process", {
+        method: "POST",
+        body: JSON.stringify({ scanId: scanData.scan.id }),
+        headers: { "Content-Type": "application/json" }
+      });
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "Emails processed",
+        description: `Successfully processed ${data.processed} emails with unsubscribe links.`,
+      });
+      onRefresh();
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to process selected emails.",
         variant: "destructive",
       });
     },
@@ -193,10 +218,11 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
             </Button>
             <Button
               className="btn-error flex items-center"
-              disabled={selectedCount === 0}
+              disabled={selectedCount === 0 || processSelectedMutation.isPending}
+              onClick={() => processSelectedMutation.mutate()}
             >
               <Trash2 className="mr-1 h-4 w-4" />
-              Process Selected ({selectedCount})
+              {processSelectedMutation.isPending ? "Processing..." : `Process Selected (${selectedCount})`}
             </Button>
           </div>
         </div>
