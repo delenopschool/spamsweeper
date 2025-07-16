@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Mail, Shield, Zap } from "lucide-react";
+import outlookIcon from "@/assets/outlook.png";
+import gmailIcon from "@/assets/gmail.png";
 
 // Outlook logo - eenvoudig en accuraat
 const OutlookIcon = () => (
@@ -102,7 +104,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <OutlookIcon />
+                  <img src={outlookIcon} alt="Smart Review" className="w-6 h-6" />
                   Connect Outlook
                 </>
               )}
@@ -120,7 +122,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <GmailIcon />
+                  <img src={gmailIcon} alt="Smart Review" className="w-6 h-6" />
                   Connect Gmail
                 </>
               )}
@@ -148,9 +150,9 @@ export default function Home() {
           <Card className="bg-card dark:bg-card border-border">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
-                <Shield className="w-6 h-6 text-primary" />
+                <Zap className="h-12 w-12 text-warning mx-auto mb-2" />
               </div>
-              <CardTitle className="text-xl text-center text-foreground">Safe Unsubscribe</CardTitle>
+              <CardTitle className="text-xl text-center text-foreground">Automatic Unsubscribe</CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
               <CardDescription className="text-center text-muted-foreground">
@@ -215,7 +217,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <OutlookIcon />
+                  <img src={outlookIcon} alt="Smart Review" className="w-6 h-6" />
                   Connect Outlook
                 </>
               )}
@@ -233,7 +235,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <GmailIcon />
+                  <img src={gmailIcon} alt="Smart Review" className="w-6 h-6" />
                   Connect Gmail
                 </>
               )}
