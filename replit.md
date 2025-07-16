@@ -119,6 +119,8 @@ The application follows a modern full-stack architecture with clear separation b
   - Fixed API request patterns throughout the frontend
   - Added proper accessibility descriptions to dialog modals
   - Updated all database connections and environment variable handling
+  - Fixed Google OAuth callback route - added missing `/auth/google/callback` GET route
+  - Updated feature card icon sizes on homepage as requested
 - **Gmail Integration (July 2025)**: Added full Gmail support alongside Microsoft Graph
   - Implemented Google OAuth authentication flow
   - Added Gmail API integration for spam email scanning

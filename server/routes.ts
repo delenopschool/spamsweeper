@@ -28,6 +28,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Google OAuth callback route
+  app.get("/auth/google/callback", async (req, res) => {
+    try {
+      const { code } = req.query;
+      
+      if (!code) {
+        return res.redirect("/?error=no_code");
+      }
+
+      const tokens = await gmailService.exchangeCodeForTokens(code as string);
+      const userProfile = await gmailService.getUserProfile(tokens.accessToken);
+      
+      let user = await storage.getUserByGoogleId(userProfile.id);
+      
+      if (!user) {
+        user = await storage.createUser({
+          email: userProfile.mail,
+          googleId: userProfile.id,
+          provider: 'google'
+        });
+      }
+
+      const tokenExpiry = new Date(Date.now() + tokens.expiresIn * 1000);
+      
+      await storage.updateUser(user.id, {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+        tokenExpiry
+      });
+
+      // Redirect to auth callback page with user ID
+      res.redirect(`/auth-callback?userId=${user.id}&provider=google`);
+    } catch (error) {
+      console.error("Google OAuth callback error:", error);
+      res.redirect("/?error=auth_failed");
+    }
+  });
+
   app.post("/api/auth/callback", async (req, res) => {
     try {
       const { code, provider } = req.body;
