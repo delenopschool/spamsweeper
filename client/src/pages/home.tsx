@@ -4,18 +4,26 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Mail, Shield, Zap } from "lucide-react";
-// Icons als SVG components
-const MicrosoftIcon = () => (
-  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z"/>
+
+// Outlook logo - eenvoudig en accuraat
+const OutlookIcon = () => (
+  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+    <rect x="2" y="4" width="20" height="16" rx="2" fill="#0078d4"/>
+    <circle cx="8" cy="12" r="4" fill="white"/>
+    <text x="8" y="15" textAnchor="middle" fill="#0078d4" fontSize="7" fontWeight="bold">O</text>
   </svg>
 );
 
+// Gmail logo - met juiste kleuren
 const GmailIcon = () => (
-  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="#ea4335">
-    <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.909 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
+  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+    <path d="M6 7l6 4 6-4v12H6z" fill="#ea4335"/>
+    <path d="M2 7l6 4v9H4c-1.1 0-2-.9-2-2V7z" fill="#4285f4"/>
+    <path d="M22 7v11c0 1.1-.9 2-2 2h-4v-9l6-4z" fill="#34a853"/>
+    <path d="M8 11l-6-4h20l-6 4-4-3-4 3z" fill="#fbbc04"/>
   </svg>
 );
+
 import logoUrl from "@/assets/spam-sweeper-logo.png";
 import smartReviewIcon from "@/assets/broom-svgrepo-com.png";
 import automaticUnsubscribeIcon from "@/assets/ai-svgrepo-com.png";
@@ -94,7 +102,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <MicrosoftIcon />
+                  <OutlookIcon />
                   Connect Outlook
                 </>
               )}
@@ -123,55 +131,114 @@ export default function Home() {
         {/* Features */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12 sm:mb-16">
           <Card className="bg-card dark:bg-card border-border">
-            <CardHeader className="text-center">
-              <img src={automaticUnsubscribeIcon} alt="Smart Review" className="h-12 w-12 mx-auto mb-2" />
-              <CardTitle className="text-foreground">AI Spam Detection</CardTitle>
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
+                <img src={smartReviewIcon} alt="Smart Review" className="w-6 h-6" />
+              </div>
+              <CardTitle className="text-xl text-center text-foreground">Smart Review</CardTitle>
             </CardHeader>
-            <CardContent>
-              <CardDescription className="text-muted-foreground">
-                Advanced AI analyzes your spam folder and identifies genuine spam with high accuracy, 
-                reducing false positives and protecting important emails.
+            <CardContent className="pt-0">
+              <CardDescription className="text-center text-muted-foreground">
+                AI automatically scans your spam folder and identifies emails with high confidence scores, 
+                making it easy to review and clean up your inbox.
               </CardDescription>
             </CardContent>
           </Card>
 
           <Card className="bg-card dark:bg-card border-border">
-            <CardHeader className="text-center">
-              <img src={smartReviewIcon} alt="Smart Review" className="h-12 w-12 mx-auto mb-2" />
-              <CardTitle className="text-foreground">Automatic Unsubscribe</CardTitle>
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
+                <Shield className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle className="text-xl text-center text-foreground">Safe Unsubscribe</CardTitle>
             </CardHeader>
-            <CardContent>
-              <CardDescription className="text-muted-foreground">
-                Automatically detects and processes unsubscribe links in spam emails, 
-                helping you get removed from unwanted mailing lists effortlessly.
+            <CardContent className="pt-0">
+              <CardDescription className="text-center text-muted-foreground">
+                Automatically finds and processes unsubscribe links from legitimate emails, 
+                helping you reduce future spam without compromising your email security.
               </CardDescription>
             </CardContent>
           </Card>
 
           <Card className="bg-card dark:bg-card border-border">
-            <CardHeader className="text-center">
-              <Zap className="h-12 w-12 text-warning mx-auto mb-2" />
-              <CardTitle className="text-foreground">Smart Review Process</CardTitle>
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
+                <img src={automaticUnsubscribeIcon} alt="AI Powered" className="w-6 h-6" />
+              </div>
+              <CardTitle className="text-xl text-center text-foreground">AI Powered</CardTitle>
             </CardHeader>
-            <CardContent>
-              <CardDescription className="text-muted-foreground">
-                Review AI classifications before processing, with confidence scores and 
-                detailed analysis to ensure important emails are never lost.
+            <CardContent className="pt-0">
+              <CardDescription className="text-center text-muted-foreground">
+                Uses advanced language models to understand email content and context, 
+                providing intelligent spam detection with detailed reasoning for each decision.
               </CardDescription>
             </CardContent>
           </Card>
         </div>
 
-        {/* Security Notice */}
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 text-center">
-          <Shield className="h-8 w-8 text-primary mx-auto mb-2" />
-          <h3 className="text-lg font-medium text-foreground mb-2">
-            Your Privacy is Protected
-          </h3>
-          <p className="text-muted-foreground">
-            We use Microsoft's official Graph API with secure OAuth 2.0 authentication. 
-            Your emails are processed securely and we never store your email content permanently.
-          </p>
+        {/* How it works */}
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-8">How it works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex flex-col items-center">
+              <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mb-4">1</div>
+              <h3 className="text-lg font-medium text-foreground mb-2">Connect Account</h3>
+              <p className="text-muted-foreground">Sign in with your email provider to grant secure access to your spam folder.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mb-4">2</div>
+              <h3 className="text-lg font-medium text-foreground mb-2">AI Analysis</h3>
+              <p className="text-muted-foreground">Our AI scans your spam emails and finds unsubscribe links automatically.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mb-4">3</div>
+              <h3 className="text-lg font-medium text-foreground mb-2">Clean Inbox</h3>
+              <p className="text-muted-foreground">Review results and process unsubscribes to reduce future spam.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Ready to clean up your inbox?</h2>
+          <p className="text-lg text-muted-foreground mb-8">Get started in seconds with your existing email account.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              onClick={handleMicrosoftAuth}
+              disabled={isAuthenticating}
+              className="bg-[#0078d4] hover:bg-[#106ebe] text-white border-0 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg shadow-lg transition-all duration-200"
+            >
+              {isAuthenticating && authProvider === "microsoft" ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Connecting...
+                </>
+              ) : (
+                <>
+                  <OutlookIcon />
+                  Connect Outlook
+                </>
+              )}
+            </Button>
+            
+            <Button 
+              onClick={handleGoogleAuth}
+              disabled={isAuthenticating}
+              className="bg-white hover:bg-gray-50 text-gray-800 border-2 border-gray-300 hover:border-gray-400 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg shadow-lg transition-all duration-200"
+            >
+              {isAuthenticating && authProvider === "google" ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#ea4335] mr-2"></div>
+                  Connecting...
+                </>
+              ) : (
+                <>
+                  <GmailIcon />
+                  Connect Gmail
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
