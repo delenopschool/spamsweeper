@@ -23,49 +23,57 @@ const StatusCards = React.memo(function StatusCards({ scanData }: StatusCardsPro
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-      <Card className="bg-card dark:bg-card border-border">
+      <Card className="bg-card dark:bg-card border-border hover:shadow-lg transition-all duration-300 animate-fade-in">
         <CardContent className="p-4 sm:p-6">
           <div className="flex items-center">
-            <Mail className="text-primary text-xl sm:text-2xl mr-3 flex-shrink-0" />
+            <Mail className="text-blue-600 dark:text-blue-400 text-xl sm:text-2xl mr-3 flex-shrink-0 animate-float" />
             <div className="min-w-0">
               <p className="text-sm font-medium text-muted-foreground">Total Emails Scanned</p>
-              <p className="text-xl sm:text-2xl font-semibold text-foreground">{stats.totalScanned.toLocaleString()}</p>
+              <p className="text-xl sm:text-2xl font-semibold text-foreground transition-all duration-300">
+                {stats.totalScanned.toLocaleString()}
+              </p>
             </div>
           </div>
         </CardContent>
       </Card>
       
-      <Card className="bg-card dark:bg-card border-border">
+      <Card className="bg-card dark:bg-card border-border hover:shadow-lg transition-all duration-300 animate-fade-in" style={{ animationDelay: '0.1s' }}>
         <CardContent className="p-4 sm:p-6">
           <div className="flex items-center">
-            <AlertTriangle className="text-error text-xl sm:text-2xl mr-3 flex-shrink-0" />
+            <AlertTriangle className="text-red-600 dark:text-red-400 text-xl sm:text-2xl mr-3 flex-shrink-0 animate-float" style={{ animationDelay: '0.5s' }} />
             <div className="min-w-0">
               <p className="text-sm font-medium text-muted-foreground">AI Detected Spam</p>
-              <p className="text-xl sm:text-2xl font-semibold text-foreground">{stats.detectedSpam.toLocaleString()}</p>
+              <p className="text-xl sm:text-2xl font-semibold text-foreground transition-all duration-300">
+                {stats.detectedSpam.toLocaleString()}
+              </p>
             </div>
           </div>
         </CardContent>
       </Card>
       
-      <Card className="bg-card dark:bg-card border-border">
+      <Card className="bg-card dark:bg-card border-border hover:shadow-lg transition-all duration-300 animate-fade-in" style={{ animationDelay: '0.2s' }}>
         <CardContent className="p-4 sm:p-6">
           <div className="flex items-center">
-            <Link2Off className="text-warning text-xl sm:text-2xl mr-3 flex-shrink-0" />
+            <Link2Off className="text-amber-600 dark:text-amber-400 text-xl sm:text-2xl mr-3 flex-shrink-0 animate-float" style={{ animationDelay: '1s' }} />
             <div className="min-w-0">
               <p className="text-sm font-medium text-muted-foreground">Unsubscribe Links</p>
-              <p className="text-xl sm:text-2xl font-semibold text-foreground">{stats.unsubscribeLinks.toLocaleString()}</p>
+              <p className="text-xl sm:text-2xl font-semibold text-foreground transition-all duration-300">
+                {stats.unsubscribeLinks.toLocaleString()}
+              </p>
             </div>
           </div>
         </CardContent>
       </Card>
       
-      <Card className="bg-card dark:bg-card border-border">
+      <Card className="bg-card dark:bg-card border-border hover:shadow-lg transition-all duration-300 animate-fade-in" style={{ animationDelay: '0.3s' }}>
         <CardContent className="p-4 sm:p-6">
           <div className="flex items-center">
-            <CheckCircle className="text-success text-xl sm:text-2xl mr-3 flex-shrink-0" />
+            <CheckCircle className="text-green-600 dark:text-green-400 text-xl sm:text-2xl mr-3 flex-shrink-0 animate-float" style={{ animationDelay: '1.5s' }} />
             <div className="min-w-0">
               <p className="text-sm font-medium text-muted-foreground">Successfully Processed</p>
-              <p className="text-xl sm:text-2xl font-semibold text-foreground">{stats.processed.toLocaleString()}</p>
+              <p className={`text-xl sm:text-2xl font-semibold text-foreground transition-all duration-300 ${stats.processed > 0 ? 'animate-pulse-success' : ''}`}>
+                {stats.processed.toLocaleString()}
+              </p>
             </div>
           </div>
         </CardContent>

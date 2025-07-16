@@ -50,22 +50,22 @@ export default function ProcessingModal({ isOpen, onClose, emailCount }: Process
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 animate-scale-in">
+        <DialogHeader className="animate-slide-in">
           <DialogTitle className="flex items-center justify-center">
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
-              <RotateCw className={`text-primary text-2xl ${isProcessing ? 'animate-spin' : ''}`} />
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 mb-4 animate-bounce-in">
+              <RotateCw className={`text-blue-600 dark:text-blue-400 text-2xl ${isProcessing ? 'animate-spin' : ''}`} />
             </div>
           </DialogTitle>
         </DialogHeader>
         
-        <div className="text-center">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+        <div className="text-center animate-fade-in">
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-2">
             {isProcessing ? 'Processing Unsubscribes' : 'Processing Complete'}
           </h3>
           
           <div className="mt-2 px-7 py-3">
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
               {isProcessing 
                 ? 'Automatically unsubscribing from selected spam emails...'
                 : 'All unsubscribe requests have been processed!'
@@ -73,10 +73,10 @@ export default function ProcessingModal({ isOpen, onClose, emailCount }: Process
             </p>
             
             <div className="w-full mb-4">
-              <Progress value={progress} className="w-full" />
+              <Progress value={progress} className="w-full h-2 bg-gray-200 dark:bg-gray-700" />
             </div>
             
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-400 dark:text-gray-500">
               {isProcessing 
                 ? `Processing ${currentEmail} of ${emailCount} emails`
                 : `Completed ${emailCount} unsubscribe requests`
@@ -89,14 +89,14 @@ export default function ProcessingModal({ isOpen, onClose, emailCount }: Process
               <Button
                 variant="outline"
                 onClick={handleCancel}
-                className="w-full"
+                className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 Cancel Processing
               </Button>
             ) : (
               <Button
                 onClick={onClose}
-                className="btn-success w-full"
+                className="btn-success w-full transition-all duration-300 hover:scale-105"
               >
                 Close
               </Button>

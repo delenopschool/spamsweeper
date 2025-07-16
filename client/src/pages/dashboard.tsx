@@ -151,25 +151,25 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background transition-colors duration-300">
       {/* Navigation */}
-      <nav className="bg-card shadow-sm border-b border-border">
+      <nav className="bg-card shadow-sm border-b border-border animate-slide-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-10 w-10 sm:h-12 sm:w-12 mr-3 rounded-lg" style={{ borderRadius: '7px' }} />
+              <img src={logoUrl} alt="Spam Sweeper Logo" className="h-10 w-10 sm:h-12 sm:w-12 mr-3 rounded-lg animate-bounce-in" style={{ borderRadius: '7px' }} />
               <h1 className="text-lg sm:text-xl font-medium text-foreground">Spam Sweeper</h1>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="hidden sm:flex items-center text-sm text-muted-foreground">
-                <UserRound className="text-success text-lg mr-1" />
+                <UserRound className="text-success text-lg mr-1 animate-pulse" />
                 <span className="truncate max-w-32 lg:max-w-none">{user.email}</span>
               </div>
               <ThemeToggle />
               <Button 
                 onClick={handleSignOut}
                 variant="outline"
-                className="flex items-center"
+                className="flex items-center transition-all duration-300 hover:scale-105"
                 size="sm"
               >
                 <LogOut className="mr-1 h-4 w-4" />
@@ -182,7 +182,7 @@ export default function Dashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Dashboard Header */}
-        <div className="mb-6 sm:mb-8">
+        <div className="mb-6 sm:mb-8 animate-fade-in">
           <h2 className="text-xl sm:text-2xl font-medium text-foreground mb-2">Email Spam Management</h2>
           <p className="text-muted-foreground">Review AI-classified spam emails and manage your subscriptions automatically</p>
         </div>
@@ -194,7 +194,7 @@ export default function Dashboard() {
         <LearningDashboard userId={userId} />
 
         {/* Action Panel */}
-        <div className="bg-card rounded-lg shadow-sm border border-border mb-6 sm:mb-8">
+        <div className="bg-card rounded-lg shadow-sm border border-border mb-6 sm:mb-8 animate-fade-in">
           <div className="px-4 sm:px-6 py-4 border-b border-border">
             <h3 className="text-lg font-medium text-foreground">Quick Actions</h3>
           </div>
@@ -202,16 +202,24 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Button 
                 onClick={handleScanEmails}
-                className="btn-primary flex items-center justify-center px-4 py-3"
+                className={`btn-primary flex items-center justify-center px-4 py-3 transition-all duration-300 ${
+                  isScanning 
+                    ? 'cursor-not-allowed opacity-50' 
+                    : 'hover:scale-105 animate-glow'
+                }`}
                 disabled={isScanning}
               >
-                <WashingMachine className="mr-2" />
+                <WashingMachine className={`mr-2 ${isScanning ? 'animate-spin' : ''}`} />
                 {isScanning ? 'AI Processing...' : 'Scan Spam Folder'}
               </Button>
               
               <Button 
                 onClick={handleRefresh}
-                className="btn-success flex items-center justify-center px-4 py-3"
+                className={`btn-success flex items-center justify-center px-4 py-3 transition-all duration-300 ${
+                  !currentScanId 
+                    ? 'cursor-not-allowed opacity-50' 
+                    : 'hover:scale-105 animate-glow'
+                }`}
                 disabled={!currentScanId}
               >
                 <UserRound className="mr-2" />
@@ -220,7 +228,11 @@ export default function Dashboard() {
               
               <Button 
                 onClick={handleProcessUnsubscribes}
-                className="btn-warning flex items-center justify-center px-4 py-3"
+                className={`btn-warning flex items-center justify-center px-4 py-3 transition-all duration-300 ${
+                  !scanData?.emails?.some((email: any) => email.isSelected && email.hasUnsubscribeLink)
+                    ? 'cursor-not-allowed opacity-50' 
+                    : 'hover:scale-105 animate-glow'
+                }`}
                 disabled={!scanData?.emails?.some((email: any) => email.isSelected && email.hasUnsubscribeLink)}
               >
                 <LogOut className="mr-2" />
