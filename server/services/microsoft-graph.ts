@@ -94,13 +94,8 @@ export class MicrosoftGraphService {
   }
 
   private getRedirectUri(): string {
-    // Use Replit domain if available, otherwise localhost for development
-    const domain = process.env.REPLIT_DOMAINS;
-    
-    if (domain) {
-      return `https://${domain}/auth/callback`;
-    }
-    return 'http://localhost:5000/auth/callback';
+    // For production deployment, use the Render URL
+    return 'https://spamsweeper.onrender.com/auth/callback';
   }
 
   getAuthUrl(): string {

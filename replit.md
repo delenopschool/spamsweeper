@@ -125,5 +125,7 @@ The application follows a modern full-stack architecture with clear separation b
   - Updated database schema to support multiple email providers
   - Modified frontend to offer both Gmail and Outlook connection options
   - Enhanced backend to handle both Microsoft Graph and Gmail APIs
+  - Fixed OAuth redirect URI configuration for production deployment on Render
+  - Both services now use correct Render URLs: spamsweeper.onrender.com
 
 The application is designed to be easily deployable to platforms like Render, Vercel, or similar services with minimal configuration changes.

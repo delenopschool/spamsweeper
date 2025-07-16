@@ -18,13 +18,8 @@ export interface GmailEmail {
 
 export class GmailService {
   private getRedirectUri(): string {
-    // Use Replit domain if available, otherwise localhost for development
-    const domain = process.env.REPLIT_DOMAINS;
-    
-    if (domain) {
-      return `https://${domain}/auth/google/callback`;
-    }
-    return 'http://localhost:5000/auth/google/callback';
+    // For production deployment, use the Render URL
+    return 'https://spamsweeper.onrender.com/auth/google/callback';
   }
 
   private getClient(accessToken: string) {
