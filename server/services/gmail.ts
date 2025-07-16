@@ -17,13 +17,21 @@ export interface GmailEmail {
 }
 
 export class GmailService {
+  private getRedirectUri(): string {
+    // Use Replit domain if available, otherwise localhost for development
+    const domain = process.env.REPLIT_DOMAINS;
+    
+    if (domain) {
+      return `https://${domain}/auth/google/callback`;
+    }
+    return 'http://localhost:5000/auth/google/callback';
+  }
+
   private getClient(accessToken: string) {
     const oauth2Client = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,
       process.env.GOOGLE_CLIENT_SECRET,
-      process.env.NODE_ENV === 'production' 
-        ? `https://${process.env.REPLIT_DOMAINS}/auth/google/callback`
-        : 'http://localhost:5000/auth/google/callback'
+      this.getRedirectUri()
     );
     
     oauth2Client.setCredentials({ access_token: accessToken });
@@ -132,9 +140,7 @@ export class GmailService {
       const oauth2Client = new google.auth.OAuth2(
         process.env.GOOGLE_CLIENT_ID,
         process.env.GOOGLE_CLIENT_SECRET,
-        process.env.NODE_ENV === 'production' 
-          ? `https://${process.env.REPLIT_DOMAINS}/auth/google/callback`
-          : 'http://localhost:5000/auth/google/callback'
+        this.getRedirectUri()
       );
 
       oauth2Client.setCredentials({ refresh_token: refreshToken });
@@ -153,12 +159,13 @@ export class GmailService {
   }
 
   getAuthUrl(): string {
+    const redirectUri = this.getRedirectUri();
+    console.log(`🔐 [Gmail Auth] Using redirect URI: ${redirectUri}`);
+    
     const oauth2Client = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,
       process.env.GOOGLE_CLIENT_SECRET,
-      process.env.NODE_ENV === 'production' 
-        ? `https://${process.env.REPLIT_DOMAINS}/auth/google/callback`
-        : 'http://localhost:5000/auth/google/callback'
+      redirectUri
     );
 
     return oauth2Client.generateAuthUrl({
@@ -177,9 +184,7 @@ export class GmailService {
       const oauth2Client = new google.auth.OAuth2(
         process.env.GOOGLE_CLIENT_ID,
         process.env.GOOGLE_CLIENT_SECRET,
-        process.env.NODE_ENV === 'production' 
-          ? `https://${process.env.REPLIT_DOMAINS}/auth/google/callback`
-          : 'http://localhost:5000/auth/google/callback'
+        this.getRedirectUri()
       );
 
       const { tokens } = await oauth2Client.getToken(code);

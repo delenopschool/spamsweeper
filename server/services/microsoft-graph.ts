@@ -93,20 +93,19 @@ export class MicrosoftGraphService {
     };
   }
 
+  private getRedirectUri(): string {
+    // Use Replit domain if available, otherwise localhost for development
+    const domain = process.env.REPLIT_DOMAINS;
+    
+    if (domain) {
+      return `https://${domain}/auth/callback`;
+    }
+    return 'http://localhost:5000/auth/callback';
+  }
+
   getAuthUrl(): string {
     const clientId = process.env.MICROSOFT_CLIENT_ID;
-    
-    // Auto-detect the redirect URI based on environment
-    let redirectUri = process.env.MICROSOFT_REDIRECT_URI;
-    if (!redirectUri) {
-      if (process.env.NODE_ENV === 'development') {
-        redirectUri = 'http://localhost:5000/auth/callback';
-      } else if (process.env.RENDER_EXTERNAL_URL) {
-        redirectUri = `${process.env.RENDER_EXTERNAL_URL}/auth/callback`;
-      } else {
-        redirectUri = 'https://spamsweeper.onrender.com/auth/callback';
-      }
-    }
+    const redirectUri = this.getRedirectUri();
     
     console.log(`🔐 [Auth] Using redirect URI: ${redirectUri}`);
     
@@ -128,18 +127,7 @@ export class MicrosoftGraphService {
   async exchangeCodeForTokens(code: string): Promise<{ accessToken: string; refreshToken: string; expiresIn: number }> {
     const clientId = process.env.MICROSOFT_CLIENT_ID;
     const clientSecret = process.env.MICROSOFT_CLIENT_SECRET;
-    
-    // Auto-detect the redirect URI based on environment
-    let redirectUri = process.env.MICROSOFT_REDIRECT_URI;
-    if (!redirectUri) {
-      if (process.env.NODE_ENV === 'development') {
-        redirectUri = 'http://localhost:5000/auth/callback';
-      } else if (process.env.RENDER_EXTERNAL_URL) {
-        redirectUri = `${process.env.RENDER_EXTERNAL_URL}/auth/callback`;
-      } else {
-        redirectUri = 'https://spamsweeper.onrender.com/auth/callback';
-      }
-    }
+    const redirectUri = this.getRedirectUri();
     
     console.log(`🔐 [Auth] Exchanging code with redirect URI: ${redirectUri}`);
     
