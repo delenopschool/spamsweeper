@@ -135,7 +135,7 @@ export default function Home() {
           <Card className="bg-card dark:bg-card border-border">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
-                <img src={smartReviewIcon} alt="Smart Review" className="w-6 h-6" />
+                <img src={smartReviewIcon} alt="Smart Review" className="w-8 h-8" />
               </div>
               <CardTitle className="text-xl text-center text-foreground">Smart Review</CardTitle>
             </CardHeader>
@@ -150,7 +150,7 @@ export default function Home() {
           <Card className="bg-card dark:bg-card border-border">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
-                <Zap className="h-12 w-12 text-warning mx-auto mb-2" />
+                <Zap className="h-8 w-8 text-warning" />
               </div>
               <CardTitle className="text-xl text-center text-foreground">Automatic Unsubscribe</CardTitle>
             </CardHeader>
@@ -165,7 +165,7 @@ export default function Home() {
           <Card className="bg-card dark:bg-card border-border">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
-                <img src={automaticUnsubscribeIcon} alt="AI Powered" className="w-6 h-6" />
+                <img src={automaticUnsubscribeIcon} alt="AI Powered" className="w-8 h-8" />
               </div>
               <CardTitle className="text-xl text-center text-foreground">AI Powered</CardTitle>
             </CardHeader>
