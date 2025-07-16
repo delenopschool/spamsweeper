@@ -165,7 +165,7 @@ export default function Home() {
           <Card className="bg-card dark:bg-card border-border">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
-                <img src={automaticUnsubscribeIcon} alt="AI Powered" className="w-14 h-14" />
+                <img src={automaticUnsubscribeIcon} alt="AI Powered" className="w-1/15 h-1/15" />
               </div>
               <CardTitle className="text-xl text-center text-foreground">AI Powered</CardTitle>
             </CardHeader>
