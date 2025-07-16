@@ -14,6 +14,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/auth/callback" component={AuthCallback} />
+      <Route path="/auth-callback" component={AuthCallback} />
       <Route path="/dashboard/:userId" component={Dashboard} />
       <Route component={NotFound} />
     </Switch>

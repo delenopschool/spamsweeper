@@ -13,27 +13,41 @@ export default function AuthCallback() {
     const processCallback = async () => {
       try {
         const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId');
+        const provider = urlParams.get('provider');
         const code = urlParams.get('code');
         const error = urlParams.get('error');
-        const state = urlParams.get('state');
 
         if (error) {
           throw new Error(`Authentication error: ${error}`);
         }
 
+        // If we have userId and provider, authentication was already processed
+        if (userId && provider) {
+          setStatus('success');
+          setMessage('Authentication successful! Redirecting to dashboard...');
+
+          // Redirect to dashboard after a short delay
+          setTimeout(() => {
+            setLocation(`/dashboard/${userId}`);
+          }, 1500);
+          return;
+        }
+
+        // Legacy code handling (for Microsoft OAuth which still uses code flow)
         if (!code) {
-          throw new Error('No authorization code received');
+          throw new Error('No authorization code or user ID received');
         }
 
         // Determine provider based on URL or state parameter
-        let provider = 'microsoft'; // default
-        if (window.location.pathname.includes('/auth/google/callback') || state?.includes('google')) {
-          provider = 'google';
+        let authProvider = 'microsoft'; // default
+        if (window.location.pathname.includes('/auth/google/callback')) {
+          authProvider = 'google';
         }
 
         setMessage('Exchanging authorization code...');
         
-        const response = await apiRequest("POST", "/api/auth/callback", { code, provider });
+        const response = await apiRequest("POST", "/api/auth/callback", { code, provider: authProvider });
         const data = await response.json();
 
         setStatus('success');
