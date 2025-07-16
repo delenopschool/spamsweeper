@@ -11,10 +11,12 @@ import { apiRequest } from "@/lib/queryClient";
 
 export default function Home() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [authProvider, setAuthProvider] = useState<string>("");
 
   const handleMicrosoftAuth = async () => {
     try {
       setIsAuthenticating(true);
+      setAuthProvider("microsoft");
       const response = await apiRequest("GET", "/api/auth/microsoft");
       const data = await response.json();
       
@@ -22,6 +24,22 @@ export default function Home() {
     } catch (error) {
       console.error("Authentication error:", error);
       setIsAuthenticating(false);
+      setAuthProvider("");
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    try {
+      setIsAuthenticating(true);
+      setAuthProvider("google");
+      const response = await apiRequest("GET", "/api/auth/google");
+      const data = await response.json();
+      
+      window.location.href = data.authUrl;
+    } catch (error) {
+      console.error("Authentication error:", error);
+      setIsAuthenticating(false);
+      setAuthProvider("");
     }
   };
 
@@ -47,27 +65,48 @@ export default function Home() {
             AI-Powered Email Spam Management
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto px-4">
-            Connect your Outlook account and let AI automatically identify spam emails, 
+            Connect your email account and let AI automatically identify spam emails, 
             find unsubscribe links, and clean up your inbox with intelligent automation.
           </p>
           
-          <Button 
-            onClick={handleMicrosoftAuth}
-            disabled={isAuthenticating}
-            className="btn-primary px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg"
-          >
-            {isAuthenticating ? (
-              <>
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                Connecting...
-              </>
-            ) : (
-              <>
-                <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                Connect Outlook Account
-              </>
-            )}
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              onClick={handleMicrosoftAuth}
+              disabled={isAuthenticating}
+              className="btn-primary px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg"
+            >
+              {isAuthenticating && authProvider === "microsoft" ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Connecting...
+                </>
+              ) : (
+                <>
+                  <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  Connect Outlook
+                </>
+              )}
+            </Button>
+            
+            <Button 
+              onClick={handleGoogleAuth}
+              disabled={isAuthenticating}
+              variant="outline"
+              className="px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg"
+            >
+              {isAuthenticating && authProvider === "google" ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary mr-2"></div>
+                  Connecting...
+                </>
+              ) : (
+                <>
+                  <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  Connect Gmail
+                </>
+              )}
+            </Button>
+          </div>
         </div>
 
         {/* Features */}

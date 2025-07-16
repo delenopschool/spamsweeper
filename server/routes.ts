@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { microsoftGraphService } from "./services/microsoft-graph";
+import { gmailService } from "./services/gmail";
 import { openaiClassifierService } from "./services/openai-classifier";
 import { emailParserService } from "./services/email-parser";
 import { insertUserSchema, insertEmailScanSchema } from "@shared/schema";
@@ -17,24 +18,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Google OAuth routes
+  app.get("/api/auth/google", async (req, res) => {
+    try {
+      const authUrl = gmailService.getAuthUrl();
+      res.json({ authUrl });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate auth URL" });
+    }
+  });
+
   app.post("/api/auth/callback", async (req, res) => {
     try {
-      const { code } = req.body;
+      const { code, provider } = req.body;
       
       if (!code) {
         return res.status(400).json({ message: "Authorization code required" });
       }
 
-      const tokens = await microsoftGraphService.exchangeCodeForTokens(code);
-      const userProfile = await microsoftGraphService.getUserProfile(tokens.accessToken);
+      if (!provider || !['microsoft', 'google'].includes(provider)) {
+        return res.status(400).json({ message: "Valid provider required (microsoft or google)" });
+      }
 
-      let user = await storage.getUserByEmail(userProfile.mail || userProfile.userPrincipalName);
-      
-      if (!user) {
-        user = await storage.createUser({
-          email: userProfile.mail || userProfile.userPrincipalName,
-          microsoftId: userProfile.id
-        });
+      let tokens, userProfile, user;
+
+      if (provider === 'microsoft') {
+        tokens = await microsoftGraphService.exchangeCodeForTokens(code);
+        userProfile = await microsoftGraphService.getUserProfile(tokens.accessToken);
+        
+        user = await storage.getUserByMicrosoftId(userProfile.id);
+        
+        if (!user) {
+          user = await storage.createUser({
+            email: userProfile.mail || userProfile.userPrincipalName,
+            microsoftId: userProfile.id,
+            provider: 'microsoft'
+          });
+        }
+      } else if (provider === 'google') {
+        tokens = await gmailService.exchangeCodeForTokens(code);
+        userProfile = await gmailService.getUserProfile(tokens.accessToken);
+        
+        user = await storage.getUserByGoogleId(userProfile.id);
+        
+        if (!user) {
+          user = await storage.createUser({
+            email: userProfile.mail,
+            googleId: userProfile.id,
+            provider: 'google'
+          });
+        }
       }
 
       const tokenExpiry = new Date(Date.now() + tokens.expiresIn * 1000);
@@ -45,7 +78,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         tokenExpiry
       });
 
-      res.json({ user: { id: user.id, email: user.email } });
+      res.json({ user: { id: user.id, email: user.email, provider: user.provider } });
     } catch (error) {
       console.error("OAuth callback error:", error);
       res.status(500).json({ message: "Authentication failed" });
@@ -82,7 +115,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log("Creating test user for development");
         user = await storage.createUser({
           email: "test@example.com",
-          microsoftId: "test_id"
+          microsoftId: "test_id",
+          provider: "microsoft"
         });
         user = await storage.updateUser(user.id, {
           accessToken: "test_token",
@@ -111,7 +145,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Start background processing
-      processEmailScan(scan.id, user.accessToken).catch(console.error);
+      processEmailScan(scan.id, user.accessToken, user.provider).catch(console.error);
 
       res.json({ scanId: scan.id });
     } catch (error) {
@@ -367,15 +401,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
 }
 
 // Background processing functions
-async function processEmailScan(scanId: number, accessToken: string) {
+async function processEmailScan(scanId: number, accessToken: string, provider: string) {
   const scanStartTime = Date.now();
   try {
-    console.log(`🚀 [Scan] Starting email scan for scanId: ${scanId} at ${new Date().toISOString()}`);
+    console.log(`🚀 [Scan] Starting email scan for scanId: ${scanId} with provider: ${provider} at ${new Date().toISOString()}`);
     
     const fetchStartTime = Date.now();
-    const emails = await microsoftGraphService.getSpamEmails(accessToken);
+    let emails;
+    
+    if (provider === 'microsoft') {
+      emails = await microsoftGraphService.getSpamEmails(accessToken);
+    } else if (provider === 'google') {
+      emails = await gmailService.getSpamEmails(accessToken);
+    } else {
+      throw new Error(`Unsupported provider: ${provider}`);
+    }
+    
     const fetchTime = Date.now() - fetchStartTime;
-    console.log(`📧 [Scan] Fetched ${emails.length} emails from spam folder in ${fetchTime}ms`);
+    console.log(`📧 [Scan] Fetched ${emails.length} emails from ${provider} spam folder in ${fetchTime}ms`);
     
     await storage.updateEmailScan(scanId, {
       totalScanned: emails.length,

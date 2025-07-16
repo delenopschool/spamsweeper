@@ -5,7 +5,9 @@ import { z } from "zod";
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
-  microsoftId: text("microsoft_id").notNull().unique(),
+  microsoftId: text("microsoft_id").unique(),
+  googleId: text("google_id").unique(),
+  provider: text("provider").notNull(), // "microsoft" or "google"
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
   tokenExpiry: timestamp("token_expiry"),
@@ -56,6 +58,8 @@ export const userLearningData = pgTable("user_learning_data", {
 export const insertUserSchema = createInsertSchema(users).pick({
   email: true,
   microsoftId: true,
+  googleId: true,
+  provider: true,
 });
 
 export const insertEmailScanSchema = createInsertSchema(emailScans).pick({

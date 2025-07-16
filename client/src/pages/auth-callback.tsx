@@ -15,6 +15,7 @@ export default function AuthCallback() {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         const error = urlParams.get('error');
+        const state = urlParams.get('state');
 
         if (error) {
           throw new Error(`Authentication error: ${error}`);
@@ -24,9 +25,15 @@ export default function AuthCallback() {
           throw new Error('No authorization code received');
         }
 
+        // Determine provider based on URL or state parameter
+        let provider = 'microsoft'; // default
+        if (window.location.pathname.includes('/auth/google/callback') || state?.includes('google')) {
+          provider = 'google';
+        }
+
         setMessage('Exchanging authorization code...');
         
-        const response = await apiRequest("POST", "/api/auth/callback", { code });
+        const response = await apiRequest("POST", "/api/auth/callback", { code, provider });
         const data = await response.json();
 
         setStatus('success');

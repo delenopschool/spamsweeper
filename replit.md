@@ -119,5 +119,11 @@ The application follows a modern full-stack architecture with clear separation b
   - Fixed API request patterns throughout the frontend
   - Added proper accessibility descriptions to dialog modals
   - Updated all database connections and environment variable handling
+- **Gmail Integration (July 2025)**: Added full Gmail support alongside Microsoft Graph
+  - Implemented Google OAuth authentication flow
+  - Added Gmail API integration for spam email scanning
+  - Updated database schema to support multiple email providers
+  - Modified frontend to offer both Gmail and Outlook connection options
+  - Enhanced backend to handle both Microsoft Graph and Gmail APIs
 
 The application is designed to be easily deployable to platforms like Render, Vercel, or similar services with minimal configuration changes.
