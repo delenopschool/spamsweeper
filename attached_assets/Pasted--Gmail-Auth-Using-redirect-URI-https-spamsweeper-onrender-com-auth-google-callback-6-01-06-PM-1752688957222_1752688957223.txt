@@ -1,0 +1,190 @@
+🔐 [Gmail Auth] Using redirect URI: https://spamsweeper.onrender.com/auth/google/callback
+6:01:06 PM [express] GET /api/auth/google 304 in 3ms :: {"authUrl":"https://accounts.google.com/o/oa…
+Error getting Gmail profile: GaxiosError: Precondition check failed.
+    at Gaxios._request (/opt/render/project/src/node_modules/gaxios/build/cjs/src/gaxios.js:154:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async OAuth2Client.requestAsync (/opt/render/project/src/node_modules/google-auth-library/build/src/auth/oauth2client.js:463:20)
+    at async createAPIRequestAsync (/opt/render/project/src/node_modules/googleapis-common/build/src/apirequest.js:308:25)
+    at async GmailService.getUserProfile (file:///opt/render/project/src/dist/index.js:360:24)
+    at async file:///opt/render/project/src/dist/index.js:1011:27 {
+  config: {
+    url: URL {
+      href: 'https://gmail.googleapis.com/gmail/v1/users/me/profile',
+      origin: 'https://gmail.googleapis.com',
+      protocol: 'https:',
+      username: '',
+      password: '',
+      host: 'gmail.googleapis.com',
+      hostname: 'gmail.googleapis.com',
+      port: '',
+      pathname: '/gmail/v1/users/me/profile',
+      search: '',
+      searchParams: URLSearchParams {},
+      hash: ''
+    },
+    method: 'GET',
+    apiVersion: '',
+    userAgentDirectives: [ [Object] ],
+    headers: Headers {
+      'accept-encoding': 'gzip',
+      authorization: '<<REDACTED> - See `errorRedactor` option in `gaxios` for configuration>.',
+      'user-agent': 'google-api-nodejs-client/8.0.0 (gzip)',
+      'x-goog-api-client': 'gdcl/8.0.0 gl-node/22.16.0'
+    },
+    validateStatus: [Function (anonymous)],
+    retry: true,
+    responseType: 'unknown',
+    errorRedactor: [Function: defaultErrorRedactor],
+    retryConfig: {
+      currentRetryAttempt: 0,
+      retry: 3,
+      httpMethodsToRetry: [Array],
+      noResponseRetries: 2,
+      retryDelayMultiplier: 2,
+      timeOfFirstRequest: 1752688879025,
+      totalTimeout: 9007199254740991,
+      maxRetryDelay: 9007199254740991,
+      statusCodesToRetry: [Array]
+    }
+  },
+  response: Response {
+    size: 0,
+    data: { error: [Object] },
+    config: {
+      url: URL {},
+      method: 'GET',
+      apiVersion: '',
+      userAgentDirectives: [Array],
+      headers: Headers {
+        'accept-encoding': 'gzip',
+        authorization: '<<REDACTED> - See `errorRedactor` option in `gaxios` for configuration>.',
+        'user-agent': 'google-api-nodejs-client/8.0.0 (gzip)',
+        'x-goog-api-client': 'gdcl/8.0.0 gl-node/22.16.0'
+      },
+      validateStatus: [Function (anonymous)],
+      retry: true,
+      responseType: 'unknown',
+      errorRedactor: [Function: defaultErrorRedactor]
+    },
+    [Symbol(Body internals)]: {
+      body: [Gunzip],
+      stream: [Gunzip],
+      boundary: null,
+      disturbed: true,
+      error: null
+    },
+    [Symbol(Response internals)]: {
+      type: 'default',
+      url: 'https://gmail.googleapis.com/gmail/v1/users/me/profile',
+      status: 400,
+      statusText: 'Bad Request',
+      headers: [Object],
+      counter: 0,
+      highWaterMark: 16384
+    }
+  },
+  code: 400,
+  status: 400,
+  error: undefined,
+  [Symbol(gaxios-gaxios-error)]: '7.1.1',
+  [cause]: {
+    message: 'Precondition check failed.',
+    code: 400,
+    status: 'FAILED_PRECONDITION',
+    errors: [ [Object] ]
+  }
+}
+Google OAuth callback error: GaxiosError: Precondition check failed.
+    at Gaxios._request (/opt/render/project/src/node_modules/gaxios/build/cjs/src/gaxios.js:154:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async OAuth2Client.requestAsync (/opt/render/project/src/node_modules/google-auth-library/build/src/auth/oauth2client.js:463:20)
+    at async createAPIRequestAsync (/opt/render/project/src/node_modules/googleapis-common/build/src/apirequest.js:308:25)
+    at async GmailService.getUserProfile (file:///opt/render/project/src/dist/index.js:360:24)
+    at async file:///opt/render/project/src/dist/index.js:1011:27 {
+  config: {
+    url: URL {
+      href: 'https://gmail.googleapis.com/gmail/v1/users/me/profile',
+      origin: 'https://gmail.googleapis.com',
+      protocol: 'https:',
+      username: '',
+      password: '',
+      host: 'gmail.googleapis.com',
+      hostname: 'gmail.googleapis.com',
+      port: '',
+      pathname: '/gmail/v1/users/me/profile',
+      search: '',
+      searchParams: URLSearchParams {},
+      hash: ''
+    },
+    method: 'GET',
+    apiVersion: '',
+    userAgentDirectives: [ [Object] ],
+    headers: Headers {
+      'accept-encoding': 'gzip',
+      authorization: '<<REDACTED> - See `errorRedactor` option in `gaxios` for configuration>.',
+      'user-agent': 'google-api-nodejs-client/8.0.0 (gzip)',
+      'x-goog-api-client': 'gdcl/8.0.0 gl-node/22.16.0'
+    },
+    validateStatus: [Function (anonymous)],
+    retry: true,
+    responseType: 'unknown',
+    errorRedactor: [Function: defaultErrorRedactor],
+    retryConfig: {
+      currentRetryAttempt: 0,
+      retry: 3,
+      httpMethodsToRetry: [Array],
+      noResponseRetries: 2,
+      retryDelayMultiplier: 2,
+      timeOfFirstRequest: 1752688879025,
+      totalTimeout: 9007199254740991,
+      maxRetryDelay: 9007199254740991,
+      statusCodesToRetry: [Array]
+    }
+  },
+  response: Response {
+    size: 0,
+    data: { error: [Object] },
+    config: {
+      url: URL {},
+      method: 'GET',
+      apiVersion: '',
+      userAgentDirectives: [Array],
+      headers: Headers {
+        'accept-encoding': 'gzip',
+        authorization: '<<REDACTED> - See `errorRedactor` option in `gaxios` for configuration>.',
+        'user-agent': 'google-api-nodejs-client/8.0.0 (gzip)',
+        'x-goog-api-client': 'gdcl/8.0.0 gl-node/22.16.0'
+      },
+      validateStatus: [Function (anonymous)],
+      retry: true,
+      responseType: 'unknown',
+      errorRedactor: [Function: defaultErrorRedactor]
+    },
+    [Symbol(Body internals)]: {
+      body: [Gunzip],
+      stream: [Gunzip],
+      boundary: null,
+      disturbed: true,
+      error: null
+    },
+    [Symbol(Response internals)]: {
+      type: 'default',
+      url: 'https://gmail.googleapis.com/gmail/v1/users/me/profile',
+      status: 400,
+      statusText: 'Bad Request',
+      headers: [Object],
+      counter: 0,
+      highWaterMark: 16384
+    }
+  },
+  code: 400,
+  status: 400,
+  error: undefined,
+  [Symbol(gaxios-gaxios-error)]: '7.1.1',
+  [cause]: {
+    message: 'Precondition check failed.',
+    code: 400,
+    status: 'FAILED_PRECONDITION',
+    errors: [ [Object] ]
+  }
+}

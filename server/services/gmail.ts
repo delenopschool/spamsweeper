@@ -35,15 +35,25 @@ export class GmailService {
 
   async getUserProfile(accessToken: string) {
     try {
-      const gmail = this.getClient(accessToken);
-      const response = await gmail.users.getProfile({ userId: 'me' });
+      const oauth2Client = new google.auth.OAuth2(
+        process.env.GOOGLE_CLIENT_ID,
+        process.env.GOOGLE_CLIENT_SECRET,
+        this.getRedirectUri()
+      );
+      
+      oauth2Client.setCredentials({ access_token: accessToken });
+      
+      // Use OAuth2 API to get user info
+      const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
+      const response = await oauth2.userinfo.get();
+      
       return {
-        id: response.data.historyId || '',
-        displayName: response.data.emailAddress || '',
-        mail: response.data.emailAddress || ''
+        id: response.data.id || '',
+        displayName: response.data.name || '',
+        mail: response.data.email || ''
       };
     } catch (error) {
-      console.error('Error getting Gmail profile:', error);
+      console.error('Error getting Google user profile:', error);
       throw error;
     }
   }
