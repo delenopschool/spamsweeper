@@ -4,6 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Mail, Shield, Zap } from "lucide-react";
+// Icons als SVG components
+const MicrosoftIcon = () => (
+  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z"/>
+  </svg>
+);
+
+const GmailIcon = () => (
+  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="#ea4335">
+    <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.909 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
+  </svg>
+);
 import logoUrl from "@/assets/spam-sweeper-logo.png";
 import smartReviewIcon from "@/assets/broom-svgrepo-com.png";
 import automaticUnsubscribeIcon from "@/assets/ai-svgrepo-com.png";
@@ -73,7 +85,7 @@ export default function Home() {
             <Button 
               onClick={handleMicrosoftAuth}
               disabled={isAuthenticating}
-              className="btn-primary px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg"
+              className="bg-[#0078d4] hover:bg-[#106ebe] text-white border-0 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg shadow-lg transition-all duration-200"
             >
               {isAuthenticating && authProvider === "microsoft" ? (
                 <>
@@ -82,7 +94,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  <MicrosoftIcon />
                   Connect Outlook
                 </>
               )}
@@ -91,17 +103,16 @@ export default function Home() {
             <Button 
               onClick={handleGoogleAuth}
               disabled={isAuthenticating}
-              variant="outline"
-              className="px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg"
+              className="bg-white hover:bg-gray-50 text-gray-800 border-2 border-gray-300 hover:border-gray-400 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg shadow-lg transition-all duration-200"
             >
               {isAuthenticating && authProvider === "google" ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary mr-2"></div>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#ea4335] mr-2"></div>
                   Connecting...
                 </>
               ) : (
                 <>
-                  <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  <GmailIcon />
                   Connect Gmail
                 </>
               )}
