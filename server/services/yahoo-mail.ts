@@ -41,9 +41,7 @@ class YahooMailService {
   constructor() {
     this.clientId = process.env.YAHOO_CLIENT_ID || '';
     this.clientSecret = process.env.YAHOO_CLIENT_SECRET || '';
-    this.redirectUri = process.env.REPLIT_DOMAIN ? 
-      `${process.env.REPLIT_DOMAIN}/auth/yahoo/callback` : 
-      'http://localhost:5000/auth/yahoo/callback';
+    this.redirectUri = 'https://spamsweeper.onrender.com/auth/yahoo/callback';
   }
 
   getAuthUrl(): string {
