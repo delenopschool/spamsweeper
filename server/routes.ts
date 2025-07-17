@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { microsoftGraphService } from "./services/microsoft-graph";
 import { gmailService } from "./services/gmail";
+import { yahooMailService } from "./services/yahoo-mail";
 import { openaiClassifierService } from "./services/openai-classifier";
 import { emailParserService } from "./services/email-parser";
 import { insertUserSchema, insertEmailScanSchema } from "@shared/schema";
@@ -22,6 +23,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/auth/google", async (req, res) => {
     try {
       const authUrl = gmailService.getAuthUrl();
+      res.json({ authUrl });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate auth URL" });
+    }
+  });
+
+  // Yahoo OAuth routes
+  app.get("/api/auth/yahoo", async (req, res) => {
+    try {
+      const authUrl = yahooMailService.getAuthUrl();
       res.json({ authUrl });
     } catch (error) {
       res.status(500).json({ message: "Failed to generate auth URL" });
@@ -98,6 +109,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/auth/yahoo/callback", async (req, res) => {
+    try {
+      const { code } = req.query;
+      
+      console.log("🔐 [Yahoo] Callback received with code:", !!code);
+      
+      if (!code) {
+        console.log("❌ [Yahoo] No authorization code received");
+        return res.redirect("/?error=no_code");
+      }
+
+      console.log("🔐 [Yahoo] Exchanging code for tokens...");
+      const tokens = await yahooMailService.exchangeCodeForTokens(code as string);
+      console.log("🔐 [Yahoo] Tokens received successfully");
+      
+      console.log("🔐 [Yahoo] Getting user profile...");
+      const userProfile = await yahooMailService.getUserProfile(tokens.accessToken);
+      console.log("🔐 [Yahoo] User profile received:", { 
+        id: userProfile.id, 
+        email: userProfile.mail 
+      });
+      
+      let user = await storage.getUserByYahooId(userProfile.id);
+      console.log("🔐 [Yahoo] Existing user found:", !!user);
+      
+      if (!user) {
+        // Check if user exists with same email but different provider
+        const existingUser = await storage.getUserByEmail(userProfile.mail);
+        if (existingUser) {
+          console.log("🔐 [Yahoo] Updating existing user to Yahoo provider...");
+          user = await storage.updateUser(existingUser.id, {
+            yahooId: userProfile.id,
+            provider: 'yahoo'
+          });
+        } else {
+          console.log("🔐 [Yahoo] Creating new user...");
+          user = await storage.createUser({
+            email: userProfile.mail,
+            yahooId: userProfile.id,
+            provider: 'yahoo'
+          });
+        }
+        console.log("🔐 [Yahoo] User processed successfully:", user.id);
+      }
+
+      const tokenExpiry = new Date(Date.now() + tokens.expiresIn * 1000);
+      
+      console.log("🔐 [Yahoo] Updating user tokens...");
+      await storage.updateUser(user.id, {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+        tokenExpiry
+      });
+
+      console.log("🔐 [Yahoo] Redirecting to auth callback...");
+      // Redirect to auth callback page with user ID
+      res.redirect(`/auth-callback?userId=${user.id}&provider=yahoo`);
+    } catch (error) {
+      console.error("Yahoo OAuth callback error:", error);
+      console.error("Error stack:", error.stack);
+      console.error("Error details:", {
+        message: error.message,
+        name: error.name,
+        hasCode: !!req.query.code
+      });
+      res.redirect("/?error=auth_failed");
+    }
+  });
+
   app.post("/api/auth/callback", async (req, res) => {
     try {
       const { code, provider } = req.body;
@@ -108,8 +188,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Authorization code required" });
       }
 
-      if (!provider || !['microsoft', 'google'].includes(provider)) {
-        return res.status(400).json({ message: "Valid provider required (microsoft or google)" });
+      if (!provider || !['microsoft', 'google', 'yahoo'].includes(provider)) {
+        return res.status(400).json({ message: "Valid provider required (microsoft, google, or yahoo)" });
       }
 
       let tokens, userProfile, user;
@@ -179,6 +259,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
             });
           }
           console.log("🔐 [Auth] Google user processed:", user.id);
+        }
+      } else if (provider === 'yahoo') {
+        console.log("🔐 [Auth] Processing Yahoo authentication...");
+        tokens = await yahooMailService.exchangeCodeForTokens(code);
+        console.log("🔐 [Auth] Yahoo tokens received");
+        
+        userProfile = await yahooMailService.getUserProfile(tokens.accessToken);
+        console.log("🔐 [Auth] Yahoo profile received:", { 
+          id: userProfile.id, 
+          email: userProfile.mail 
+        });
+        
+        user = await storage.getUserByYahooId(userProfile.id);
+        console.log("🔐 [Auth] Existing Yahoo user found:", !!user);
+        
+        if (!user) {
+          // Check if user exists with same email but different provider
+          const existingUser = await storage.getUserByEmail(userProfile.mail);
+          if (existingUser) {
+            console.log("🔐 [Auth] Updating existing user to Yahoo provider...");
+            user = await storage.updateUser(existingUser.id, {
+              yahooId: userProfile.id,
+              provider: 'yahoo'
+            });
+          } else {
+            console.log("🔐 [Auth] Creating new Yahoo user...");
+            user = await storage.createUser({
+              email: userProfile.mail,
+              yahooId: userProfile.id,
+              provider: 'yahoo'
+            });
+          }
+          console.log("🔐 [Auth] Yahoo user processed:", user.id);
         }
       }
 
@@ -553,6 +666,8 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
       emails = await microsoftGraphService.getSpamEmails(accessToken, folders);
     } else if (provider === 'google') {
       emails = await gmailService.getSpamEmails(accessToken, folders);
+    } else if (provider === 'yahoo') {
+      emails = await yahooMailService.getSpamEmails(accessToken, folders);
     } else {
       throw new Error(`Unsupported provider: ${provider}`);
     }

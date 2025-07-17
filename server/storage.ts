@@ -8,6 +8,7 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   getUserByMicrosoftId(microsoftId: string): Promise<User | undefined>;
   getUserByGoogleId(googleId: string): Promise<User | undefined>;
+  getUserByYahooId(yahooId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: number, updates: Partial<User>): Promise<User>;
 
@@ -62,6 +63,10 @@ export class MemStorage implements IStorage {
 
   async getUserByGoogleId(googleId: string): Promise<User | undefined> {
     return Array.from(this.users.values()).find(user => user.googleId === googleId);
+  }
+
+  async getUserByYahooId(yahooId: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(user => user.yahooId === yahooId);
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
@@ -227,6 +232,11 @@ export class DatabaseStorage implements IStorage {
 
   async getUserByGoogleId(googleId: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.googleId, googleId));
+    return user || undefined;
+  }
+
+  async getUserByYahooId(yahooId: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.yahooId, yahooId));
     return user || undefined;
   }
 

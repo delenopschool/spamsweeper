@@ -6,6 +6,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Mail, Shield, Zap } from "lucide-react";
 import outlookIcon from "@/assets/outlook.png";
 import gmailIcon from "@/assets/gmail.png";
+import yahooIcon from "@/assets/yahoo.svg";
 
 // Outlook logo - eenvoudig en accuraat
 const OutlookIcon = () => (
@@ -23,6 +24,15 @@ const GmailIcon = () => (
     <path d="M2 7l6 4v9H4c-1.1 0-2-.9-2-2V7z" fill="#4285f4"/>
     <path d="M22 7v11c0 1.1-.9 2-2 2h-4v-9l6-4z" fill="#34a853"/>
     <path d="M8 11l-6-4h20l-6 4-4-3-4 3z" fill="#fbbc04"/>
+  </svg>
+);
+
+// Yahoo logo - met juiste kleuren
+const YahooIcon = () => (
+  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+    <rect width="24" height="24" rx="4" fill="#410093"/>
+    <path d="M7 6h3l2 4 2-4h3l-3.5 6v4h-2v-4L7 6z" fill="white"/>
+    <path d="M16.5 16h-2v-2h2v2zm0-3h-2v-1h2v1z" fill="white"/>
   </svg>
 );
 
@@ -55,6 +65,21 @@ export default function Home() {
       setIsAuthenticating(true);
       setAuthProvider("google");
       const response = await apiRequest("GET", "/api/auth/google");
+      const data = await response.json();
+      
+      window.location.href = data.authUrl;
+    } catch (error) {
+      console.error("Authentication error:", error);
+      setIsAuthenticating(false);
+      setAuthProvider("");
+    }
+  };
+
+  const handleYahooAuth = async () => {
+    try {
+      setIsAuthenticating(true);
+      setAuthProvider("yahoo");
+      const response = await apiRequest("GET", "/api/auth/yahoo");
       const data = await response.json();
       
       window.location.href = data.authUrl;
@@ -124,6 +149,24 @@ export default function Home() {
                 <>
                   <img src={gmailIcon} alt="Smart Review" className="w-6 h-6" />
                   Connect Gmail
+                </>
+              )}
+            </Button>
+            
+            <Button 
+              onClick={handleYahooAuth}
+              disabled={isAuthenticating}
+              className="bg-[#410093] hover:bg-[#350075] text-white border-0 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg shadow-lg transition-all duration-200"
+            >
+              {isAuthenticating && authProvider === "yahoo" ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Connecting...
+                </>
+              ) : (
+                <>
+                  <YahooIcon />
+                  Connect Yahoo
                 </>
               )}
             </Button>

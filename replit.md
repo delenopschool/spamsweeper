@@ -138,5 +138,13 @@ The application follows a modern full-stack architecture with clear separation b
   - Enhanced backend to handle both Microsoft Graph and Gmail APIs
   - Fixed OAuth redirect URI configuration for production deployment on Render
   - Both services now use correct Render URLs: spamsweeper.onrender.com
+- **Yahoo Mail Integration (July 2025)**: Added full Yahoo Mail support as third email provider
+  - Implemented Yahoo OAuth2 authentication flow with JSON-RPC API
+  - Added Yahoo Mail API service for spam email scanning from Bulk folder
+  - Updated database schema with yahooId field for Yahoo user identification
+  - Added Yahoo Mail purple-themed button to frontend homepage
+  - Enhanced backend routes with Yahoo OAuth callback and token management
+  - Unified API interface allows seamless switching between Microsoft, Google, and Yahoo providers
+  - Full support for Yahoo's unique JSON-RPC email API structure
 
 The application is designed to be easily deployable to platforms like Render, Vercel, or similar services with minimal configuration changes.

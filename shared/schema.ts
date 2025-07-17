@@ -7,7 +7,8 @@ export const users = pgTable("users", {
   email: text("email").notNull(),
   microsoftId: text("microsoft_id").unique(),
   googleId: text("google_id").unique(),
-  provider: text("provider").notNull(), // "microsoft" or "google"
+  yahooId: text("yahoo_id").unique(),
+  provider: text("provider").notNull(), // "microsoft", "google", or "yahoo"
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
   tokenExpiry: timestamp("token_expiry"),
@@ -60,6 +61,7 @@ export const insertUserSchema = createInsertSchema(users).pick({
   email: true,
   microsoftId: true,
   googleId: true,
+  yahooId: true,
   provider: true,
 });
 
