@@ -1,12 +1,12 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage-sqlite";
+import { storage } from "./storage";
 import { microsoftGraphService } from "./services/microsoft-graph";
 import { gmailService } from "./services/gmail";
 import { yahooMailService } from "./services/yahoo-mail";
 import { openaiClassifierService } from "./services/openai-classifier";
 import { emailParserService } from "./services/email-parser";
-import { insertUserSchema, insertEmailScanSchema } from "@shared/schema-sqlite";
+import { insertUserSchema, insertEmailScanSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Microsoft OAuth routes
