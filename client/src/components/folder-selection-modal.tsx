@@ -15,6 +15,7 @@ interface FolderSelectionModalProps {
 
 const FOLDER_OPTIONS = {
   gmail: [
+    { id: "INBOX", name: "Inbox", description: "Hoofdmap met alle ontvangen emails", icon: "📨" },
     { id: "SPAM", name: "Spam", description: "Emails marked as spam by Gmail", icon: "⚠️" },
     { id: "TRASH", name: "Trash", description: "Deleted emails", icon: "🗑️" },
     { id: "PROMOTIONS", name: "Promotions", description: "Marketing and promotional emails", icon: "📢" },
@@ -23,6 +24,7 @@ const FOLDER_OPTIONS = {
     { id: "FORUMS", name: "Forums", description: "Forum notifications and discussions", icon: "💬" }
   ],
   outlook: [
+    { id: "Inbox", name: "Inbox", description: "Hoofdmap met alle ontvangen emails", icon: "📨" },
     { id: "JunkEmail", name: "Junk Email", description: "Emails marked as junk by Outlook", icon: "⚠️" },
     { id: "DeletedItems", name: "Deleted Items", description: "Deleted emails", icon: "🗑️" },
     { id: "Clutter", name: "Clutter", description: "Low-priority emails", icon: "📋" },
