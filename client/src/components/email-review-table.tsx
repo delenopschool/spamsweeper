@@ -20,6 +20,7 @@ interface EmailReviewTableProps {
       hasUnsubscribeLink: boolean;
       isSelected: boolean;
       receivedDate: string;
+      userFeedback?: string;
     }>;
   };
   onPreviewEmail: (emailId: number) => void;
@@ -380,7 +381,11 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
                       variant="ghost"
                       size="sm"
                       onClick={() => handleUserFeedbackMemo(email.id, "spam")}
-                      className="text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-all duration-300 hover:scale-110"
+                      className={`transition-all duration-300 hover:scale-110 ${
+                        email.userFeedback === "spam" 
+                          ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20" 
+                          : "text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
+                      }`}
                       title="Mark as spam (helps AI learn)"
                     >
                       <ThumbsDown className="h-4 w-4" />
@@ -389,7 +394,11 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
                       variant="ghost"
                       size="sm"
                       onClick={() => handleUserFeedbackMemo(email.id, "not_spam")}
-                      className="text-green-500 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition-all duration-300 hover:scale-110"
+                      className={`transition-all duration-300 hover:scale-110 ${
+                        email.userFeedback === "not_spam" 
+                          ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20" 
+                          : "text-green-500 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300"
+                      }`}
                       title="Mark as not spam (helps AI learn)"
                     >
                       <ThumbsUp className="h-4 w-4" />

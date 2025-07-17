@@ -213,7 +213,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           aiConfidence: email.aiConfidence,
           hasUnsubscribeLink: email.hasUnsubscribeLink,
           isSelected: email.isSelected,
-          receivedDate: email.receivedDate
+          receivedDate: email.receivedDate,
+          userFeedback: email.userFeedback
         }))
       });
     } catch (error) {
@@ -242,7 +243,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           aiConfidence: email.aiConfidence,
           hasUnsubscribeLink: email.hasUnsubscribeLink,
           isSelected: email.isSelected,
-          receivedDate: email.receivedDate
+          receivedDate: email.receivedDate,
+          userFeedback: email.userFeedback
         }))
       });
     } catch (error) {
@@ -313,24 +315,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const emailId = parseInt(req.params.emailId);
       const { feedback } = req.body; // "spam" or "not_spam"
       
+      // Update email with new feedback (overwrites any existing feedback)
       const email = await storage.updateSpamEmail(emailId, { 
         userFeedback: feedback 
       });
       
-      // Save learning data
+      // Save learning data (only create new entry, don't duplicate)
       const scan = await storage.getEmailScan(email.scanId);
       if (scan) {
-        await storage.createUserLearningData({
-          userId: scan.userId,
-          senderPattern: email.sender,
-          subjectPattern: email.subject,
-          bodyKeywords: email.body ? email.body.toLowerCase().split(/\s+/).slice(0, 10) : [],
-          userDecision: feedback,
-          confidence: 75
-        });
+        // Check if learning data already exists for this user and email pattern
+        const existingLearningData = await storage.getUserLearningData(scan.userId);
+        const existingPattern = existingLearningData.find(data => 
+          data.senderPattern === email.sender && data.subjectPattern === email.subject
+        );
+        
+        if (existingPattern) {
+          // Update existing learning data instead of creating new
+          await storage.updateUserLearningData(existingPattern.id, {
+            userDecision: feedback,
+            confidence: 75
+          });
+        } else {
+          // Create new learning data
+          await storage.createUserLearningData({
+            userId: scan.userId,
+            senderPattern: email.sender,
+            subjectPattern: email.subject,
+            bodyKeywords: email.body ? email.body.toLowerCase().split(/\s+/).slice(0, 10) : [],
+            userDecision: feedback,
+            confidence: 75
+          });
+        }
       }
       
-      res.json({ success: true });
+      res.json({ success: true, feedback });
     } catch (error) {
       console.error("Failed to save feedback:", error);
       res.status(500).json({ message: "Er ging iets mis bij het opslaan van je feedback" });
