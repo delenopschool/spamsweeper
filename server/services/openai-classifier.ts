@@ -7,37 +7,85 @@ interface OpenRouterResponse {
   }>;
 }
 
-async function callOpenRouter(messages: Array<{ role: string; content: string }>): Promise<OpenRouterResponse> {
-  const startTime = Date.now();
-  console.log(`🔄 [OpenRouter] Starting API call at ${new Date().toISOString()}`);
-  
-  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-      'Content-Type': 'application/json',
-      'HTTP-Referer': 'https://spamsweeper.onrender.com', // Your site URL
-      'X-Title': 'Spam Sweeper', // Your app name
-    },
-    body: JSON.stringify({
-      model: 'deepseek/deepseek-chat-v3-0324:free', // Free Deepseek model
-      messages: messages,
-      temperature: 0.1,
-    }),
-  });
+// Rate limiting for OpenRouter free tier
+class RateLimiter {
+  private requests: number[] = [];
+  private readonly maxRequests = 15; // Conservative limit for free tier
+  private readonly timeWindow = 60000; // 1 minute in milliseconds
 
-  const responseTime = Date.now() - startTime;
-  console.log(`📡 [OpenRouter] API response received in ${responseTime}ms`);
-
-  if (!response.ok) {
-    console.error(`❌ [OpenRouter] API error: ${response.status} ${response.statusText}`);
-    throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
+  async waitForSlot(): Promise<void> {
+    const now = Date.now();
+    
+    // Remove old requests outside the time window
+    this.requests = this.requests.filter(time => now - time < this.timeWindow);
+    
+    if (this.requests.length >= this.maxRequests) {
+      // Calculate wait time until oldest request expires
+      const waitTime = this.timeWindow - (now - this.requests[0]) + 1000; // Add 1 second buffer
+      console.log(`⏱️ [OpenRouter] Rate limit reached, waiting ${Math.ceil(waitTime / 1000)}s...`);
+      await new Promise(resolve => setTimeout(resolve, waitTime));
+      return this.waitForSlot(); // Recursively check again
+    }
+    
+    this.requests.push(now);
   }
+}
 
-  const jsonResponse = await response.json();
-  console.log(`✅ [OpenRouter] JSON parsed successfully in ${Date.now() - startTime}ms total`);
+const rateLimiter = new RateLimiter();
+
+async function callOpenRouter(messages: Array<{ role: string; content: string }>, retryCount = 0): Promise<OpenRouterResponse> {
+  const maxRetries = 3;
+  const startTime = Date.now();
   
-  return jsonResponse;
+  try {
+    // Wait for rate limit slot
+    await rateLimiter.waitForSlot();
+    
+    console.log(`🔄 [OpenRouter] Starting API call at ${new Date().toISOString()}`);
+    
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://spamsweeper.onrender.com', // Your site URL
+        'X-Title': 'Spam Sweeper', // Your app name
+      },
+      body: JSON.stringify({
+        model: 'deepseek/deepseek-chat-v3-0324:free', // Free Deepseek model
+        messages: messages,
+        temperature: 0.1,
+      }),
+    });
+
+    const responseTime = Date.now() - startTime;
+    console.log(`📡 [OpenRouter] API response received in ${responseTime}ms`);
+
+    if (!response.ok) {
+      if (response.status === 429 && retryCount < maxRetries) {
+        const waitTime = Math.pow(2, retryCount) * 5000; // Exponential backoff: 5s, 10s, 20s
+        console.log(`⏳ [OpenRouter] Rate limited, retrying in ${waitTime/1000}s (attempt ${retryCount + 1}/${maxRetries})`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+        return callOpenRouter(messages, retryCount + 1);
+      }
+      
+      console.error(`❌ [OpenRouter] API error: ${response.status} ${response.statusText}`);
+      throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
+    }
+
+    const jsonResponse = await response.json();
+    console.log(`✅ [OpenRouter] JSON parsed successfully in ${Date.now() - startTime}ms total`);
+    
+    return jsonResponse;
+  } catch (error) {
+    if (retryCount < maxRetries && (error as Error).message.includes('429')) {
+      const waitTime = Math.pow(2, retryCount) * 5000;
+      console.log(`⏳ [OpenRouter] Retrying after error in ${waitTime/1000}s (attempt ${retryCount + 1}/${maxRetries})`);
+      await new Promise(resolve => setTimeout(resolve, waitTime));
+      return callOpenRouter(messages, retryCount + 1);
+    }
+    throw error;
+  }
 }
 
 export interface SpamClassificationResult {
@@ -138,38 +186,31 @@ Respond with JSON in this exact format:
     
     const results: SpamClassificationResult[] = [];
     
-    // Process emails in batches to avoid rate limits
-    const batchSize = 5;
-    for (let i = 0; i < emails.length; i += batchSize) {
-      const batchNumber = Math.floor(i / batchSize) + 1;
-      const totalBatches = Math.ceil(emails.length / batchSize);
+    // Process emails one by one to avoid rate limits with free tier
+    for (let i = 0; i < emails.length; i++) {
+      const email = emails[i];
+      const emailNumber = i + 1;
       
-      console.log(`📦 [Batch ${batchNumber}/${totalBatches}] Processing emails ${i + 1} to ${Math.min(i + batchSize, emails.length)}`);
-      
-      const batch = emails.slice(i, i + batchSize);
-      const batchPromises = batch.map(email => 
-        this.classifyEmail(email.sender, email.subject, email.body)
-      );
+      console.log(`📧 [${emailNumber}/${emails.length}] Processing email from ${email.sender}: "${email.subject}"`);
       
       try {
-        const batchResults = await Promise.all(batchPromises);
-        results.push(...batchResults);
-        console.log(`✅ [Batch ${batchNumber}/${totalBatches}] Completed successfully`);
+        const result = await this.classifyEmail(email.sender, email.subject, email.body);
+        results.push(result);
+        console.log(`✅ [${emailNumber}/${emails.length}] Classification completed: ${result.isSpam ? 'SPAM' : 'NOT SPAM'} (${result.confidence}%)`);
       } catch (error) {
-        console.error(`❌ [Batch ${batchNumber}/${totalBatches}] Error processing batch:`, error);
-        // Add fallback results for failed batch
-        const fallbackResults = batch.map(() => ({
+        console.error(`❌ [${emailNumber}/${emails.length}] Error classifying email:`, error);
+        // Add fallback result for failed email
+        const fallbackResult = {
           isSpam: false,
           confidence: 0,
-          reasoning: 'Classification failed'
-        }));
-        results.push(...fallbackResults);
+          reasoning: 'Classification failed: ' + (error as Error).message
+        };
+        results.push(fallbackResult);
       }
       
-      // Add delay between batches to respect rate limits
-      if (i + batchSize < emails.length) {
-        console.log(`⏱️ [Batch] Waiting 1 second before next batch...`);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      // Add small delay between individual emails for safety
+      if (i < emails.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 500));
       }
     }
     
