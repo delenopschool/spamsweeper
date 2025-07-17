@@ -1,6 +1,6 @@
 import { users, emailScans, spamEmails, userLearningData, type User, type InsertUser, type EmailScan, type InsertEmailScan, type SpamEmail, type InsertSpamEmail, type UserLearningData, type InsertUserLearningData } from "@shared/schema";
 import { db } from "./db";
-import { eq, inArray, desc, like, or, ilike } from "drizzle-orm";
+import { eq, inArray, desc, like, or, ilike, and } from "drizzle-orm";
 
 export interface IStorage {
   // User management
@@ -379,4 +379,4 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+export const storage = new MemStorage();
