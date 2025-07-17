@@ -30,24 +30,41 @@ export class MicrosoftGraphService {
     return await client.api('/me').get();
   }
 
-  async getSpamEmails(accessToken: string): Promise<GraphEmail[]> {
+  async getSpamEmails(accessToken: string, folders?: string[]): Promise<GraphEmail[]> {
     const client = this.getClient(accessToken);
     
     try {
-      console.log(`📫 [Graph] Starting to fetch emails from junk folder...`);
+      // Default to JunkEmail folder if no folders specified
+      const targetFolders = folders && folders.length > 0 ? folders : ['JunkEmail'];
+      
+      console.log(`📫 [Graph] Starting to fetch emails from folders: ${targetFolders.join(', ')}`);
       const startTime = Date.now();
       
-      // Get emails from the Junk Email folder
-      const response = await client
-        .api('/me/mailFolders/JunkEmail/messages')
-        .select('id,subject,sender,body,receivedDateTime')
-        .top(1000)
-        .get();
+      // For multiple folders, we need to fetch from each folder separately
+      const allEmails: GraphEmail[] = [];
+      
+      for (const folder of targetFolders) {
+        try {
+          const response = await client
+            .api(`/me/mailFolders/${folder}/messages`)
+            .select('id,subject,sender,body,receivedDateTime')
+            .top(1000)
+            .get();
+
+          if (response.value && Array.isArray(response.value)) {
+            allEmails.push(...response.value);
+            console.log(`📫 [Graph] Fetched ${response.value.length} emails from folder ${folder}`);
+          }
+        } catch (error) {
+          console.error(`❌ [Graph] Error fetching emails from folder ${folder}:`, error);
+          // Continue with other folders even if one fails
+        }
+      }
 
       const fetchTime = Date.now() - startTime;
-      console.log(`📫 [Graph] Fetched ${response.value?.length || 0} emails from Microsoft Graph in ${fetchTime}ms`);
+      console.log(`📫 [Graph] Total: ${allEmails.length} emails from Microsoft Graph in ${fetchTime}ms`);
 
-      return response.value || [];
+      return allEmails;
     } catch (error) {
       console.error('❌ [Graph] Error fetching spam emails:', error);
       throw new Error('Failed to fetch spam emails from Outlook');

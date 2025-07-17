@@ -58,14 +58,17 @@ export class GmailService {
     }
   }
 
-  async getSpamEmails(accessToken: string): Promise<GmailEmail[]> {
+  async getSpamEmails(accessToken: string, folders?: string[]): Promise<GmailEmail[]> {
     try {
       const gmail = this.getClient(accessToken);
       
-      // Get messages from SPAM folder
+      // Default to SPAM folder if no folders specified
+      const targetFolders = folders && folders.length > 0 ? folders : ['SPAM'];
+      
+      // Get messages from specified folders
       const listResponse = await gmail.users.messages.list({
         userId: 'me',
-        labelIds: ['SPAM'],
+        labelIds: targetFolders,
         maxResults: 100
       });
 

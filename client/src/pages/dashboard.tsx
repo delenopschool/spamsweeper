@@ -3,13 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { WashingMachine, LogOut, UserRound } from "lucide-react";
+import { WashingMachine, LogOut, UserRound, Folder } from "lucide-react";
 import logoUrl from "@/assets/spam-sweeper-logo.png";
 import StatusCards from "@/components/status-cards";
 import EmailReviewTable from "@/components/email-review-table";
 import ProcessingModal from "@/components/processing-modal";
 import EmailPreviewModal from "@/components/email-preview-modal";
 import LearningDashboard from "@/components/learning-dashboard";
+import FolderSelectionModal from "@/components/folder-selection-modal";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export default function Dashboard() {
@@ -21,6 +22,7 @@ export default function Dashboard() {
   const [previewEmailId, setPreviewEmailId] = useState<number | null>(null);
   const [scanData, setScanData] = useState<any>(null);
   const [isScanning, setIsScanning] = useState(false);
+  const [isFolderSelectionOpen, setIsFolderSelectionOpen] = useState(false);
 
   const { data: user, isLoading: userLoading } = useQuery({
     queryKey: ["/api/user", userId],
@@ -69,12 +71,12 @@ export default function Dashboard() {
     window.location.href = '/';
   }, []);
 
-  const handleScanEmails = useCallback(async () => {
+  const handleScanEmails = useCallback(async (folders?: string[]) => {
     if (!userId) return;
     
     try {
       setIsScanning(true);
-      const response = await apiRequest("POST", `/api/scan/${userId}`);
+      const response = await apiRequest("POST", `/api/scan/${userId}`, { folders });
       const data = await response.json();
       setCurrentScanId(data.scanId);
       
@@ -85,6 +87,21 @@ export default function Dashboard() {
       setIsScanning(false);
     }
   }, [userId]);
+
+  const handleQuickScan = useCallback(() => {
+    // Quick scan only scans the default spam folder
+    handleScanEmails();
+  }, [handleScanEmails]);
+
+  const handleFullScan = useCallback(() => {
+    // Open folder selection modal for full scan
+    setIsFolderSelectionOpen(true);
+  }, []);
+
+  const handleFolderSelection = useCallback((selectedFolders: string[]) => {
+    setIsFolderSelectionOpen(false);
+    handleScanEmails(selectedFolders);
+  }, [handleScanEmails]);
 
   const pollScanResults = async (scanId: number) => {
     let attempts = 0;
@@ -199,9 +216,9 @@ export default function Dashboard() {
             <h3 className="text-lg font-medium text-foreground">Quick Actions</h3>
           </div>
           <div className="p-4 sm:p-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <Button 
-                onClick={handleScanEmails}
+                onClick={handleQuickScan}
                 className={`btn-primary flex items-center justify-center px-4 py-3 transition-all duration-300 ${
                   isScanning 
                     ? 'cursor-not-allowed opacity-50' 
@@ -210,7 +227,20 @@ export default function Dashboard() {
                 disabled={isScanning}
               >
                 <WashingMachine className={`mr-2 ${isScanning ? 'animate-spin' : ''}`} />
-                {isScanning ? 'AI Processing...' : 'Scan Spam Folder'}
+                {isScanning ? 'AI Processing...' : 'Quick Scan'}
+              </Button>
+              
+              <Button 
+                onClick={handleFullScan}
+                className={`btn-secondary flex items-center justify-center px-4 py-3 transition-all duration-300 ${
+                  isScanning 
+                    ? 'cursor-not-allowed opacity-50' 
+                    : 'hover:scale-105 animate-glow'
+                }`}
+                disabled={isScanning}
+              >
+                <Folder className="mr-2" />
+                Full Scan
               </Button>
               
               <Button 
@@ -274,7 +304,7 @@ export default function Dashboard() {
             <h3 className="text-lg font-medium text-foreground mb-2">Welcome to Spam Sweeper!</h3>
             <p className="text-muted-foreground mb-4">Start by scanning your spam folder to detect unwanted emails and find unsubscribe links.</p>
             <Button 
-              onClick={handleScanEmails}
+              onClick={handleQuickScan}
               className="btn-primary flex items-center justify-center"
             >
               <WashingMachine className="mr-2" />
@@ -294,6 +324,14 @@ export default function Dashboard() {
           emailId={previewEmailId}
           isOpen={!!previewEmailId}
           onClose={() => setPreviewEmailId(null)}
+        />
+
+        <FolderSelectionModal 
+          isOpen={isFolderSelectionOpen}
+          onClose={() => setIsFolderSelectionOpen(false)}
+          onConfirm={handleFolderSelection}
+          provider={user?.provider || 'gmail'}
+          isLoading={isScanning}
         />
       </div>
     </div>

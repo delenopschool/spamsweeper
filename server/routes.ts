@@ -182,8 +182,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         status: "pending"
       });
 
-      // Start background processing
-      processEmailScan(scan.id, user.accessToken, user.provider).catch(console.error);
+      // Start background processing with selected folders
+      const { folders } = req.body;
+      processEmailScan(scan.id, user.accessToken, user.provider, folders).catch(console.error);
 
       res.json({ scanId: scan.id });
     } catch (error) {
@@ -457,7 +458,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 }
 
 // Background processing functions
-async function processEmailScan(scanId: number, accessToken: string, provider: string) {
+async function processEmailScan(scanId: number, accessToken: string, provider: string, folders?: string[]) {
   const scanStartTime = Date.now();
   try {
     console.log(`🚀 [Scan] Starting email scan for scanId: ${scanId} with provider: ${provider} at ${new Date().toISOString()}`);
@@ -466,9 +467,9 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
     let emails;
     
     if (provider === 'microsoft') {
-      emails = await microsoftGraphService.getSpamEmails(accessToken);
+      emails = await microsoftGraphService.getSpamEmails(accessToken, folders);
     } else if (provider === 'google') {
-      emails = await gmailService.getSpamEmails(accessToken);
+      emails = await gmailService.getSpamEmails(accessToken, folders);
     } else {
       throw new Error(`Unsupported provider: ${provider}`);
     }
