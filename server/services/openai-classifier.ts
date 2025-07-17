@@ -7,39 +7,51 @@ interface OpenRouterResponse {
   }>;
 }
 
-// Rate limiting for OpenRouter free tier
-class RateLimiter {
-  private requests: number[] = [];
-  private readonly maxRequests = 15; // Conservative limit for free tier
-  private readonly timeWindow = 60000; // 1 minute in milliseconds
+// Adaptive rate limiting - only activate after hitting 429 errors
+class AdaptiveRateLimiter {
+  private isRateLimited = false;
+  private rateLimitDelay = 5000; // 5 seconds delay when rate limited
+  private lastRequestTime = 0;
 
-  async waitForSlot(): Promise<void> {
+  async waitIfNeeded(): Promise<void> {
+    if (!this.isRateLimited) {
+      return; // No delay needed if we haven't hit rate limits
+    }
+
     const now = Date.now();
+    const timeSinceLastRequest = now - this.lastRequestTime;
     
-    // Remove old requests outside the time window
-    this.requests = this.requests.filter(time => now - time < this.timeWindow);
-    
-    if (this.requests.length >= this.maxRequests) {
-      // Calculate wait time until oldest request expires
-      const waitTime = this.timeWindow - (now - this.requests[0]) + 1000; // Add 1 second buffer
-      console.log(`⏱️ [OpenRouter] Rate limit reached, waiting ${Math.ceil(waitTime / 1000)}s...`);
+    if (timeSinceLastRequest < this.rateLimitDelay) {
+      const waitTime = this.rateLimitDelay - timeSinceLastRequest;
+      console.log(`⏱️ [OpenRouter] Rate limit mode active, waiting ${Math.ceil(waitTime / 1000)}s...`);
       await new Promise(resolve => setTimeout(resolve, waitTime));
-      return this.waitForSlot(); // Recursively check again
     }
     
-    this.requests.push(now);
+    this.lastRequestTime = Date.now();
+  }
+
+  activateRateLimit(): void {
+    if (!this.isRateLimited) {
+      console.log(`🚦 [OpenRouter] Rate limiting activated - adding ${this.rateLimitDelay/1000}s delay between requests`);
+      this.isRateLimited = true;
+    }
+  }
+
+  // Optionally reset after successful period
+  recordSuccess(): void {
+    // Could implement logic to disable rate limiting after X successful requests
   }
 }
 
-const rateLimiter = new RateLimiter();
+const adaptiveRateLimiter = new AdaptiveRateLimiter();
 
 async function callOpenRouter(messages: Array<{ role: string; content: string }>, retryCount = 0): Promise<OpenRouterResponse> {
   const maxRetries = 3;
   const startTime = Date.now();
   
   try {
-    // Wait for rate limit slot
-    await rateLimiter.waitForSlot();
+    // Wait only if we're in rate limit mode
+    await adaptiveRateLimiter.waitIfNeeded();
     
     console.log(`🔄 [OpenRouter] Starting API call at ${new Date().toISOString()}`);
     
@@ -62,23 +74,32 @@ async function callOpenRouter(messages: Array<{ role: string; content: string }>
     console.log(`📡 [OpenRouter] API response received in ${responseTime}ms`);
 
     if (!response.ok) {
-      if (response.status === 429 && retryCount < maxRetries) {
-        const waitTime = Math.pow(2, retryCount) * 5000; // Exponential backoff: 5s, 10s, 20s
-        console.log(`⏳ [OpenRouter] Rate limited, retrying in ${waitTime/1000}s (attempt ${retryCount + 1}/${maxRetries})`);
-        await new Promise(resolve => setTimeout(resolve, waitTime));
-        return callOpenRouter(messages, retryCount + 1);
+      if (response.status === 429) {
+        // Activate rate limiting for future requests
+        adaptiveRateLimiter.activateRateLimit();
+        
+        if (retryCount < maxRetries) {
+          const waitTime = Math.pow(2, retryCount) * 5000; // Exponential backoff: 5s, 10s, 20s
+          console.log(`⏳ [OpenRouter] Rate limited, retrying in ${waitTime/1000}s (attempt ${retryCount + 1}/${maxRetries})`);
+          await new Promise(resolve => setTimeout(resolve, waitTime));
+          return callOpenRouter(messages, retryCount + 1);
+        }
       }
       
       console.error(`❌ [OpenRouter] API error: ${response.status} ${response.statusText}`);
       throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
     }
 
+    // Record successful request
+    adaptiveRateLimiter.recordSuccess();
+    
     const jsonResponse = await response.json();
     console.log(`✅ [OpenRouter] JSON parsed successfully in ${Date.now() - startTime}ms total`);
     
     return jsonResponse;
   } catch (error) {
     if (retryCount < maxRetries && (error as Error).message.includes('429')) {
+      adaptiveRateLimiter.activateRateLimit();
       const waitTime = Math.pow(2, retryCount) * 5000;
       console.log(`⏳ [OpenRouter] Retrying after error in ${waitTime/1000}s (attempt ${retryCount + 1}/${maxRetries})`);
       await new Promise(resolve => setTimeout(resolve, waitTime));
@@ -186,31 +207,51 @@ Respond with JSON in this exact format:
     
     const results: SpamClassificationResult[] = [];
     
-    // Process emails one by one to avoid rate limits with free tier
-    for (let i = 0; i < emails.length; i++) {
-      const email = emails[i];
-      const emailNumber = i + 1;
+    // Process emails in small batches - fast until rate limited
+    const batchSize = 3;
+    for (let i = 0; i < emails.length; i += batchSize) {
+      const batch = emails.slice(i, i + batchSize);
+      const batchNumber = Math.floor(i / batchSize) + 1;
+      const totalBatches = Math.ceil(emails.length / batchSize);
       
-      console.log(`📧 [${emailNumber}/${emails.length}] Processing email from ${email.sender}: "${email.subject}"`);
+      console.log(`📦 [Batch ${batchNumber}/${totalBatches}] Processing ${batch.length} emails concurrently`);
+      
+      const batchPromises = batch.map(async (email, index) => {
+        const emailNumber = i + index + 1;
+        console.log(`📧 [${emailNumber}/${emails.length}] Processing email from ${email.sender}: "${email.subject}"`);
+        
+        try {
+          const result = await this.classifyEmail(email.sender, email.subject, email.body);
+          console.log(`✅ [${emailNumber}/${emails.length}] Classification completed: ${result.isSpam ? 'SPAM' : 'NOT SPAM'} (${result.confidence}%)`);
+          return result;
+        } catch (error) {
+          console.error(`❌ [${emailNumber}/${emails.length}] Error classifying email:`, error);
+          return {
+            isSpam: false,
+            confidence: 0,
+            reasoning: 'Classification failed: ' + (error as Error).message
+          };
+        }
+      });
       
       try {
-        const result = await this.classifyEmail(email.sender, email.subject, email.body);
-        results.push(result);
-        console.log(`✅ [${emailNumber}/${emails.length}] Classification completed: ${result.isSpam ? 'SPAM' : 'NOT SPAM'} (${result.confidence}%)`);
+        const batchResults = await Promise.all(batchPromises);
+        results.push(...batchResults);
+        console.log(`✅ [Batch ${batchNumber}/${totalBatches}] Completed ${batchResults.length} emails`);
       } catch (error) {
-        console.error(`❌ [${emailNumber}/${emails.length}] Error classifying email:`, error);
-        // Add fallback result for failed email
-        const fallbackResult = {
+        console.error(`❌ [Batch ${batchNumber}/${totalBatches}] Batch error:`, error);
+        // This shouldn't happen with individual try-catch, but just in case
+        const fallbackResults = batch.map(() => ({
           isSpam: false,
           confidence: 0,
-          reasoning: 'Classification failed: ' + (error as Error).message
-        };
-        results.push(fallbackResult);
+          reasoning: 'Batch processing failed'
+        }));
+        results.push(...fallbackResults);
       }
       
-      // Add small delay between individual emails for safety
-      if (i < emails.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 500));
+      // Only add delay if we're not on the last batch
+      if (i + batchSize < emails.length) {
+        await new Promise(resolve => setTimeout(resolve, 200)); // Small delay between batches
       }
     }
     
