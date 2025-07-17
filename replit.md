@@ -122,6 +122,7 @@ The application follows a modern full-stack architecture with clear separation b
   - Fixed Google OAuth callback route - added missing `/auth/google/callback` GET route
   - Updated feature card icon sizes on homepage as requested
   - **Fixed Multi-Provider Authentication**: Resolved duplicate email constraint issue that prevented users from switching between Gmail and Outlook providers with the same email address
+  - **Enhanced Folder Selection Modal**: Added scrollable functionality to prevent modal from going off-screen, with flexible layout and proper scroll handling
 - **Gmail Integration (July 2025)**: Added full Gmail support alongside Microsoft Graph
   - Implemented Google OAuth authentication flow
   - Added Gmail API integration for spam email scanning
