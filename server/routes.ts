@@ -55,13 +55,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("🔐 [Google] Existing user found:", !!user);
       
       if (!user) {
-        console.log("🔐 [Google] Creating new user...");
-        user = await storage.createUser({
-          email: userProfile.mail,
-          googleId: userProfile.id,
-          provider: 'google'
-        });
-        console.log("🔐 [Google] User created successfully:", user.id);
+        // Check if user exists with same email but different provider
+        const existingUser = await storage.getUserByEmail(userProfile.mail);
+        if (existingUser) {
+          console.log("🔐 [Google] Updating existing user to Google provider...");
+          user = await storage.updateUser(existingUser.id, {
+            googleId: userProfile.id,
+            provider: 'google'
+          });
+        } else {
+          console.log("🔐 [Google] Creating new user...");
+          user = await storage.createUser({
+            email: userProfile.mail,
+            googleId: userProfile.id,
+            provider: 'google'
+          });
+        }
+        console.log("🔐 [Google] User processed successfully:", user.id);
       }
 
       const tokenExpiry = new Date(Date.now() + tokens.expiresIn * 1000);
@@ -119,13 +129,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log("🔐 [Auth] Existing Microsoft user found:", !!user);
         
         if (!user) {
-          console.log("🔐 [Auth] Creating new Microsoft user...");
-          user = await storage.createUser({
-            email: userProfile.mail || userProfile.userPrincipalName,
-            microsoftId: userProfile.id,
-            provider: 'microsoft'
-          });
-          console.log("🔐 [Auth] Microsoft user created:", user.id);
+          // Check if user exists with same email but different provider
+          const existingUser = await storage.getUserByEmail(userProfile.mail || userProfile.userPrincipalName);
+          if (existingUser) {
+            console.log("🔐 [Auth] Updating existing user to Microsoft provider...");
+            user = await storage.updateUser(existingUser.id, {
+              microsoftId: userProfile.id,
+              provider: 'microsoft'
+            });
+          } else {
+            console.log("🔐 [Auth] Creating new Microsoft user...");
+            user = await storage.createUser({
+              email: userProfile.mail || userProfile.userPrincipalName,
+              microsoftId: userProfile.id,
+              provider: 'microsoft'
+            });
+          }
+          console.log("🔐 [Auth] Microsoft user processed:", user.id);
         }
       } else if (provider === 'google') {
         console.log("🔐 [Auth] Processing Google authentication...");
@@ -142,13 +162,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log("🔐 [Auth] Existing Google user found:", !!user);
         
         if (!user) {
-          console.log("🔐 [Auth] Creating new Google user...");
-          user = await storage.createUser({
-            email: userProfile.mail,
-            googleId: userProfile.id,
-            provider: 'google'
-          });
-          console.log("🔐 [Auth] Google user created:", user.id);
+          // Check if user exists with same email but different provider
+          const existingUser = await storage.getUserByEmail(userProfile.mail);
+          if (existingUser) {
+            console.log("🔐 [Auth] Updating existing user to Google provider...");
+            user = await storage.updateUser(existingUser.id, {
+              googleId: userProfile.id,
+              provider: 'google'
+            });
+          } else {
+            console.log("🔐 [Auth] Creating new Google user...");
+            user = await storage.createUser({
+              email: userProfile.mail,
+              googleId: userProfile.id,
+              provider: 'google'
+            });
+          }
+          console.log("🔐 [Auth] Google user processed:", user.id);
         }
       }
 
