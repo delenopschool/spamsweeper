@@ -111,8 +111,12 @@ export class MicrosoftGraphService {
   }
 
   private getRedirectUri(): string {
-    // For production deployment, use the Render URL
-    return 'https://spamsweeper.onrender.com/auth/callback';
+    // Use environment variable for flexibility between development and production
+    const baseUrl = process.env.REPLIT_DOMAINS 
+      ? `https://${process.env.REPLIT_DOMAINS.split(' ')[0]}`
+      : 'https://spamsweeper.onrender.com';
+    
+    return `${baseUrl}/auth/microsoft/callback`;
   }
 
   getAuthUrl(): string {
