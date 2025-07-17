@@ -79,7 +79,8 @@ export class MicrosoftGraphService {
       throw new Error('Microsoft OAuth credentials not configured');
     }
 
-    const tokenUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
+    // Use consumers endpoint for personal accounts
+    const tokenUrl = 'https://login.microsoftonline.com/consumers/oauth2/v2.0/token';
     
     const params = new URLSearchParams({
       client_id: clientId,
@@ -125,7 +126,8 @@ export class MicrosoftGraphService {
       throw new Error('Microsoft Client ID not configured');
     }
 
-    const authUrl = new URL('https://login.microsoftonline.com/common/oauth2/v2.0/authorize');
+    // Try using consumers endpoint specifically for personal accounts
+    const authUrl = new URL('https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize');
     authUrl.searchParams.append('client_id', clientId);
     authUrl.searchParams.append('response_type', 'code');
     authUrl.searchParams.append('redirect_uri', redirectUri);
@@ -134,6 +136,7 @@ export class MicrosoftGraphService {
     
     console.log(`🔐 [Auth] Generated auth URL with Client ID: ${clientId}`);
     console.log(`🔐 [Auth] Redirect URI: ${redirectUri}`);
+    console.log(`🔐 [Auth] Using consumers endpoint for personal accounts`);
 
     return authUrl.toString();
   }
@@ -149,7 +152,8 @@ export class MicrosoftGraphService {
       throw new Error('Microsoft OAuth credentials not configured');
     }
 
-    const tokenUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
+    // Use consumers endpoint for personal accounts
+    const tokenUrl = 'https://login.microsoftonline.com/consumers/oauth2/v2.0/token';
     
     const params = new URLSearchParams({
       client_id: clientId,
