@@ -129,9 +129,11 @@ export class MicrosoftGraphService {
     authUrl.searchParams.append('client_id', clientId);
     authUrl.searchParams.append('response_type', 'code');
     authUrl.searchParams.append('redirect_uri', redirectUri);
-    authUrl.searchParams.append('scope', 'https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/User.Read');
+    authUrl.searchParams.append('scope', 'https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/User.Read offline_access');
     authUrl.searchParams.append('response_mode', 'query');
-    authUrl.searchParams.append('prompt', 'select_account');
+    
+    console.log(`🔐 [Auth] Generated auth URL with Client ID: ${clientId}`);
+    console.log(`🔐 [Auth] Redirect URI: ${redirectUri}`);
 
     return authUrl.toString();
   }
@@ -155,6 +157,7 @@ export class MicrosoftGraphService {
       code,
       redirect_uri: redirectUri,
       grant_type: 'authorization_code',
+      scope: 'https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/User.Read offline_access'
     });
 
     const response = await fetch(tokenUrl, {
