@@ -198,6 +198,79 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Microsoft OAuth callback route
+  app.get("/auth/microsoft/callback", async (req, res) => {
+    try {
+      const { code, error: authError } = req.query;
+      
+      console.log("🔐 [Microsoft] Callback received:", { 
+        hasCode: !!code, 
+        error: authError 
+      });
+      
+      if (authError) {
+        console.log("❌ [Microsoft] OAuth error:", authError);
+        return res.redirect(`/?error=${encodeURIComponent('Microsoft authentication failed: ' + authError)}`);
+      }
+      
+      if (!code) {
+        console.log("❌ [Microsoft] No authorization code received");
+        return res.redirect("/?error=no_code");
+      }
+
+      console.log("🔐 [Microsoft] Exchanging code for tokens...");
+      const tokens = await microsoftGraphService.exchangeCodeForTokens(code as string);
+      console.log("🔐 [Microsoft] Tokens received successfully");
+      
+      console.log("🔐 [Microsoft] Getting user profile...");
+      const userProfile = await microsoftGraphService.getUserProfile(tokens.accessToken);
+      console.log("🔐 [Microsoft] User profile received:", { 
+        id: userProfile.id, 
+        email: userProfile.mail || userProfile.userPrincipalName 
+      });
+      
+      let user = await storage.getUserByMicrosoftId(userProfile.id);
+      console.log("🔐 [Microsoft] Existing user found:", !!user);
+      
+      if (!user) {
+        // Check if user exists with same email but different provider
+        const existingUser = await storage.getUserByEmail(userProfile.mail || userProfile.userPrincipalName);
+        if (existingUser) {
+          console.log("🔐 [Microsoft] Updating existing user to Microsoft provider...");
+          user = await storage.updateUser(existingUser.id, {
+            microsoftId: userProfile.id,
+            provider: 'microsoft'
+          });
+        } else {
+          console.log("🔐 [Microsoft] Creating new user...");
+          user = await storage.createUser({
+            email: userProfile.mail || userProfile.userPrincipalName,
+            microsoftId: userProfile.id,
+            provider: 'microsoft'
+          });
+        }
+        console.log("🔐 [Microsoft] User processed successfully:", user.id);
+      }
+
+      const tokenExpiry = new Date(Date.now() + tokens.expiresIn * 1000);
+      
+      console.log("🔐 [Microsoft] Updating user tokens...");
+      await storage.updateUser(user.id, {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+        tokenExpiry
+      });
+
+      console.log("🔐 [Microsoft] Redirecting to auth callback...");
+      // Redirect to auth callback page with user ID
+      res.redirect(`/auth-callback?userId=${user.id}&provider=microsoft`);
+    } catch (error) {
+      console.error("❌ [Microsoft] OAuth callback error:", error);
+      console.error("Error stack:", error.stack);
+      res.redirect(`/?error=${encodeURIComponent('Microsoft authentication failed: ' + error.message)}`);
+    }
+  });
+
   app.post("/api/auth/callback", async (req, res) => {
     try {
       const { code, provider } = req.body;

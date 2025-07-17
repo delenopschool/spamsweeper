@@ -111,12 +111,8 @@ export class MicrosoftGraphService {
   }
 
   private getRedirectUri(): string {
-    // Use environment variable for flexibility between development and production
-    const baseUrl = process.env.REPLIT_DOMAINS 
-      ? `https://${process.env.REPLIT_DOMAINS.split(' ')[0]}`
-      : 'https://spamsweeper.onrender.com';
-    
-    return `${baseUrl}/auth/microsoft/callback`;
+    // Always use the production URL for OAuth redirects to avoid dynamic URI issues
+    return 'https://spamsweeper.onrender.com/auth/microsoft/callback';
   }
 
   getAuthUrl(): string {
