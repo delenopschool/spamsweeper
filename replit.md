@@ -122,6 +122,13 @@ The application follows a modern full-stack architecture with clear separation b
   - Fixed Google OAuth callback route - added missing `/auth/google/callback` GET route
   - Updated feature card icon sizes on homepage as requested
   - **Fixed Multi-Provider Authentication**: Resolved duplicate email constraint issue that prevented users from switching between Gmail and Outlook providers with the same email address
+  - **Added Real-Time AI Progress Tracker**: Implemented live progress tracking during email analysis
+    - Added `currentProgress` field to email scan schema to track real-time progress
+    - Created `AIProgressModal` component with live progress bar and status updates
+    - Progress updates every second showing current email being processed
+    - Shows completion percentage, current email count, and detected spam statistics
+    - Improved user experience with visual feedback during AI analysis process
+    - Enhanced folder selection modal with scrollable content for better mobile experience
   - **Enhanced Folder Selection Modal**: Added scrollable functionality to prevent modal from going off-screen, with flexible layout and proper scroll handling
 - **Gmail Integration (July 2025)**: Added full Gmail support alongside Microsoft Graph
   - Implemented Google OAuth authentication flow

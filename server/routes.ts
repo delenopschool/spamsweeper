@@ -576,6 +576,11 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
       
       console.log(`📨 [Email ${i + 1}/${emails.length}] Processing: "${email.subject}" from ${email.sender.emailAddress.address}`);
       
+      // Update progress in database
+      await storage.updateEmailScan(scanId, {
+        currentProgress: i + 1
+      });
+      
       const textBody = emailParserService.extractTextFromHtml(email.body.content);
       const bodyExtractionTime = Date.now() - emailStartTime;
       console.log(`📝 [Email ${i + 1}/${emails.length}] Text extracted in ${bodyExtractionTime}ms`);

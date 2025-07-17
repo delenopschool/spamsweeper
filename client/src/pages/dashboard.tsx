@@ -8,6 +8,7 @@ import logoUrl from "@/assets/spam-sweeper-logo.png";
 import StatusCards from "@/components/status-cards";
 import EmailReviewTable from "@/components/email-review-table";
 import ProcessingModal from "@/components/processing-modal";
+import AIProgressModal from "@/components/ai-progress-modal";
 import EmailPreviewModal from "@/components/email-preview-modal";
 import LearningDashboard from "@/components/learning-dashboard";
 import FolderSelectionModal from "@/components/folder-selection-modal";
@@ -19,6 +20,7 @@ export default function Dashboard() {
   
   const [currentScanId, setCurrentScanId] = useState<number | null>(null);
   const [isProcessingModalOpen, setIsProcessingModalOpen] = useState(false);
+  const [isAIProgressModalOpen, setIsAIProgressModalOpen] = useState(false);
   const [previewEmailId, setPreviewEmailId] = useState<number | null>(null);
   const [scanData, setScanData] = useState<any>(null);
   const [isScanning, setIsScanning] = useState(false);
@@ -80,8 +82,8 @@ export default function Dashboard() {
       const data = await response.json();
       setCurrentScanId(data.scanId);
       
-      // Start polling for results
-      pollScanResults(data.scanId);
+      // Open AI progress modal to show real-time progress
+      setIsAIProgressModalOpen(true);
     } catch (error) {
       console.error("Scan error:", error);
       setIsScanning(false);
@@ -103,28 +105,16 @@ export default function Dashboard() {
     handleScanEmails(selectedFolders);
   }, [handleScanEmails]);
 
-  const pollScanResults = async (scanId: number) => {
-    let attempts = 0;
-    const maxAttempts = 60; // 2 minutes max
-    
-    const poll = async () => {
-      const data = await fetchScanData(scanId);
-      
-      if (data && data.scan && data.scan.status === "completed") {
-        setIsScanning(false);
-        return;
-      }
-      
-      if (attempts < maxAttempts && data && data.scan && data.scan.status === "processing") {
-        attempts++;
-        setTimeout(poll, 2000);
-      } else {
-        setIsScanning(false);
-      }
-    };
-    
-    poll();
-  };
+  const handleAIProgressComplete = useCallback((data: any) => {
+    setScanData(data);
+    setIsScanning(false);
+    setIsAIProgressModalOpen(false);
+  }, []);
+
+  const handleAIProgressClose = useCallback(() => {
+    setIsAIProgressModalOpen(false);
+    setIsScanning(false);
+  }, []);
 
   const handleRefresh = () => {
     if (currentScanId) {
@@ -318,6 +308,13 @@ export default function Dashboard() {
           isOpen={isProcessingModalOpen}
           onClose={() => setIsProcessingModalOpen(false)}
           emailCount={scanData?.emails?.filter((email: any) => email.isSelected && email.hasUnsubscribeLink)?.length || 0}
+        />
+
+        <AIProgressModal 
+          isOpen={isAIProgressModalOpen}
+          onClose={handleAIProgressClose}
+          scanId={currentScanId}
+          onComplete={handleAIProgressComplete}
         />
 
         <EmailPreviewModal 

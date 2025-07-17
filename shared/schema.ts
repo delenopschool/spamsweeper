@@ -21,7 +21,8 @@ export const emailScans = pgTable("email_scans", {
   detectedSpam: integer("detected_spam").default(0),
   unsubscribeLinks: integer("unsubscribe_links").default(0),
   processed: integer("processed").default(0),
-  status: text("status").default("pending"), // pending, completed, failed
+  currentProgress: integer("current_progress").default(0), // Current email being processed
+  status: text("status").default("pending"), // pending, processing, completed, failed
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -68,6 +69,7 @@ export const insertEmailScanSchema = createInsertSchema(emailScans).pick({
   detectedSpam: true,
   unsubscribeLinks: true,
   processed: true,
+  currentProgress: true,
   status: true,
 });
 
