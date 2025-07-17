@@ -33,35 +33,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { code } = req.query;
       
+      console.log("🔐 [Google] Callback received with code:", !!code);
+      
       if (!code) {
+        console.log("❌ [Google] No authorization code received");
         return res.redirect("/?error=no_code");
       }
 
+      console.log("🔐 [Google] Exchanging code for tokens...");
       const tokens = await gmailService.exchangeCodeForTokens(code as string);
+      console.log("🔐 [Google] Tokens received successfully");
+      
+      console.log("🔐 [Google] Getting user profile...");
       const userProfile = await gmailService.getUserProfile(tokens.accessToken);
+      console.log("🔐 [Google] User profile received:", { 
+        id: userProfile.id, 
+        email: userProfile.mail 
+      });
       
       let user = await storage.getUserByGoogleId(userProfile.id);
+      console.log("🔐 [Google] Existing user found:", !!user);
       
       if (!user) {
+        console.log("🔐 [Google] Creating new user...");
         user = await storage.createUser({
           email: userProfile.mail,
           googleId: userProfile.id,
           provider: 'google'
         });
+        console.log("🔐 [Google] User created successfully:", user.id);
       }
 
       const tokenExpiry = new Date(Date.now() + tokens.expiresIn * 1000);
       
+      console.log("🔐 [Google] Updating user tokens...");
       await storage.updateUser(user.id, {
         accessToken: tokens.accessToken,
         refreshToken: tokens.refreshToken,
         tokenExpiry
       });
 
+      console.log("🔐 [Google] Redirecting to auth callback...");
       // Redirect to auth callback page with user ID
       res.redirect(`/auth-callback?userId=${user.id}&provider=google`);
     } catch (error) {
       console.error("Google OAuth callback error:", error);
+      console.error("Error stack:", error.stack);
+      console.error("Error details:", {
+        message: error.message,
+        name: error.name,
+        hasCode: !!req.query.code
+      });
       res.redirect("/?error=auth_failed");
     }
   });
@@ -69,6 +91,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/callback", async (req, res) => {
     try {
       const { code, provider } = req.body;
+      
+      console.log("🔐 [Auth] Callback received:", { provider, hasCode: !!code });
       
       if (!code) {
         return res.status(400).json({ message: "Authorization code required" });
@@ -81,45 +105,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let tokens, userProfile, user;
 
       if (provider === 'microsoft') {
+        console.log("🔐 [Auth] Processing Microsoft authentication...");
         tokens = await microsoftGraphService.exchangeCodeForTokens(code);
+        console.log("🔐 [Auth] Microsoft tokens received");
+        
         userProfile = await microsoftGraphService.getUserProfile(tokens.accessToken);
+        console.log("🔐 [Auth] Microsoft profile received:", { 
+          id: userProfile.id, 
+          email: userProfile.mail || userProfile.userPrincipalName 
+        });
         
         user = await storage.getUserByMicrosoftId(userProfile.id);
+        console.log("🔐 [Auth] Existing Microsoft user found:", !!user);
         
         if (!user) {
+          console.log("🔐 [Auth] Creating new Microsoft user...");
           user = await storage.createUser({
             email: userProfile.mail || userProfile.userPrincipalName,
             microsoftId: userProfile.id,
             provider: 'microsoft'
           });
+          console.log("🔐 [Auth] Microsoft user created:", user.id);
         }
       } else if (provider === 'google') {
+        console.log("🔐 [Auth] Processing Google authentication...");
         tokens = await gmailService.exchangeCodeForTokens(code);
+        console.log("🔐 [Auth] Google tokens received");
+        
         userProfile = await gmailService.getUserProfile(tokens.accessToken);
+        console.log("🔐 [Auth] Google profile received:", { 
+          id: userProfile.id, 
+          email: userProfile.mail 
+        });
         
         user = await storage.getUserByGoogleId(userProfile.id);
+        console.log("🔐 [Auth] Existing Google user found:", !!user);
         
         if (!user) {
+          console.log("🔐 [Auth] Creating new Google user...");
           user = await storage.createUser({
             email: userProfile.mail,
             googleId: userProfile.id,
             provider: 'google'
           });
+          console.log("🔐 [Auth] Google user created:", user.id);
         }
       }
 
       const tokenExpiry = new Date(Date.now() + tokens.expiresIn * 1000);
       
+      console.log("🔐 [Auth] Updating user tokens...");
       await storage.updateUser(user.id, {
         accessToken: tokens.accessToken,
         refreshToken: tokens.refreshToken,
         tokenExpiry
       });
 
+      console.log("🔐 [Auth] Authentication successful for user:", user.id);
       res.json({ user: { id: user.id, email: user.email, provider: user.provider } });
     } catch (error) {
       console.error("OAuth callback error:", error);
-      res.status(500).json({ message: "Authentication failed" });
+      console.error("Error stack:", error.stack);
+      console.error("Error details:", {
+        message: error.message,
+        name: error.name,
+        provider: req.body.provider,
+        hasCode: !!req.body.code
+      });
+      res.status(500).json({ message: "Authentication failed", error: error.message });
     }
   });
 
