@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Mail, Shield, Zap } from "lucide-react";
 import outlookIcon from "@/assets/outlook.png";
 import gmailIcon from "@/assets/gmail.png";
-import yahooIcon from "@/assets/yahoo.svg";
+import yahooIcon from "@/assets/yahoo.png";
 
 // Outlook logo - eenvoudig en accuraat
 const OutlookIcon = () => (
@@ -165,7 +165,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <YahooIcon />
+                  <img src={yahooIcon} alt="Smart Review" className="w-6 h-6" />
                   Connect Yahoo
                 </>
               )}
