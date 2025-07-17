@@ -79,6 +79,21 @@ export default function Home() {
     try {
       setIsAuthenticating(true);
       setAuthProvider("yahoo");
+      
+      // Show info about Yahoo Mail API requirements
+      const proceed = confirm(
+        "Yahoo Mail API toegang vereist speciale goedkeuring van Yahoo.\n\n" +
+        "Voor volledige email toegang moet je een aanvraag indienen bij:\n" +
+        "https://senders.yahooinc.com/developer/developer-access/\n\n" +
+        "Wil je toch doorgaan met basis profiel authenticatie?"
+      );
+      
+      if (!proceed) {
+        setIsAuthenticating(false);
+        setAuthProvider("");
+        return;
+      }
+      
       const response = await apiRequest("GET", "/api/auth/yahoo");
       const data = await response.json();
       
@@ -156,7 +171,7 @@ export default function Home() {
             <Button 
               onClick={handleYahooAuth}
               disabled={isAuthenticating}
-              className="bg-[#410093] hover:bg-[#350075] text-white border-0 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg shadow-lg transition-all duration-200"
+              className="bg-[#9d4fff] hover:bg-[#350075] text-white border-0 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg shadow-lg transition-all duration-200"
             >
               {isAuthenticating && authProvider === "yahoo" ? (
                 <>

@@ -47,15 +47,29 @@ class YahooMailService {
   }
 
   getAuthUrl(): string {
+    console.log('🔐 [Yahoo] Generating auth URL with config:', {
+      clientId: this.clientId ? 'SET' : 'MISSING',
+      redirectUri: this.redirectUri,
+      scope: 'openid profile email'
+    });
+
+    // Check if client credentials are properly configured
+    if (!this.clientId || !this.clientSecret) {
+      console.error('❌ [Yahoo] Missing client credentials');
+      throw new Error('Yahoo OAuth credentials not configured');
+    }
+
     const params = new URLSearchParams({
       client_id: this.clientId,
       response_type: 'code',
       redirect_uri: this.redirectUri,
-      scope: 'mail-r openid profile', // Read mail access, OpenID, and profile
-      state: 'random_state_string' // Should be random for security
+      scope: 'openid profile', // Yahoo requires approval for mail access
+      state: 'yahoo_auth_' + Math.random().toString(36).substring(2, 15)
     });
 
-    return `https://api.login.yahoo.com/oauth2/request_auth?${params.toString()}`;
+    const authUrl = `https://api.login.yahoo.com/oauth2/request_auth?${params.toString()}`;
+    console.log('🔐 [Yahoo] Generated auth URL:', authUrl);
+    return authUrl;
   }
 
   async exchangeCodeForTokens(code: string): Promise<YahooTokens> {
@@ -168,71 +182,16 @@ class YahooMailService {
   async getSpamEmails(accessToken: string, folders?: string[]): Promise<YahooEmail[]> {
     try {
       console.log('📧 [Yahoo] Fetching spam emails...');
+      console.log('⚠️ [Yahoo] Mail API access requires special approval from Yahoo');
       
-      // Yahoo Mail API uses JSON-RPC format
-      const requestBody = {
-        method: 'ListMessages',
-        params: {
-          folderId: 'Bulk', // Yahoo's spam folder
-          numMid: 100, // Maximum number of messages to retrieve
-          sortKey: 'date',
-          sortOrder: 'down',
-          includeHeaders: true
-        }
-      };
-
-      const response = await axios.post(
-        'https://mail.yahooapis.com/ws/mail/v1.1/jsonrpc',
-        requestBody,
-        {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        }
-      );
-
-      if (response.data.error) {
-        console.error('❌ [Yahoo] API Error:', response.data.error);
-        throw new Error(response.data.error.message);
-      }
-
-      const messages = response.data.result?.message || [];
-      console.log(`📧 [Yahoo] Retrieved ${messages.length} emails from spam folder`);
-
-      // Transform Yahoo messages to our standard format
-      const transformedEmails: YahooEmail[] = messages.map((msg: any) => {
-        const fromHeader = msg.header?.from || '';
-        const subjectHeader = msg.header?.subject || 'No Subject';
-        
-        // Parse sender from header
-        const senderMatch = fromHeader.match(/(.+?)\s*<(.+?)>/) || [null, fromHeader, fromHeader];
-        const senderName = senderMatch[1]?.trim() || '';
-        const senderEmail = senderMatch[2]?.trim() || fromHeader;
-
-        return {
-          id: msg.mid,
-          subject: subjectHeader,
-          sender: {
-            emailAddress: {
-              address: senderEmail,
-              name: senderName
-            }
-          },
-          body: {
-            content: msg.textPart || msg.htmlPart || '',
-            contentType: msg.htmlPart ? 'text/html' : 'text/plain'
-          },
-          receivedDateTime: new Date(msg.receivedDate * 1000).toISOString(),
-          folder: 'Bulk'
-        };
-      });
-
-      return transformedEmails;
+      // For now, return empty array since Yahoo requires approval for mail access
+      // Users will need to apply for mail API access at https://senders.yahooinc.com/developer/developer-access/
+      console.log('📧 [Yahoo] Returning empty array - mail access not yet approved');
+      
+      return [];
     } catch (error) {
       console.error('❌ [Yahoo] Failed to fetch emails:', error.response?.data || error.message);
-      throw new Error('Failed to fetch spam emails');
+      throw new Error('Yahoo Mail API access requires approval. Please apply at https://senders.yahooinc.com/developer/developer-access/');
     }
   }
 

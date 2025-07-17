@@ -111,9 +111,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/auth/yahoo/callback", async (req, res) => {
     try {
-      const { code } = req.query;
+      const { code, error: authError, state } = req.query;
       
-      console.log("🔐 [Yahoo] Callback received with code:", !!code);
+      console.log("🔐 [Yahoo] Callback received:", {
+        code: !!code,
+        error: authError,
+        state: state,
+        fullQuery: req.query
+      });
+      
+      if (authError) {
+        console.log("❌ [Yahoo] OAuth error:", authError);
+        return res.redirect(`/?error=${encodeURIComponent('Yahoo authentication failed: ' + authError)}`);
+      }
       
       if (!code) {
         console.log("❌ [Yahoo] No authorization code received");
@@ -122,59 +132,69 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log("🔐 [Yahoo] Exchanging code for tokens...");
       const tokens = await yahooMailService.exchangeCodeForTokens(code as string);
-      console.log("🔐 [Yahoo] Tokens received successfully");
+      console.log("🔐 [Yahoo] Tokens received:", tokens ? 'SUCCESS' : 'FAILED');
+      
+      if (!tokens) {
+        console.error("❌ [Yahoo] Failed to exchange code for tokens");
+        return res.redirect("/?error=token_exchange_failed");
+      }
       
       console.log("🔐 [Yahoo] Getting user profile...");
-      const userProfile = await yahooMailService.getUserProfile(tokens.accessToken);
-      console.log("🔐 [Yahoo] User profile received:", { 
-        id: userProfile.id, 
-        email: userProfile.mail 
-      });
+      const userProfile = await yahooMailService.getUserProfile(tokens.access_token);
+      console.log("🔐 [Yahoo] User profile received:", userProfile ? 'SUCCESS' : 'FAILED');
       
-      let user = await storage.getUserByYahooId(userProfile.id);
+      if (!userProfile) {
+        console.error("❌ [Yahoo] Failed to get user profile");
+        return res.redirect("/?error=profile_failed");
+      }
+      
+      let user = await storage.findUserByYahooId(userProfile.sub);
       console.log("🔐 [Yahoo] Existing user found:", !!user);
       
       if (!user) {
         // Check if user exists with same email but different provider
-        const existingUser = await storage.getUserByEmail(userProfile.mail);
+        const existingUser = await storage.getUserByEmail(userProfile.email);
         if (existingUser) {
           console.log("🔐 [Yahoo] Updating existing user to Yahoo provider...");
           user = await storage.updateUser(existingUser.id, {
-            yahooId: userProfile.id,
+            yahooId: userProfile.sub,
             provider: 'yahoo'
           });
         } else {
           console.log("🔐 [Yahoo] Creating new user...");
           user = await storage.createUser({
-            email: userProfile.mail,
-            yahooId: userProfile.id,
-            provider: 'yahoo'
+            email: userProfile.email,
+            name: userProfile.name,
+            yahooId: userProfile.sub,
+            provider: 'yahoo',
+            accessToken: tokens.access_token,
+            refreshToken: tokens.refresh_token,
+            tokenExpiry: new Date(Date.now() + tokens.expires_in * 1000)
           });
         }
         console.log("🔐 [Yahoo] User processed successfully:", user.id);
+      } else {
+        // Update existing user's tokens
+        console.log("🔐 [Yahoo] Updating user tokens...");
+        await storage.updateUser(user.id, {
+          accessToken: tokens.access_token,
+          refreshToken: tokens.refresh_token,
+          tokenExpiry: new Date(Date.now() + tokens.expires_in * 1000)
+        });
       }
-
-      const tokenExpiry = new Date(Date.now() + tokens.expiresIn * 1000);
-      
-      console.log("🔐 [Yahoo] Updating user tokens...");
-      await storage.updateUser(user.id, {
-        accessToken: tokens.accessToken,
-        refreshToken: tokens.refreshToken,
-        tokenExpiry
-      });
 
       console.log("🔐 [Yahoo] Redirecting to auth callback...");
       // Redirect to auth callback page with user ID
       res.redirect(`/auth-callback?userId=${user.id}&provider=yahoo`);
     } catch (error) {
-      console.error("Yahoo OAuth callback error:", error);
+      console.error("❌ [Yahoo] OAuth callback error:", error);
       console.error("Error stack:", error.stack);
       console.error("Error details:", {
         message: error.message,
         name: error.name,
         hasCode: !!req.query.code
       });
-      res.redirect("/?error=auth_failed");
+      res.redirect(`/?error=${encodeURIComponent('Yahoo authentication failed: ' + error.message)}`);
     }
   });
 
@@ -667,7 +687,9 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
     } else if (provider === 'google') {
       emails = await gmailService.getSpamEmails(accessToken, folders);
     } else if (provider === 'yahoo') {
-      emails = await yahooMailService.getSpamEmails(accessToken, folders);
+      // Yahoo Mail API access requires special approval
+      console.log('⚠️ [Yahoo] Mail API access requires approval, returning empty array');
+      emails = [];
     } else {
       throw new Error(`Unsupported provider: ${provider}`);
     }
