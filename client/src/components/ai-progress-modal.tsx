@@ -21,6 +21,7 @@ export default function AIProgressModal({ isOpen, onClose, scanId, onComplete }:
     if (isOpen && scanId) {
       setIsLoading(true);
       setError(null);
+      setScanData(null); // Reset scan data when modal opens
       pollScanProgress();
     }
   }, [isOpen, scanId]);

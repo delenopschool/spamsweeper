@@ -772,10 +772,13 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
     const fetchTime = Date.now() - fetchStartTime;
     console.log(`📧 [Scan] Fetched ${emails.length} emails from ${provider} spam folder in ${fetchTime}ms`);
     
+    // Immediately update the scan with total count before processing starts
     await storage.updateEmailScan(scanId, {
       totalScanned: emails.length,
+      currentProgress: 0,
       status: "processing"
     });
+    console.log(`📊 [Progress] Set totalScanned to ${emails.length}, currentProgress to 0`);
 
     let detectedSpam = 0;
     let unsubscribeLinksFound = 0;
