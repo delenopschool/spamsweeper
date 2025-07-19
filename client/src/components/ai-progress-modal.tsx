@@ -31,6 +31,7 @@ export default function AIProgressModal({ isOpen, onClose, scanId, onComplete }:
     try {
       const response = await apiRequest("GET", `/api/scan/${scanId}`);
       const data = await response.json();
+      console.log("🔄 Progress poll result:", data.scan);
       setScanData(data);
 
       if (data.scan.status === "completed") {
@@ -42,8 +43,8 @@ export default function AIProgressModal({ isOpen, onClose, scanId, onComplete }:
       } else if (data.scan.status === "failed") {
         setIsLoading(false);
         setError("De scan is mislukt. Probeer het opnieuw.");
-      } else if (data.scan.status === "processing") {
-        // Continue polling
+      } else if (data.scan.status === "processing" || data.scan.status === "pending") {
+        // Continue polling for both processing and pending states
         setTimeout(pollScanProgress, 1000);
       }
     } catch (error) {
@@ -61,7 +62,9 @@ export default function AIProgressModal({ isOpen, onClose, scanId, onComplete }:
   const getProgressPercentage = () => {
     if (!scanData?.scan) return 0;
     if (scanData.scan.totalScanned === 0) return 0;
-    return (scanData.scan.currentProgress / scanData.scan.totalScanned) * 100;
+    const progress = Math.min(100, Math.max(0, (scanData.scan.currentProgress / scanData.scan.totalScanned) * 100));
+    console.log(`📊 Progress: ${scanData.scan.currentProgress}/${scanData.scan.totalScanned} = ${progress}%`);
+    return progress;
   };
 
   const getStatusText = () => {

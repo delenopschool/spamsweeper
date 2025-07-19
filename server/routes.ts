@@ -493,6 +493,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const emails = await storage.getSpamEmailsByScan(scanId);
+      
+      console.log(`📊 [API] Returning scan data - currentProgress: ${scan.currentProgress}, totalScanned: ${scan.totalScanned}, status: ${scan.status}`);
 
       res.json({
         scan,
@@ -790,6 +792,7 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
       await storage.updateEmailScan(scanId, {
         currentProgress: i + 1
       });
+      console.log(`📊 [Progress] Updated currentProgress to ${i + 1}/${emails.length}`);
       
       const textBody = emailParserService.extractTextFromHtml(email.body.content);
       const bodyExtractionTime = Date.now() - emailStartTime;
