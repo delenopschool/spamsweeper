@@ -3,45 +3,20 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Mail, Shield, Zap } from "lucide-react";
+import { Link } from "wouter";
 import outlookIcon from "@/assets/outlook.png";
 import gmailIcon from "@/assets/gmail.png";
 import yahooIcon from "@/assets/yahoo.png";
-
-// Outlook logo - eenvoudig en accuraat
-const OutlookIcon = () => (
-  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-    <rect x="2" y="4" width="20" height="16" rx="2" fill="#0078d4"/>
-    <circle cx="8" cy="12" r="4" fill="white"/>
-    <text x="8" y="15" textAnchor="middle" fill="#0078d4" fontSize="7" fontWeight="bold">O</text>
-  </svg>
-);
-
-// Gmail logo - met juiste kleuren
-const GmailIcon = () => (
-  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-    <path d="M6 7l6 4 6-4v12H6z" fill="#ea4335"/>
-    <path d="M2 7l6 4v9H4c-1.1 0-2-.9-2-2V7z" fill="#4285f4"/>
-    <path d="M22 7v11c0 1.1-.9 2-2 2h-4v-9l6-4z" fill="#34a853"/>
-    <path d="M8 11l-6-4h20l-6 4-4-3-4 3z" fill="#fbbc04"/>
-  </svg>
-);
-
-// Yahoo logo - met juiste kleuren
-const YahooIcon = () => (
-  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-    <rect width="24" height="24" rx="4" fill="#410093"/>
-    <path d="M7 6h3l2 4 2-4h3l-3.5 6v4h-2v-4L7 6z" fill="white"/>
-    <path d="M16.5 16h-2v-2h2v2zm0-3h-2v-1h2v1z" fill="white"/>
-  </svg>
-);
-
 import logoUrl from "@/assets/spam-sweeper-logo.png";
 import smartReviewIcon from "@/assets/broom-svgrepo-com.png";
 import automaticUnsubscribeIcon from "@/assets/ai-svgrepo-com.png";
 import { apiRequest } from "@/lib/queryClient";
 
 export default function Home() {
+  const { t } = useLanguage();
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [authProvider, setAuthProvider] = useState<string>("");
 
@@ -81,12 +56,7 @@ export default function Home() {
       setAuthProvider("yahoo");
       
       // Show info about Yahoo Mail API requirements
-      const proceed = confirm(
-        "Yahoo Mail API toegang vereist speciale goedkeuring van Yahoo.\n\n" +
-        "Voor volledige email toegang moet je een aanvraag indienen bij:\n" +
-        "https://senders.yahooinc.com/developer/developer-access/\n\n" +
-        "Wil je toch doorgaan met basis profiel authenticatie?"
-      );
+      const proceed = confirm(t.homepage.yahooWarning);
       
       if (!proceed) {
         setIsAuthenticating(false);
@@ -115,7 +85,13 @@ export default function Home() {
               <img src={logoUrl} alt="Spam Sweeper Logo" className="h-10 w-10 sm:h-12 sm:w-12 mr-3 rounded-lg" style={{ borderRadius: '7px' }} />
               <h1 className="text-lg sm:text-xl font-medium text-foreground">Spam Sweeper</h1>
             </div>
-            <ThemeToggle />
+            <div className="flex items-center gap-4">
+              <Link href="/privacy">
+                <Button variant="ghost">{t.homepage.privacy}</Button>
+              </Link>
+              <LanguageSelector />
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </nav>
@@ -124,11 +100,10 @@ export default function Home() {
         {/* Hero Section */}
         <div className="text-center mb-12 sm:mb-16">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            AI-Powered Email Spam Management
+            {t.homepage.title}
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto px-4">
-            Connect your email account and let AI automatically identify spam emails, 
-            find unsubscribe links, and clean up your inbox with intelligent automation.
+            {t.homepage.subtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -140,12 +115,12 @@ export default function Home() {
               {isAuthenticating && authProvider === "microsoft" ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Connecting...
+                  {t.homepage.connecting}
                 </>
               ) : (
                 <>
-                  <img src={outlookIcon} alt="Smart Review" className="w-6 h-6" />
-                  Connect Outlook
+                  <img src={outlookIcon} alt="Outlook" className="w-6 h-6" />
+                  {t.homepage.connectOutlook}
                 </>
               )}
             </Button>
@@ -158,12 +133,12 @@ export default function Home() {
               {isAuthenticating && authProvider === "google" ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#ea4335] mr-2"></div>
-                  Connecting...
+                  {t.homepage.connecting}
                 </>
               ) : (
                 <>
-                  <img src={gmailIcon} alt="Smart Review" className="w-6 h-6" />
-                  Connect Gmail
+                  <img src={gmailIcon} alt="Gmail" className="w-6 h-6" />
+                  {t.homepage.connectGmail}
                 </>
               )}
             </Button>
@@ -176,12 +151,12 @@ export default function Home() {
               {isAuthenticating && authProvider === "yahoo" ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Connecting...
+                  {t.homepage.connecting}
                 </>
               ) : (
                 <>
-                  <img src={yahooIcon} alt="Smart Review" className="w-6 h-6" />
-                  Connect Yahoo
+                  <img src={yahooIcon} alt="Yahoo" className="w-6 h-6" />
+                  {t.homepage.connectYahoo}
                 </>
               )}
             </Button>
@@ -195,12 +170,11 @@ export default function Home() {
               <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
                 <Zap className="h-12 w-12 text-warning" />
               </div>
-              <CardTitle className="text-xl text-center text-foreground">Smart Review</CardTitle>
+              <CardTitle className="text-xl text-center text-foreground">{t.homepage.features.smartReview.title}</CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
               <CardDescription className="text-center text-muted-foreground">
-                AI automatically scans your spam folder and identifies emails with high confidence scores, 
-                making it easy to review and clean up your inbox.
+                {t.homepage.features.smartReview.description}
               </CardDescription>
             </CardContent>
           </Card>
@@ -208,14 +182,13 @@ export default function Home() {
           <Card className="bg-card dark:bg-card border-border">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
-                <img src={smartReviewIcon} alt="Smart Review" className="w-12 h-12" />
+                <img src={smartReviewIcon} alt="Auto Unsubscribe" className="w-12 h-12" />
               </div>
-              <CardTitle className="text-xl text-center text-foreground">Automatic Unsubscribe</CardTitle>
+              <CardTitle className="text-xl text-center text-foreground">{t.homepage.features.autoUnsubscribe.title}</CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
               <CardDescription className="text-center text-muted-foreground">
-                Automatically finds and processes unsubscribe links from legitimate emails, 
-                helping you reduce future spam without compromising your email security.
+                {t.homepage.features.autoUnsubscribe.description}
               </CardDescription>
             </CardContent>
           </Card>
@@ -225,12 +198,11 @@ export default function Home() {
               <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4 mx-auto">
                 <img src={automaticUnsubscribeIcon} alt="AI Powered" className="w-1/15 h-1/15" />
               </div>
-              <CardTitle className="text-xl text-center text-foreground">AI Powered</CardTitle>
+              <CardTitle className="text-xl text-center text-foreground">{t.homepage.features.aiPowered.title}</CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
               <CardDescription className="text-center text-muted-foreground">
-                Uses advanced language models to understand email content and context, 
-                providing intelligent spam detection with detailed reasoning for each decision.
+                {t.homepage.features.aiPowered.description}
               </CardDescription>
             </CardContent>
           </Card>
@@ -238,30 +210,30 @@ export default function Home() {
 
         {/* How it works */}
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-8">How it works</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-8">{t.homepage.howItWorks.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center">
               <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mb-4">1</div>
-              <h3 className="text-lg font-medium text-foreground mb-2">Connect Account</h3>
-              <p className="text-muted-foreground">Sign in with your email provider to grant secure access to your spam folder.</p>
+              <h3 className="text-lg font-medium text-foreground mb-2">{t.homepage.howItWorks.step1.title}</h3>
+              <p className="text-muted-foreground">{t.homepage.howItWorks.step1.description}</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mb-4">2</div>
-              <h3 className="text-lg font-medium text-foreground mb-2">AI Analysis</h3>
-              <p className="text-muted-foreground">Our AI scans your spam emails and finds unsubscribe links automatically.</p>
+              <h3 className="text-lg font-medium text-foreground mb-2">{t.homepage.howItWorks.step2.title}</h3>
+              <p className="text-muted-foreground">{t.homepage.howItWorks.step2.description}</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mb-4">3</div>
-              <h3 className="text-lg font-medium text-foreground mb-2">Clean Inbox</h3>
-              <p className="text-muted-foreground">Review results and process unsubscribes to reduce future spam.</p>
+              <h3 className="text-lg font-medium text-foreground mb-2">{t.homepage.howItWorks.step3.title}</h3>
+              <p className="text-muted-foreground">{t.homepage.howItWorks.step3.description}</p>
             </div>
           </div>
         </div>
 
         {/* CTA */}
         <div className="text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Ready to clean up your inbox?</h2>
-          <p className="text-lg text-muted-foreground mb-8">Get started in seconds with your existing email account.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">{t.homepage.cta.title}</h2>
+          <p className="text-lg text-muted-foreground mb-8">{t.homepage.cta.subtitle}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               onClick={handleMicrosoftAuth}
@@ -271,12 +243,12 @@ export default function Home() {
               {isAuthenticating && authProvider === "microsoft" ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Connecting...
+                  {t.homepage.connecting}
                 </>
               ) : (
                 <>
-                  <img src={outlookIcon} alt="Smart Review" className="w-6 h-6" />
-                  Connect Outlook
+                  <img src={outlookIcon} alt="Outlook" className="w-6 h-6" />
+                  {t.homepage.connectOutlook}
                 </>
               )}
             </Button>
@@ -289,12 +261,12 @@ export default function Home() {
               {isAuthenticating && authProvider === "google" ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#ea4335] mr-2"></div>
-                  Connecting...
+                  {t.homepage.connecting}
                 </>
               ) : (
                 <>
-                  <img src={gmailIcon} alt="Smart Review" className="w-6 h-6" />
-                  Connect Gmail
+                  <img src={gmailIcon} alt="Gmail" className="w-6 h-6" />
+                  {t.homepage.connectGmail}
                 </>
               )}
             </Button>
