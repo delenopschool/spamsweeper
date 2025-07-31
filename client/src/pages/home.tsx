@@ -7,6 +7,7 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Mail, Shield, Zap } from "lucide-react";
 import { Link } from "wouter";
+import { Footer } from "@/components/Footer";
 import outlookIcon from "@/assets/outlook.png";
 import gmailIcon from "@/assets/gmail.png";
 import yahooIcon from "@/assets/yahoo.png";
@@ -273,6 +274,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 }

@@ -147,6 +147,15 @@ The application follows a modern full-stack architecture with clear separation b
     - Improved user experience with visual feedback during AI analysis process
     - Enhanced folder selection modal with scrollable content for better mobile experience
   - **Enhanced Folder Selection Modal**: Added scrollable functionality to prevent modal from going off-screen, with flexible layout and proper scroll handling
+- **Multi-language Support** (July 2025): Complete internationalization implemented
+  - Added support for Dutch, German, English, and French languages
+  - Language context and provider with localStorage persistence
+  - Browser language detection with fallback to Dutch (user preference)
+  - Language selector component with flag icons
+  - Complete translation system for all UI text
+  - Footer component added with privacy link
+  - Privacy page fully translated in all four languages
+  - Database references updated from PostgreSQL to Neon PostgreSQL in privacy content
 - **Gmail Integration (July 2025)**: Added full Gmail support alongside Microsoft Graph
   - Implemented Google OAuth authentication flow
   - Added Gmail API integration for spam email scanning

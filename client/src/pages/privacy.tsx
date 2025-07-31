@@ -38,7 +38,7 @@ const privacyContent = {
         title: "Gegevensbeveiliging",
         icon: Lock,
         content: [
-          "Alle gegevens worden versleuteld opgeslagen in een beveiligde PostgreSQL database",
+          "Alle gegevens worden versleuteld opgeslagen in een beveiligde Neon PostgreSQL database",
           "We gebruiken OAuth 2.0 voor veilige authenticatie",
           "Toegangstokens worden veilig opgeslagen en regelmatig vernieuwd",
           "We delen uw gegevens nooit met derden voor marketing doeleinden",
@@ -115,7 +115,7 @@ const privacyContent = {
         title: "Datensicherheit",
         icon: Lock,
         content: [
-          "Alle Daten werden verschlüsselt in einer sicheren PostgreSQL-Datenbank gespeichert",
+          "Alle Daten werden verschlüsselt in einer sicheren Neon PostgreSQL-Datenbank gespeichert",
           "Wir verwenden OAuth 2.0 für sichere Authentifizierung",
           "Zugangstoken werden sicher gespeichert und regelmäßig erneuert",
           "Wir teilen Ihre Daten niemals mit Dritten für Marketingzwecke",
@@ -192,7 +192,7 @@ const privacyContent = {
         title: "Data security",
         icon: Lock,
         content: [
-          "All data is encrypted and stored in a secure PostgreSQL database",
+          "All data is encrypted and stored in a secure Neon PostgreSQL database",
           "We use OAuth 2.0 for secure authentication",
           "Access tokens are securely stored and regularly refreshed",
           "We never share your data with third parties for marketing purposes",
@@ -269,7 +269,7 @@ const privacyContent = {
         title: "Sécurité des données",
         icon: Lock,
         content: [
-          "Toutes les données sont cryptées et stockées dans une base de données PostgreSQL sécurisée",
+          "Toutes les données sont cryptées et stockées dans une base de données Neon PostgreSQL sécurisée",
           "Nous utilisons OAuth 2.0 pour l'authentification sécurisée",
           "Les jetons d'accès sont stockés en sécurité et régulièrement actualisés",
           "Nous ne partageons jamais vos données avec des tiers à des fins marketing",
