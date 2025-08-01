@@ -154,6 +154,13 @@ The application follows a modern full-stack architecture with clear separation b
   - Added progress modal timeout protection to prevent endless polling
   - Added backend process timeout protection (10-minute maximum)
   - Fixed email scan recovery mechanisms for stuck processes
+  - **Scan Crash Recovery System (August 2025)**: Implemented comprehensive crash recovery
+    - ScanRecoveryService automatically detects and resumes interrupted scans
+    - Startup recovery check finds scans stuck in "processing" state for >30 minutes
+    - Periodic recovery checks every 10 minutes for ongoing resilience
+    - Resume from exact point where scan was interrupted (skips already processed emails)
+    - Keepalive heartbeat every 5 minutes to prevent Render service from sleeping
+    - Users can now safely close computer/browser during long scans
   - All project functionality fully operational in standard Replit environment
 - **Complete Multi-language Implementation (August 2025)**: Finalized comprehensive internationalization system
   - Updated homepage with complete translation integration

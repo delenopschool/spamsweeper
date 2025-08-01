@@ -4,6 +4,7 @@ dotenv.config();
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { scanRecoveryService } from "./services/scan-recovery.js";
 
 const app = express();
 app.use(express.json());
@@ -41,6 +42,24 @@ app.use((req, res, next) => {
 
 (async () => {
   const server = await registerRoutes(app);
+
+  // Check for interrupted scans on startup and recover them
+  console.log("🔄 [Startup] Checking for interrupted scans...");
+  await scanRecoveryService.checkAndRecoverScans();
+
+  // Set up periodic recovery check every 10 minutes
+  setInterval(async () => {
+    try {
+      await scanRecoveryService.checkAndRecoverScans();
+    } catch (error) {
+      console.error("❌ [Periodic] Scan recovery check failed:", error);
+    }
+  }, 10 * 60 * 1000); // 10 minutes
+
+  // Keepalive mechanism to prevent Render from sleeping
+  setInterval(() => {
+    console.log("💓 [Keepalive] Server heartbeat");
+  }, 5 * 60 * 1000); // 5 minutes
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

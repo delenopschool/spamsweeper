@@ -1,6 +1,6 @@
 import { users, emailScans, spamEmails, userLearningData, type User, type InsertUser, type EmailScan, type InsertEmailScan, type SpamEmail, type InsertSpamEmail, type UserLearningData, type InsertUserLearningData } from "@shared/schema";
 import { db } from "./db";
-import { eq, inArray, desc, like, or, ilike, and } from "drizzle-orm";
+import { eq, inArray, desc, like, or, ilike, and, lt } from "drizzle-orm";
 
 export interface IStorage {
   // User management
@@ -18,6 +18,7 @@ export interface IStorage {
   getEmailScansByUser(userId: number): Promise<EmailScan[]>;
   getLatestEmailScan(userId: number): Promise<EmailScan | undefined>;
   updateEmailScan(id: number, updates: Partial<EmailScan>): Promise<EmailScan>;
+  getStuckScans(): Promise<EmailScan[]>;
 
   // Spam email management
   createSpamEmail(email: InsertSpamEmail): Promise<SpamEmail>;
@@ -211,6 +212,17 @@ export class MemStorage implements IStorage {
     // In-memory implementation - simplified for demo
     throw new Error('Not implemented in memory storage');
   }
+
+  async getStuckScans(): Promise<EmailScan[]> {
+    // Find scans that are in "processing" state for more than 30 minutes
+    const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+    
+    return Array.from(this.emailScans.values()).filter(scan => 
+      scan.status === "processing" && 
+      scan.createdAt && 
+      new Date(scan.createdAt) < thirtyMinutesAgo
+    );
+  }
 }
 
 // Database Storage Implementation
@@ -282,6 +294,22 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(emailScans.createdAt))
       .limit(1);
     return latestScan;
+  }
+
+  async getStuckScans(): Promise<EmailScan[]> {
+    // Find scans that are in "processing" state for more than 30 minutes
+    const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+    
+    const scans = await db.select()
+      .from(emailScans)
+      .where(
+        and(
+          eq(emailScans.status, "processing"),
+          lt(emailScans.createdAt, thirtyMinutesAgo)
+        )
+      );
+    
+    return scans;
   }
 
   async updateEmailScan(id: number, updates: Partial<EmailScan>): Promise<EmailScan> {
