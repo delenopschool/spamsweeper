@@ -40,6 +40,7 @@ export const spamEmails = pgTable("spam_emails", {
   isSelected: boolean("is_selected").default(true),
   isProcessed: boolean("is_processed").default(false),
   userFeedback: text("user_feedback"), // "spam", "not_spam", "uncertain"
+  aiStatus: text("ai_status").default("classified"), // "classified", "error", "timeout"
   receivedDate: timestamp("received_date"),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -86,6 +87,7 @@ export const insertSpamEmailSchema = createInsertSchema(spamEmails).pick({
   unsubscribeUrl: true,
   isSelected: true,
   userFeedback: true,
+  aiStatus: true,
   receivedDate: true,
 });
 

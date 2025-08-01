@@ -21,6 +21,7 @@ interface EmailReviewTableProps {
       isSelected: boolean;
       receivedDate: string;
       userFeedback?: string;
+      aiStatus?: string;
     }>;
   };
   onPreviewEmail: (emailId: number) => void;
@@ -344,17 +345,23 @@ export default function EmailReviewTable({ scanData, onPreviewEmail, onRefresh }
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
-                    <div className={`text-sm font-medium ${getConfidenceTextColor(email.aiConfidence)} transition-colors`}>
-                      {email.aiConfidence}%
+                  {email.aiStatus === "error" ? (
+                    <Badge className="bg-red-600 text-white transition-all duration-300 hover:scale-105">
+                      AI Error
+                    </Badge>
+                  ) : (
+                    <div className="flex items-center">
+                      <div className={`text-sm font-medium ${getConfidenceTextColor(email.aiConfidence)} transition-colors`}>
+                        {email.aiConfidence}%
+                      </div>
+                      <div className="ml-2 w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div 
+                          className={`${getConfidenceColor(email.aiConfidence)} h-2 rounded-full transition-all duration-500 animate-scale-in`}
+                          style={{ width: `${email.aiConfidence}%` }}
+                        ></div>
+                      </div>
                     </div>
-                    <div className="ml-2 w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div 
-                        className={`${getConfidenceColor(email.aiConfidence)} h-2 rounded-full transition-all duration-500 animate-scale-in`}
-                        style={{ width: `${email.aiConfidence}%` }}
-                      ></div>
-                    </div>
-                  </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {email.hasUnsubscribeLink ? (

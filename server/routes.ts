@@ -506,7 +506,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           hasUnsubscribeLink: email.hasUnsubscribeLink,
           isSelected: email.isSelected,
           receivedDate: email.receivedDate,
-          userFeedback: email.userFeedback
+          userFeedback: email.userFeedback,
+          aiStatus: email.aiStatus || "classified"
         }))
       });
     } catch (error) {
@@ -536,7 +537,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           hasUnsubscribeLink: email.hasUnsubscribeLink,
           isSelected: email.isSelected,
           receivedDate: email.receivedDate,
-          userFeedback: email.userFeedback
+          userFeedback: email.userFeedback,
+          aiStatus: email.aiStatus || "classified"
         }))
       });
     } catch (error) {
@@ -827,17 +829,22 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
         const classificationTime = Date.now() - classificationStartTime;
         console.error(`❌ [Email ${i + 1}/${emails.length}] AI Classification failed after ${classificationTime}ms:`, error);
         
-        // Fallback classification - assume not spam if AI fails
+        // Fallback classification - mark as error if AI fails
         classification = {
-          isSpam: false,
+          isSpam: true, // We'll mark it as spam but with error status
           confidence: 0,
           reasoning: `AI classification failed: ${(error as Error).message}`
         };
-        console.log(`🔄 [Email ${i + 1}/${emails.length}] Using fallback classification: not spam`);
+        console.log(`🔄 [Email ${i + 1}/${emails.length}] Using fallback classification: AI error`);
       }
 
-      if (classification.isSpam) {
-        detectedSpam++;
+      // Always save emails that are classified as spam OR have AI errors
+      const shouldSaveEmail = classification.isSpam || classification.confidence === 0;
+      
+      if (shouldSaveEmail) {
+        if (classification.isSpam) {
+          detectedSpam++;
+        }
         
         const linkSearchStartTime = Date.now();
         const unsubscribeLinks = emailParserService.findUnsubscribeLinks(email.body.content);
@@ -850,6 +857,9 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
           unsubscribeLinksFound++;
         }
 
+        // Determine AI status
+        const aiStatus = classification.confidence === 0 ? "error" : "classified";
+        
         const storageStartTime = Date.now();
         await storage.createSpamEmail({
           scanId,
@@ -860,10 +870,11 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
           aiConfidence: classification.confidence,
           hasUnsubscribeLink,
           unsubscribeUrl: unsubscribeLinks[0]?.url || null,
+          aiStatus,
           receivedDate: new Date(email.receivedDateTime)
         });
         const storageTime = Date.now() - storageStartTime;
-        console.log(`💾 [Email ${i + 1}/${emails.length}] Stored in database in ${storageTime}ms`);
+        console.log(`💾 [Email ${i + 1}/${emails.length}] Stored in database (${aiStatus}) in ${storageTime}ms`);
       }
       
       const totalEmailTime = Date.now() - emailStartTime;
