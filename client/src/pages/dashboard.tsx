@@ -3,7 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { WashingMachine, LogOut, UserRound, Folder } from "lucide-react";
+import { Footer } from "@/components/Footer";
 import logoUrl from "@/assets/spam-sweeper-logo.png";
 import StatusCards from "@/components/status-cards";
 import EmailReviewTable from "@/components/email-review-table";
@@ -15,6 +18,7 @@ import FolderSelectionModal from "@/components/folder-selection-modal";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export default function Dashboard() {
+  const { t } = useLanguage();
   const [match, params] = useRoute("/dashboard/:userId");
   const userId = params?.userId ? parseInt(params.userId) : null;
   
@@ -138,13 +142,14 @@ export default function Dashboard() {
   };
 
   if (!match || !userId) {
-    return <div>Invalid URL</div>;
+    return <div>{t.dashboard.invalidUrl}</div>;
   }
 
   if (userLoading || latestScanLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        <div className="ml-3">{t.dashboard.loading}</div>
       </div>
     );
   }
@@ -152,7 +157,7 @@ export default function Dashboard() {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div>User not found</div>
+        <div>{t.dashboard.userNotFound}</div>
       </div>
     );
   }
@@ -172,6 +177,7 @@ export default function Dashboard() {
                 <UserRound className="text-success text-lg mr-1 animate-pulse" />
                 <span className="truncate max-w-32 lg:max-w-none">{user.email}</span>
               </div>
+              <LanguageSelector />
               <ThemeToggle />
               <Button 
                 onClick={handleSignOut}
@@ -180,7 +186,7 @@ export default function Dashboard() {
                 size="sm"
               >
                 <LogOut className="mr-1 h-4 w-4" />
-                <span className="hidden sm:inline">Sign Out</span>
+                <span className="hidden sm:inline">{t.dashboard.signOut}</span>
               </Button>
             </div>
           </div>
@@ -190,8 +196,8 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Dashboard Header */}
         <div className="mb-6 sm:mb-8 animate-fade-in">
-          <h2 className="text-xl sm:text-2xl font-medium text-foreground mb-2">Email Spam Management</h2>
-          <p className="text-muted-foreground">Review AI-classified spam emails and manage your subscriptions automatically</p>
+          <h2 className="text-xl sm:text-2xl font-medium text-foreground mb-2">{t.dashboard.title}</h2>
+          <p className="text-muted-foreground">{t.dashboard.subtitle}</p>
         </div>
 
         {/* Status Cards */}
@@ -203,7 +209,7 @@ export default function Dashboard() {
         {/* Action Panel */}
         <div className="bg-card rounded-lg shadow-sm border border-border mb-6 sm:mb-8 animate-fade-in">
           <div className="px-4 sm:px-6 py-4 border-b border-border">
-            <h3 className="text-lg font-medium text-foreground">Quick Actions</h3>
+            <h3 className="text-lg font-medium text-foreground">{t.dashboard.quickActions}</h3>
           </div>
           <div className="p-4 sm:p-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -217,7 +223,7 @@ export default function Dashboard() {
                 disabled={isScanning}
               >
                 <WashingMachine className={`mr-2 ${isScanning ? 'animate-spin' : ''}`} />
-                {isScanning ? 'AI Processing...' : 'Quick Scan'}
+                {isScanning ? t.dashboard.aiProcessing : t.dashboard.quickScan}
               </Button>
               
               <Button 
@@ -230,7 +236,7 @@ export default function Dashboard() {
                 disabled={isScanning}
               >
                 <Folder className="mr-2" />
-                Full Scan
+                {t.dashboard.fullScan}
               </Button>
               
               <Button 
@@ -243,7 +249,7 @@ export default function Dashboard() {
                 disabled={!currentScanId}
               >
                 <UserRound className="mr-2" />
-                Refresh Results
+                {t.dashboard.refreshResults}
               </Button>
               
               <Button 
@@ -256,7 +262,7 @@ export default function Dashboard() {
                 disabled={!scanData?.emails?.some((email: any) => email.isSelected && email.hasUnsubscribeLink)}
               >
                 <LogOut className="mr-2" />
-                Process Unsubscribes
+                {t.dashboard.processUnsubscribes}
               </Button>
             </div>
           </div>
@@ -266,8 +272,8 @@ export default function Dashboard() {
         {scanData && scanData.scan && scanData.scan.status === "processing" && (
           <div className="bg-card rounded-lg shadow-sm border border-border p-6 sm:p-8 text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-            <h3 className="text-lg font-medium text-foreground mb-2">AI Processing Emails...</h3>
-            <p className="text-muted-foreground">Analyzing {scanData.scan.totalScanned} emails for spam patterns</p>
+            <h3 className="text-lg font-medium text-foreground mb-2">{t.dashboard.aiProcessingEmails}</h3>
+            <p className="text-muted-foreground">{t.dashboard.analyzingEmails.replace('{count}', scanData.scan.totalScanned.toString())}</p>
           </div>
         )}
         
@@ -281,8 +287,8 @@ export default function Dashboard() {
               />
             ) : (
               <div className="bg-card rounded-lg shadow-sm border border-border p-6 sm:p-8 text-center">
-                <h3 className="text-lg font-medium text-foreground mb-2">Great News!</h3>
-                <p className="text-muted-foreground">No spam emails detected in your {scanData.scan.totalScanned} scanned messages. Your inbox is clean!</p>
+                <h3 className="text-lg font-medium text-foreground mb-2">{t.dashboard.greatNews}</h3>
+                <p className="text-muted-foreground">{t.dashboard.noSpamDetected.replace('{count}', scanData.scan.totalScanned.toString())}</p>
               </div>
             )}
           </>
@@ -291,14 +297,14 @@ export default function Dashboard() {
         {/* Default state when no scan data */}
         {!scanData && !isScanning && !latestScanLoading && (
           <div className="bg-card rounded-lg shadow-sm border border-border p-6 sm:p-8 text-center">
-            <h3 className="text-lg font-medium text-foreground mb-2">Welcome to Spam Sweeper!</h3>
-            <p className="text-muted-foreground mb-4">Start by scanning your spam folder to detect unwanted emails and find unsubscribe links.</p>
+            <h3 className="text-lg font-medium text-foreground mb-2">{t.dashboard.welcome}</h3>
+            <p className="text-muted-foreground mb-4">{t.dashboard.welcomeMessage}</p>
             <Button 
               onClick={handleQuickScan}
               className="btn-primary flex items-center justify-center"
             >
               <WashingMachine className="mr-2" />
-              Start Your First Scan
+              {t.dashboard.startFirstScan}
             </Button>
           </div>
         )}
@@ -331,6 +337,8 @@ export default function Dashboard() {
           isLoading={isScanning}
         />
       </div>
+      
+      <Footer />
     </div>
   );
 }

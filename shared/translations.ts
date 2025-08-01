@@ -70,6 +70,24 @@ export interface Translations {
   };
   dashboard: {
     title: string;
+    subtitle: string;
+    signOut: string;
+    quickActions: string;
+    quickScan: string;
+    fullScan: string;
+    refreshResults: string;
+    processUnsubscribes: string;
+    aiProcessing: string;
+    aiProcessingEmails: string;
+    analyzingEmails: string;
+    greatNews: string;
+    noSpamDetected: string;
+    welcome: string;
+    welcomeMessage: string;
+    startFirstScan: string;
+    invalidUrl: string;
+    userNotFound: string;
+    loading: string;
     lastScan: string;
     totalScanned: string;
     detectedSpam: string;
@@ -196,7 +214,25 @@ export const translations: Record<Language, Translations> = {
       connectionFailed: 'Verbinding mislukt',
     },
     dashboard: {
-      title: 'Dashboard',
+      title: 'E-mail Spam Beheer',
+      subtitle: 'Bekijk AI-geclassificeerde spam e-mails en beheer je abonnementen automatisch',
+      signOut: 'Uitloggen',
+      quickActions: 'Snelle Acties',
+      quickScan: 'Snelle Scan',
+      fullScan: 'Volledige Scan',
+      refreshResults: 'Resultaten Vernieuwen',
+      processUnsubscribes: 'Afmeldingen Verwerken',
+      aiProcessing: 'AI Verwerking...',
+      aiProcessingEmails: 'AI Verwerkt E-mails...',
+      analyzingEmails: 'Analyseert {count} e-mails voor spam patronen',
+      greatNews: 'Geweldig Nieuws!',
+      noSpamDetected: 'Geen spam e-mails gedetecteerd in je {count} gescande berichten. Je inbox is schoon!',
+      welcome: 'Welkom bij Spam Sweeper!',
+      welcomeMessage: 'Begin met het scannen van je spam map om ongewenste e-mails te detecteren en afmeldlinks te vinden.',
+      startFirstScan: 'Start Je Eerste Scan',
+      invalidUrl: 'Ongeldige URL',
+      userNotFound: 'Gebruiker niet gevonden',
+      loading: 'Laden...',
       lastScan: 'Laatste scan',
       totalScanned: 'Totaal gescand',
       detectedSpam: 'Spam gedetecteerd',
@@ -321,7 +357,25 @@ export const translations: Record<Language, Translations> = {
       connectionFailed: 'Verbindung fehlgeschlagen',
     },
     dashboard: {
-      title: 'Dashboard',
+      title: 'E-Mail Spam-Verwaltung',
+      subtitle: 'Überprüfen Sie KI-klassifizierte Spam-E-Mails und verwalten Sie Ihre Abonnements automatisch',
+      signOut: 'Abmelden',
+      quickActions: 'Schnelle Aktionen',
+      quickScan: 'Schneller Scan',
+      fullScan: 'Vollständiger Scan',
+      refreshResults: 'Ergebnisse aktualisieren',
+      processUnsubscribes: 'Abmeldungen verarbeiten',
+      aiProcessing: 'KI-Verarbeitung...',
+      aiProcessingEmails: 'KI verarbeitet E-Mails...',
+      analyzingEmails: 'Analysiert {count} E-Mails auf Spam-Muster',
+      greatNews: 'Großartige Neuigkeiten!',
+      noSpamDetected: 'Keine Spam-E-Mails in Ihren {count} gescannten Nachrichten erkannt. Ihr Posteingang ist sauber!',
+      welcome: 'Willkommen bei Spam Sweeper!',
+      welcomeMessage: 'Beginnen Sie mit dem Scannen Ihres Spam-Ordners, um unerwünschte E-Mails zu erkennen und Abmelde-Links zu finden.',
+      startFirstScan: 'Ihren ersten Scan starten',
+      invalidUrl: 'Ungültige URL',
+      userNotFound: 'Benutzer nicht gefunden',
+      loading: 'Laden...',
       lastScan: 'Letzter Scan',
       totalScanned: 'Gesamt gescannt',
       detectedSpam: 'Spam erkannt',
@@ -446,7 +500,25 @@ export const translations: Record<Language, Translations> = {
       connectionFailed: 'Connection failed',
     },
     dashboard: {
-      title: 'Dashboard',
+      title: 'Email Spam Management',
+      subtitle: 'Review AI-classified spam emails and manage your subscriptions automatically',
+      signOut: 'Sign Out',
+      quickActions: 'Quick Actions',
+      quickScan: 'Quick Scan',
+      fullScan: 'Full Scan',
+      refreshResults: 'Refresh Results',
+      processUnsubscribes: 'Process Unsubscribes',
+      aiProcessing: 'AI Processing...',
+      aiProcessingEmails: 'AI Processing Emails...',
+      analyzingEmails: 'Analyzing {count} emails for spam patterns',
+      greatNews: 'Great News!',
+      noSpamDetected: 'No spam emails detected in your {count} scanned messages. Your inbox is clean!',
+      welcome: 'Welcome to Spam Sweeper!',
+      welcomeMessage: 'Start by scanning your spam folder to detect unwanted emails and find unsubscribe links.',
+      startFirstScan: 'Start Your First Scan',
+      invalidUrl: 'Invalid URL',
+      userNotFound: 'User not found',
+      loading: 'Loading...',
       lastScan: 'Last scan',
       totalScanned: 'Total scanned',
       detectedSpam: 'Detected spam',
@@ -571,7 +643,25 @@ export const translations: Record<Language, Translations> = {
       connectionFailed: 'Connexion échouée',
     },
     dashboard: {
-      title: 'Tableau de bord',
+      title: 'Gestion du Spam Email',
+      subtitle: 'Examinez les emails spam classifiés par IA et gérez vos abonnements automatiquement',
+      signOut: 'Se déconnecter',
+      quickActions: 'Actions Rapides',
+      quickScan: 'Scan Rapide',
+      fullScan: 'Scan Complet',
+      refreshResults: 'Actualiser les Résultats',
+      processUnsubscribes: 'Traiter les Désabonnements',
+      aiProcessing: 'Traitement IA...',
+      aiProcessingEmails: 'IA Traite les Emails...',
+      analyzingEmails: 'Analyse de {count} emails pour les modèles de spam',
+      greatNews: 'Excellentes Nouvelles!',
+      noSpamDetected: 'Aucun email spam détecté dans vos {count} messages scannés. Votre boîte de réception est propre!',
+      welcome: 'Bienvenue sur Spam Sweeper!',
+      welcomeMessage: 'Commencez par scanner votre dossier spam pour détecter les emails indésirables et trouver les liens de désabonnement.',
+      startFirstScan: 'Démarrer Votre Premier Scan',
+      invalidUrl: 'URL invalide',
+      userNotFound: 'Utilisateur introuvable',
+      loading: 'Chargement...',
       lastScan: 'Dernier scan',
       totalScanned: 'Total scanné',
       detectedSpam: 'Spam détecté',
