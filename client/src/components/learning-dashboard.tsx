@@ -4,12 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Brain, TrendingUp, CheckCircle, XCircle } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface LearningDashboardProps {
   userId: number;
 }
 
 const LearningDashboard = React.memo(function LearningDashboard({ userId }: LearningDashboardProps) {
+  const { t } = useLanguage();
   const { data: learningData, isLoading } = useQuery({
     queryKey: ["/api/user", userId, "learning"],
     queryFn: async () => {
@@ -38,10 +40,10 @@ const LearningDashboard = React.memo(function LearningDashboard({ userId }: Lear
       <CardHeader className="pb-3">
         <div className="flex items-center space-x-2">
           <Brain className="h-5 w-5 text-primary" />
-          <CardTitle className="text-foreground">AI Learning Dashboard</CardTitle>
+          <CardTitle className="text-foreground">{t.learning.title}</CardTitle>
         </div>
         <CardDescription>
-          Het systeem leert van jouw keuzes om toekomstige spam classificaties te verbeteren
+          {t.learning.description}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -50,7 +52,7 @@ const LearningDashboard = React.memo(function LearningDashboard({ userId }: Lear
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
               <XCircle className="h-4 w-4 text-red-500" />
-              <h4 className="font-medium text-foreground">Spam Patronen ({spamPatterns.length})</h4>
+              <h4 className="font-medium text-foreground">{t.learning.spamPatterns} ({spamPatterns.length})</h4>
             </div>
             <div className="space-y-2 max-h-48 overflow-y-auto">
               {spamPatterns.length > 0 ? (
@@ -74,7 +76,7 @@ const LearningDashboard = React.memo(function LearningDashboard({ userId }: Lear
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">Nog geen spam patronen geleerd</p>
+                <p className="text-sm text-muted-foreground">{t.learning.noSpamPatterns}</p>
               )}
             </div>
           </div>
@@ -83,7 +85,7 @@ const LearningDashboard = React.memo(function LearningDashboard({ userId }: Lear
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
               <CheckCircle className="h-4 w-4 text-green-500" />
-              <h4 className="font-medium text-foreground">Legitieme Email Patronen ({notSpamPatterns.length})</h4>
+              <h4 className="font-medium text-foreground">{t.learning.legitimatePatterns} ({notSpamPatterns.length})</h4>
             </div>
             <div className="space-y-2 max-h-48 overflow-y-auto">
               {notSpamPatterns.length > 0 ? (
@@ -107,7 +109,7 @@ const LearningDashboard = React.memo(function LearningDashboard({ userId }: Lear
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">Nog geen legitieme email patronen geleerd</p>
+                <p className="text-sm text-muted-foreground">{t.learning.noLegitimatePatterns}</p>
               )}
             </div>
           </div>
@@ -119,12 +121,12 @@ const LearningDashboard = React.memo(function LearningDashboard({ userId }: Lear
             <div className="flex items-center space-x-2">
               <TrendingUp className="h-4 w-4 text-primary" />
               <span className="text-sm font-medium text-foreground">
-                Totaal {patterns.length} patronen geleerd
+                {t.learning.totalPatternsLearned.replace('{count}', patterns.length.toString())}
               </span>
             </div>
             {patterns.length > 0 && (
               <div className="text-xs text-muted-foreground">
-                Laatst bijgewerkt: {new Date(patterns[0]?.updatedAt).toLocaleDateString()}
+                {t.learning.lastUpdated}: {new Date(patterns[0]?.updatedAt).toLocaleDateString()}
               </div>
             )}
           </div>

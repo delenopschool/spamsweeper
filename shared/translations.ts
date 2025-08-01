@@ -98,6 +98,16 @@ export interface Translations {
     selectFolders: string;
     scanEmails: string;
   };
+  learning: {
+    title: string;
+    description: string;
+    spamPatterns: string;
+    legitimatePatterns: string;
+    noSpamPatterns: string;
+    noLegitimatePatterns: string;
+    totalPatternsLearned: string;
+    lastUpdated: string;
+  };
   scanning: {
     scanningEmails: string;
     analyzingWith: string;
@@ -243,6 +253,16 @@ export const translations: Record<Language, Translations> = {
       selectFolders: 'Mappen selecteren',
       scanEmails: 'E-mails scannen',
     },
+    learning: {
+      title: 'AI-Leer Dashboard',
+      description: 'Het systeem leert van jouw keuzes om toekomstige spam classificaties te verbeteren',
+      spamPatterns: 'Spam Patronen',
+      legitimatePatterns: 'Legitieme Email Patronen',
+      noSpamPatterns: 'Nog geen spam patronen geleerd',
+      noLegitimatePatterns: 'Nog geen legitieme email patronen geleerd',
+      totalPatternsLearned: 'Totaal {count} patronen geleerd',
+      lastUpdated: 'Laatst bijgewerkt',
+    },
     scanning: {
       scanningEmails: 'E-mails scannen',
       analyzingWith: 'Analyseren met AI',
@@ -385,6 +405,16 @@ export const translations: Record<Language, Translations> = {
       noScansYet: 'Noch keine Scans durchgeführt',
       selectFolders: 'Ordner auswählen',
       scanEmails: 'E-Mails scannen',
+    },
+    learning: {
+      title: 'KI-Lern-Dashboard',
+      description: 'Das System lernt aus Ihren Entscheidungen, um zukünftige Spam-Klassifizierungen zu verbessern',
+      spamPatterns: 'Spam-Muster',
+      legitimatePatterns: 'Legitime E-Mail-Muster',
+      noSpamPatterns: 'Noch keine Spam-Muster gelernt',
+      noLegitimatePatterns: 'Noch keine legitimen E-Mail-Muster gelernt',
+      totalPatternsLearned: 'Insgesamt {count} Muster gelernt',
+      lastUpdated: 'Zuletzt aktualisiert',
     },
     scanning: {
       scanningEmails: 'E-Mails scannen',
@@ -529,6 +559,16 @@ export const translations: Record<Language, Translations> = {
       selectFolders: 'Select folders',
       scanEmails: 'Scan emails',
     },
+    learning: {
+      title: 'AI Learning Dashboard',
+      description: 'The system learns from your choices to improve future spam classifications',
+      spamPatterns: 'Spam Patterns',
+      legitimatePatterns: 'Legitimate Email Patterns',
+      noSpamPatterns: 'No spam patterns learned yet',
+      noLegitimatePatterns: 'No legitimate email patterns learned yet',
+      totalPatternsLearned: 'Total {count} patterns learned',
+      lastUpdated: 'Last updated',
+    },
     scanning: {
       scanningEmails: 'Scanning emails',
       analyzingWith: 'Analyzing with AI',
@@ -671,6 +711,16 @@ export const translations: Record<Language, Translations> = {
       noScansYet: 'Aucun scan encore',
       selectFolders: 'Sélectionner les dossiers',
       scanEmails: 'Scanner les e-mails',
+    },
+    learning: {
+      title: 'Tableau de Bord d\'Apprentissage IA',
+      description: 'Le système apprend de vos choix pour améliorer les futures classifications de spam',
+      spamPatterns: 'Modèles de Spam',
+      legitimatePatterns: 'Modèles d\'Email Légitimes',
+      noSpamPatterns: 'Aucun modèle de spam appris pour le moment',
+      noLegitimatePatterns: 'Aucun modèle d\'email légitime appris pour le moment',
+      totalPatternsLearned: 'Total {count} modèles appris',
+      lastUpdated: 'Dernière mise à jour',
     },
     scanning: {
       scanningEmails: 'Scan des e-mails',
