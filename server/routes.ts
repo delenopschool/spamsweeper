@@ -802,14 +802,28 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
       console.log(`📝 [Email ${i + 1}/${emails.length}] Text extracted in ${bodyExtractionTime}ms`);
       
       const classificationStartTime = Date.now();
-      const classification = await openaiClassifierService.classifyEmail(
-        email.sender.emailAddress.address,
-        email.subject,
-        textBody
-      );
-      const classificationTime = Date.now() - classificationStartTime;
-
-      console.log(`🎯 [Email ${i + 1}/${emails.length}] AI Classification completed in ${classificationTime}ms: isSpam=${classification.isSpam}, confidence=${classification.confidence}%, reason="${classification.reasoning}"`);
+      let classification;
+      
+      try {
+        classification = await openaiClassifierService.classifyEmail(
+          email.sender.emailAddress.address,
+          email.subject,
+          textBody
+        );
+        const classificationTime = Date.now() - classificationStartTime;
+        console.log(`🎯 [Email ${i + 1}/${emails.length}] AI Classification completed in ${classificationTime}ms: isSpam=${classification.isSpam}, confidence=${classification.confidence}%, reason="${classification.reasoning}"`);
+      } catch (error) {
+        const classificationTime = Date.now() - classificationStartTime;
+        console.error(`❌ [Email ${i + 1}/${emails.length}] AI Classification failed after ${classificationTime}ms:`, error);
+        
+        // Fallback classification - assume not spam if AI fails
+        classification = {
+          isSpam: false,
+          confidence: 0,
+          reasoning: `AI classification failed: ${(error as Error).message}`
+        };
+        console.log(`🔄 [Email ${i + 1}/${emails.length}] Using fallback classification: not spam`);
+      };
 
       if (classification.isSpam) {
         detectedSpam++;

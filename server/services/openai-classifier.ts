@@ -48,12 +48,17 @@ const adaptiveRateLimiter = new AdaptiveRateLimiter();
 async function callOpenRouter(messages: Array<{ role: string; content: string }>, retryCount = 0): Promise<OpenRouterResponse> {
   const maxRetries = 3;
   const startTime = Date.now();
+  const timeout = 30000; // 30 second timeout
   
   try {
     // Wait only if we're in rate limit mode
     await adaptiveRateLimiter.waitIfNeeded();
     
     console.log(`🔄 [OpenRouter] Starting API call at ${new Date().toISOString()}`);
+    
+    // Create AbortController for timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
     
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
@@ -68,7 +73,10 @@ async function callOpenRouter(messages: Array<{ role: string; content: string }>
         messages: messages,
         temperature: 0.1,
       }),
+      signal: controller.signal
     });
+    
+    clearTimeout(timeoutId);
 
     const responseTime = Date.now() - startTime;
     console.log(`📡 [OpenRouter] API response received in ${responseTime}ms`);
@@ -98,7 +106,22 @@ async function callOpenRouter(messages: Array<{ role: string; content: string }>
     
     return jsonResponse;
   } catch (error) {
-    if (retryCount < maxRetries && (error as Error).message.includes('429')) {
+    const errorMessage = (error as Error).message || '';
+    
+    // Handle timeout errors
+    if (errorMessage.includes('abort') || errorMessage.includes('timeout')) {
+      console.error(`⏰ [OpenRouter] Request timed out after ${timeout/1000}s`);
+      if (retryCount < maxRetries) {
+        const waitTime = Math.pow(2, retryCount) * 2000; // Shorter wait for timeouts
+        console.log(`⏳ [OpenRouter] Retrying after timeout in ${waitTime/1000}s (attempt ${retryCount + 1}/${maxRetries})`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+        return callOpenRouter(messages, retryCount + 1);
+      }
+      throw new Error(`OpenRouter timeout after ${maxRetries + 1} attempts`);
+    }
+    
+    // Handle rate limiting and other errors
+    if (retryCount < maxRetries && (errorMessage.includes('429') || errorMessage.includes('rate'))) {
       adaptiveRateLimiter.activateRateLimit();
       const waitTime = Math.pow(2, retryCount) * 5000;
       console.log(`⏳ [OpenRouter] Retrying after error in ${waitTime/1000}s (attempt ${retryCount + 1}/${maxRetries})`);

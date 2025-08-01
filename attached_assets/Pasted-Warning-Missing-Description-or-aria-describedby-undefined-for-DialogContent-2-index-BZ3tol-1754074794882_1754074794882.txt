@@ -1,0 +1,459 @@
+Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. 2 index-BZ3tolWt.js:318:497
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 0, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 0, status: "pending", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 0, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 0, status: "pending", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 0, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 0, status: "pending", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 0, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 0, status: "pending", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 0, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 0, status: "pending", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 0, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 0, status: "pending", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 1, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 1/203 = 0.49261083743842365% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 1, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 1/203 = 0.49261083743842365% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 1, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 1/203 = 0.49261083743842365% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 1, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 1/203 = 0.49261083743842365% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 1, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 1/203 = 0.49261083743842365% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 1, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 1/203 = 0.49261083743842365% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 1, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 1/203 = 0.49261083743842365% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 1, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 1/203 = 0.49261083743842365% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 2, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 2/203 = 0.9852216748768473% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 2, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 2/203 = 0.9852216748768473% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 2, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 2/203 = 0.9852216748768473% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 2, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 2/203 = 0.9852216748768473% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 2, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 2/203 = 0.9852216748768473% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 2, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 2/203 = 0.9852216748768473% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 2, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 2/203 = 0.9852216748768473% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 2, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 2/203 = 0.9852216748768473% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 3, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 3/203 = 1.477832512315271% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 3, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 3/203 = 1.477832512315271% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 3, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 3/203 = 1.477832512315271% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 3, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 3/203 = 1.477832512315271% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 3, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 3/203 = 1.477832512315271% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 4, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 4/203 = 1.9704433497536946% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 4, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 4/203 = 1.9704433497536946% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 4, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 4/203 = 1.9704433497536946% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 4, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 4/203 = 1.9704433497536946% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 4, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 4/203 = 1.9704433497536946% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 4, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 4/203 = 1.9704433497536946% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 5, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 5/203 = 2.4630541871921183% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 5, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 5/203 = 2.4630541871921183% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 5, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 5/203 = 2.4630541871921183% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 5, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 5/203 = 2.4630541871921183% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 5, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 5/203 = 2.4630541871921183% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 5, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 5/203 = 2.4630541871921183% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 6, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 6/203 = 2.955665024630542% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 6, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 6/203 = 2.955665024630542% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 6, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 6/203 = 2.955665024630542% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 6, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 6/203 = 2.955665024630542% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 6, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 6/203 = 2.955665024630542% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 7, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 7/203 = 3.4482758620689653% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 7, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 7/203 = 3.4482758620689653% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 7, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 7/203 = 3.4482758620689653% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 7, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 7/203 = 3.4482758620689653% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 8, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 8/203 = 3.9408866995073892% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 8, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 8/203 = 3.9408866995073892% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 8, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 8/203 = 3.9408866995073892% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 8, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 8/203 = 3.9408866995073892% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 8, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 8/203 = 3.9408866995073892% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 9, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 9/203 = 4.433497536945813% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 9, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 9/203 = 4.433497536945813% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 9, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 9/203 = 4.433497536945813% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 10, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 10/203 = 4.926108374384237% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 10, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 10/203 = 4.926108374384237% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 10, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 10/203 = 4.926108374384237% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 10, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 10/203 = 4.926108374384237% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 11, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 11/203 = 5.41871921182266% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 11, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 11/203 = 5.41871921182266% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 11, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 11/203 = 5.41871921182266% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 11, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 11/203 = 5.41871921182266% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 11, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 11/203 = 5.41871921182266% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 11, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 11/203 = 5.41871921182266% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 12, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 12/203 = 5.911330049261084% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 12, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 12/203 = 5.911330049261084% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 12, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 12/203 = 5.911330049261084% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 13, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 13/203 = 6.403940886699508% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 13, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 13/203 = 6.403940886699508% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 13, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 13/203 = 6.403940886699508% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 14, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 14/203 = 6.896551724137931% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 14, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 14/203 = 6.896551724137931% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 15, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 15/203 = 7.389162561576355% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 15, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 15/203 = 7.389162561576355% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 15, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 15/203 = 7.389162561576355% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 15, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 15/203 = 7.389162561576355% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 15, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 15/203 = 7.389162561576355% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 15, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 15/203 = 7.389162561576355% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 15, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 15/203 = 7.389162561576355% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 15, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 15/203 = 7.389162561576355% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "processing", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
+🔄 Progress poll result: 
+Object { id: 11, userId: 2, totalScanned: 203, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 16, status: "failed", createdAt: "2025-08-01T18:56:38.085Z" }
+index-BZ3tolWt.js:323:2631
+📊 Progress: 16/203 = 7.8817733990147785% 2 index-BZ3tolWt.js:323:3205
