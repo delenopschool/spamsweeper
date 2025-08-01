@@ -16,10 +16,8 @@ export function Footer() {
           </div>
           
           <nav className="flex items-center gap-6">
-            <Link href="/privacy">
-              <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                {t.homepage.privacy}
-              </a>
+            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              {t.homepage.privacy}
             </Link>
           </nav>
         </div>
