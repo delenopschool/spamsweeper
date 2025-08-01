@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { microsoftGraphService } from "./services/microsoft-graph";
 import { gmailService } from "./services/gmail";
 import { yahooMailService } from "./services/yahoo-mail";
-import { openaiClassifierService } from "./services/openai-classifier";
+import { SimpleAIClassifierService } from "./services/simple-ai-classifier.js";
 import { emailParserService } from "./services/email-parser";
 import { insertUserSchema, insertEmailScanSchema } from "@shared/schema";
 
@@ -818,7 +818,8 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
       let classification;
       
       try {
-        classification = await openaiClassifierService.classifyEmail(
+        const aiClassifier = new SimpleAIClassifierService();
+        classification = await aiClassifier.classifyEmail(
           email.sender.emailAddress.address,
           email.subject,
           textBody
@@ -831,7 +832,7 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
         
         // Fallback classification - mark as error if AI fails
         classification = {
-          isSpam: true, // We'll mark it as spam but with error status
+          isSpam: false, // Don't classify as spam when AI fails
           confidence: 0,
           reasoning: `AI classification failed: ${(error as Error).message}`
         };
