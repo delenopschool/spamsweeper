@@ -751,8 +751,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 // Background processing functions
 async function processEmailScan(scanId: number, accessToken: string, provider: string, folders?: string[]) {
   const scanStartTime = Date.now();
+  const maxProcessingTime = 10 * 60 * 1000; // 10 minutes maximum
+  let processTimeout: NodeJS.Timeout;
+  
   try {
     console.log(`🚀 [Scan] Starting email scan for scanId: ${scanId} with provider: ${provider} at ${new Date().toISOString()}`);
+    
+    // Set a timeout for the entire process
+    processTimeout = setTimeout(async () => {
+      console.error(`⏰ [Scan] Process timeout after ${maxProcessingTime / 1000}s, marking as failed`);
+      await storage.updateEmailScan(scanId, {
+        status: "failed"
+      });
+    }, maxProcessingTime);
     
     const fetchStartTime = Date.now();
     let emails;
@@ -823,7 +834,7 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
           reasoning: `AI classification failed: ${(error as Error).message}`
         };
         console.log(`🔄 [Email ${i + 1}/${emails.length}] Using fallback classification: not spam`);
-      };
+      }
 
       if (classification.isSpam) {
         detectedSpam++;
@@ -862,6 +873,9 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
     const totalScanTime = Date.now() - scanStartTime;
     console.log(`🎯 [Scan] Completed: ${detectedSpam}/${emails.length} emails classified as spam in ${totalScanTime}ms (${(totalScanTime / 1000).toFixed(1)}s)`);
     
+    // Clear the timeout since we completed successfully
+    clearTimeout(processTimeout);
+    
     await storage.updateEmailScan(scanId, {
       detectedSpam,
       unsubscribeLinks: unsubscribeLinksFound,
@@ -871,6 +885,10 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
   } catch (error) {
     const totalScanTime = Date.now() - scanStartTime;
     console.error(`❌ [Scan] Error after ${totalScanTime}ms:`, error);
+    
+    // Clear the timeout since we're handling the error
+    if (processTimeout) clearTimeout(processTimeout);
+    
     await storage.updateEmailScan(scanId, {
       status: "failed"
     });

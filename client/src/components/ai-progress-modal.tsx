@@ -16,12 +16,16 @@ export default function AIProgressModal({ isOpen, onClose, scanId, onComplete }:
   const [scanData, setScanData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pollCount, setPollCount] = useState(0);
+  const [startTime, setStartTime] = useState<number>(0);
 
   useEffect(() => {
     if (isOpen && scanId) {
       setIsLoading(true);
       setError(null);
       setScanData(null); // Reset scan data when modal opens
+      setPollCount(0);
+      setStartTime(Date.now());
       pollScanProgress();
     }
   }, [isOpen, scanId]);
@@ -29,11 +33,22 @@ export default function AIProgressModal({ isOpen, onClose, scanId, onComplete }:
   const pollScanProgress = async () => {
     if (!scanId) return;
 
+    // Check for timeout (5 minutes maximum)
+    const elapsed = Date.now() - startTime;
+    const maxTimeout = 5 * 60 * 1000; // 5 minutes
+    
+    if (elapsed > maxTimeout) {
+      setIsLoading(false);
+      setError("De scan duurt te lang. Probeer het opnieuw of kies minder emails.");
+      return;
+    }
+
     try {
       const response = await apiRequest("GET", `/api/scan/${scanId}`);
       const data = await response.json();
       console.log("🔄 Progress poll result:", data.scan);
       setScanData(data);
+      setPollCount(prev => prev + 1);
 
       if (data.scan.status === "completed") {
         setIsLoading(false);
@@ -45,6 +60,16 @@ export default function AIProgressModal({ isOpen, onClose, scanId, onComplete }:
         setIsLoading(false);
         setError("De scan is mislukt. Probeer het opnieuw.");
       } else if (data.scan.status === "processing" || data.scan.status === "pending") {
+        // Check if progress is stuck (same progress for more than 30 polls = ~30 seconds)
+        if (pollCount > 30 && data.scan.currentProgress > 0) {
+          const timeSinceStart = Math.floor(elapsed / 1000);
+          if (timeSinceStart > 60) { // If stuck for more than 1 minute
+            setError(`De scan lijkt vast te lopen bij email ${data.scan.currentProgress}. Probeer het opnieuw.`);
+            setIsLoading(false);
+            return;
+          }
+        }
+        
         // Continue polling for both processing and pending states
         setTimeout(pollScanProgress, 1000);
       }

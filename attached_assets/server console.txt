@@ -1,0 +1,284 @@
+server console:
+
+
+7:04:55 PM [express] GET /api/user/2 304 in 5ms :: {"id":2,"email":"delenopschool@outlook.com","hasV…
+7:04:55 PM [express] GET /api/user/2/latest-scan 200 in 10ms :: {"scan":{"id":11,"userId":2,"totalSc…
+7:04:55 PM [express] GET /api/user/2/learning 304 in 6ms :: {"learningData":[{"id":1,"userId":2,"sen…
+🚀 [Scan] Starting email scan for scanId: 12 with provider: microsoft at 2025-08-01T19:05:10.310Z
+📫 [Graph] Starting to fetch emails from folders: INBOX, SPAM
+7:05:10 PM [express] POST /api/scan/2 200 in 131ms :: {"scanId":12}
+📊 [API] Returning scan data - currentProgress: 0, totalScanned: 0, status: pending
+7:05:10 PM [express] GET /api/scan/12 200 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":0,"de…
+📊 [API] Returning scan data - currentProgress: 0, totalScanned: 0, status: pending
+7:05:11 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":0,"de…
+📊 [API] Returning scan data - currentProgress: 0, totalScanned: 0, status: pending
+7:05:12 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":0,"de…
+📫 [Graph] Fetched 203 emails from folder INBOX
+📫 [Graph] Total: 203 emails from Microsoft Graph in 3271ms
+📧 [Scan] Fetched 203 emails from microsoft spam folder in 3271ms
+❌ [Graph] Error fetching emails from folder SPAM: GraphError: Id is malformed.
+    at new GraphError (/opt/render/project/src/node_modules/@microsoft/microsoft-graph-client/lib/src/GraphError.js:34:28)
+    at GraphErrorHandler.constructErrorFromResponse (/opt/render/project/src/node_modules/@microsoft/microsoft-graph-client/lib/src/GraphErrorHandler.js:63:22)
+    at Function.<anonymous> (/opt/render/project/src/node_modules/@microsoft/microsoft-graph-client/lib/src/GraphErrorHandler.js:91:48)
+    at step (/opt/render/project/src/node_modules/tslib/tslib.js:196:27)
+    at Object.next (/opt/render/project/src/node_modules/tslib/tslib.js:177:57)
+    at /opt/render/project/src/node_modules/tslib/tslib.js:170:75
+    at new Promise (<anonymous>)
+    at Object.__awaiter (/opt/render/project/src/node_modules/tslib/tslib.js:166:16)
+    at GraphErrorHandler.getError (/opt/render/project/src/node_modules/@microsoft/microsoft-graph-client/lib/src/GraphErrorHandler.js:87:24)
+    at GraphRequest.<anonymous> (/opt/render/project/src/node_modules/@microsoft/microsoft-graph-client/lib/src/GraphRequest.js:315:84) {
+  statusCode: 400,
+  code: 'ErrorInvalidIdMalformed',
+  requestId: null,
+  date: 2025-08-01T19:05:13.579Z,
+  body: '{"code":"ErrorInvalidIdMalformed","message":"Id is malformed."}',
+  headers: Headers {
+    'cache-control': 'private',
+    'transfer-encoding': 'chunked',
+    'content-type': 'application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false; charset=utf-8',
+    'content-encoding': 'gzip',
+    'strict-transport-security': 'max-age=31536000',
+    'request-id': '8783dd99-a63d-40fa-a087-644f16ea9d6e',
+    'client-request-id': '61035dc9-f774-4936-037d-a1b5dcfaa3da',
+    'x-ms-ags-diagnostic': '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"003","RoleInstance":"FR1PEPF00000C25"}}',
+    date: 'Fri, 01 Aug 2025 19:05:12 GMT'
+  }
+}
+📊 [API] Returning scan data - currentProgress: 0, totalScanned: 0, status: pending
+7:05:13 PM [express] GET /api/scan/12 304 in 110ms :: {"scan":{"id":12,"userId":2,"totalScanned":0,"…
+📊 [Progress] Set totalScanned to 203, currentProgress to 0
+🔄 [Scan] Starting individual email processing...
+📨 [Email 1/203] Processing: "Get Your App Ready for Real Users" from contact@mail.replit.com
+📊 [Progress] Updated currentProgress to 1/203
+📝 [Email 1/203] Text extracted in 5ms
+🧠 [AI] Starting classification for email: "Get Your App Ready for Real Users" from contact@mail.replit.com
+📤 [AI] Sending request to OpenRouter...
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:05:13.698Z
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:14 PM [express] GET /api/scan/12 200 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📡 [OpenRouter] API response received in 1203ms
+🚦 [OpenRouter] Rate limiting activated - adding 5s delay between requests
+⏳ [OpenRouter] Rate limited, retrying in 5s (attempt 1/3)
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:15 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:16 PM [express] GET /api/scan/12 304 in 13ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:17 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:19 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:05:19.902Z
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:20 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📡 [OpenRouter] API response received in 1032ms
+⏳ [OpenRouter] Rate limited, retrying in 10s (attempt 2/3)
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:21 PM [express] GET /api/scan/12 304 in 10ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:22 PM [express] GET /api/scan/12 304 in 11ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:23 PM [express] GET /api/scan/12 304 in 10ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:24 PM [express] GET /api/scan/12 304 in 21ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:25 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:26 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:27 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:28 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:29 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:30 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:05:30.935Z
+📡 [OpenRouter] API response received in 1018ms
+⏳ [OpenRouter] Rate limited, retrying in 20s (attempt 3/3)
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:31 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:33 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:34 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:35 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:36 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:37 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:38 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:39 PM [express] GET /api/scan/12 304 in 6ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:40 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:41 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:42 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:43 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:44 PM [express] GET /api/scan/12 304 in 7ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:45 PM [express] GET /api/scan/12 304 in 10ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:46 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:48 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:50 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:51 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:05:51.955Z
+📊 [API] Returning scan data - currentProgress: 1, totalScanned: 203, status: processing
+7:05:52 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📡 [OpenRouter] API response received in 941ms
+❌ [OpenRouter] API error: 429 Too Many Requests
+❌ [AI] Error classifying email after 39199ms: Error: OpenRouter API error: 429 Too Many Requests
+    at callOpenRouter (file:///opt/render/project/src/dist/index.js:796:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async OpenAIClassifierService.classifyEmail (file:///opt/render/project/src/dist/index.js:855:24)
+    at async processEmailScan (file:///opt/render/project/src/dist/index.js:1935:26)
+❌ [Email 1/203] AI Classification failed after 39200ms: Error: Failed to classify email: OpenRouter API error: 429 Too Many Requests
+    at OpenAIClassifierService.classifyEmail (file:///opt/render/project/src/dist/index.js:895:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async processEmailScan (file:///opt/render/project/src/dist/index.js:1935:26)
+🔄 [Email 1/203] Using fallback classification: not spam
+✅ [Email 1/203] Completed in 39205ms total
+📨 [Email 2/203] Processing: "Get Your App Ready for Real Users" from contact@mail.replit.com
+📊 [Progress] Updated currentProgress to 2/203
+📝 [Email 2/203] Text extracted in 5ms
+🧠 [AI] Starting classification for email: "Get Your App Ready for Real Users" from contact@mail.replit.com
+📤 [AI] Sending request to OpenRouter...
+⏱️ [OpenRouter] Rate limit mode active, waiting 5s...
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:05:53 PM [express] GET /api/scan/12 200 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:05:54 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:05:56 PM [express] GET /api/scan/12 304 in 7ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:05:56.955Z
+📡 [OpenRouter] API response received in 5064ms
+⏳ [OpenRouter] Rate limited, retrying in 5s (attempt 1/3)
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:05:58 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:05:59 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:00 PM [express] GET /api/scan/12 304 in 10ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:02 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:06:02.966Z
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:03 PM [express] GET /api/scan/12 304 in 12ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📡 [OpenRouter] API response received in 1005ms
+⏳ [OpenRouter] Rate limited, retrying in 10s (attempt 2/3)
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:04 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:05 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:06 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:07 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:08 PM [express] GET /api/scan/12 304 in 7ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:10 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:11 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:12 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:13 PM [express] GET /api/scan/12 304 in 7ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:06:13.972Z
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:14 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📡 [OpenRouter] API response received in 1034ms
+⏳ [OpenRouter] Rate limited, retrying in 20s (attempt 3/3)
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:15 PM [express] GET /api/scan/12 304 in 7ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:16 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:17 PM [express] GET /api/scan/12 304 in 11ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:19 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:20 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:21 PM [express] GET /api/scan/12 304 in 13ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:22 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:23 PM [express] GET /api/scan/12 304 in 10ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:24 PM [express] GET /api/scan/12 304 in 11ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:25 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:26 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:28 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:29 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:30 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:31 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:32 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:33 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 2, totalScanned: 203, status: processing
+7:06:34 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:06:35.005Z
+📡 [OpenRouter] API response received in 1247ms
+❌ [OpenRouter] API error: 429 Too Many Requests
+❌ [AI] Error classifying email after 43350ms: Error: OpenRouter API error: 429 Too Many Requests
+    at callOpenRouter (file:///opt/render/project/src/dist/index.js:796:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async OpenAIClassifierService.classifyEmail (file:///opt/render/project/src/dist/index.js:855:24)
+    at async processEmailScan (file:///opt/render/project/src/dist/index.js:1935:26)
+❌ [Email 2/203] AI Classification failed after 43351ms: Error: Failed to classify email: OpenRouter API error: 429 Too Many Requests
+    at OpenAIClassifierService.classifyEmail (file:///opt/render/project/src/dist/index.js:895:13)
+🔄 [Email 2/203] Using fallback classification: not spam
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async processEmailScan (file:///opt/render/project/src/dist/index.js:1935:26)
+✅ [Email 2/203] Completed in 43356ms total
+📨 [Email 3/203] Processing: "Don’t miss out on these top prompting techniques" from contact@mail.replit.com
+📊 [Progress] Updated currentProgress to 3/203
+📝 [Email 3/203] Text extracted in 5ms
+🧠 [AI] Starting classification for email: "Don’t miss out on these top prompting techniques" from contact@mail.replit.com
+📤 [AI] Sending request to OpenRouter...
+⏱️ [OpenRouter] Rate limit mode active, waiting 4s...
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:36 PM [express] GET /api/scan/12 200 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:37 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:39 PM [express] GET /api/scan/12 304 in 15ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:06:40.005Z
+📡 [OpenRouter] API response received in 4671ms
+⏳ [OpenRouter] Rate limited, retrying in 5s (attempt 1/3)
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:41 PM [express] GET /api/scan/12 304 in 16ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:42 PM [express] GET /api/scan/12 304 in 10ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:43 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:44 PM [express] GET /api/scan/12 304 in 8ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+🔄 [OpenRouter] Starting API call at 2025-08-01T19:06:45.932Z
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:46 PM [express] GET /api/scan/12 304 in 11ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
+📡 [OpenRouter] API response received in 1021ms
+⏳ [OpenRouter] Rate limited, retrying in 10s (attempt 2/3)
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:47 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:48 PM [express] GET /api/scan/12 304 in 9ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,"…
+📊 [API] Returning scan data - currentProgress: 3, totalScanned: 203, status: processing
+7:06:49 PM [express] GET /api/scan/12 304 in 10ms :: {"scan":{"id":12,"userId":2,"totalScanned":203,…
