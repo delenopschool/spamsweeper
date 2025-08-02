@@ -6,22 +6,11 @@ export interface SpamClassificationResult {
 }
 
 export class SimpleAIClassifierService {
-  private lastRequestTime = 0;
-  private readonly DELAY_BETWEEN_REQUESTS = 10000; // 10 seconds
+  private readonly DELAY_AFTER_RESPONSE = 5000; // 5 seconds after response
 
   async classifyEmail(sender: string, subject: string, body: string): Promise<SpamClassificationResult> {
     const classificationStartTime = Date.now();
     console.log(`🧠 [AI] Starting classification for email: "${subject}" from ${sender}`);
-    
-    // Ensure 5-second delay between requests
-    const now = Date.now();
-    const timeSinceLastRequest = now - this.lastRequestTime;
-    
-    if (timeSinceLastRequest < this.DELAY_BETWEEN_REQUESTS && this.lastRequestTime > 0) {
-      const waitTime = this.DELAY_BETWEEN_REQUESTS - timeSinceLastRequest;
-      console.log(`⏱️ [AI] Waiting ${Math.ceil(waitTime/1000)}s before next request (rate limit protection)...`);
-      await new Promise(resolve => setTimeout(resolve, waitTime));
-    }
 
     try {
       console.log(`📤 [AI] Sending request to OpenRouter...`);
@@ -59,7 +48,6 @@ Body: ${body.substring(0, 2000)}` // Limit body to 2000 chars
         }),
       });
 
-      this.lastRequestTime = Date.now();
       const responseTime = Date.now() - classificationStartTime;
       
       if (!response.ok) {
@@ -91,6 +79,11 @@ Body: ${body.substring(0, 2000)}` // Limit body to 2000 chars
 
         const totalTime = Date.now() - classificationStartTime;
         console.log(`✅ [AI] Classification completed in ${totalTime}ms: ${result.isSpam ? 'SPAM' : 'NOT SPAM'} (${result.confidence}% confidence)`);
+        
+        // Wait 5 seconds after receiving response before allowing next request
+        console.log(`⏱️ [AI] Waiting 5 seconds after response (rate limit protection)...`);
+        await new Promise(resolve => setTimeout(resolve, this.DELAY_AFTER_RESPONSE));
+        console.log(`✅ [AI] Delay completed, ready for next request`);
         
         return result;
       } catch (parseError) {
