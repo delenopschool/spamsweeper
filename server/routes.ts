@@ -795,6 +795,9 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
 
     console.log(`🔄 [Scan] Starting individual email processing...`);
     
+    // Create AI classifier instance once, outside the loop to maintain delay state
+    const aiClassifier = new SimpleAIClassifierService();
+    
     for (let i = 0; i < emails.length; i++) {
       const email = emails[i];
       const emailStartTime = Date.now();
@@ -815,7 +818,6 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
       let classification;
       
       try {
-        const aiClassifier = new SimpleAIClassifierService();
         classification = await aiClassifier.classifyEmail(
           email.sender.emailAddress.address,
           email.subject,

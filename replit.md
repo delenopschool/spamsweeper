@@ -154,6 +154,10 @@ The application follows a modern full-stack architecture with clear separation b
   - Added progress modal timeout protection to prevent endless polling
   - Added backend process timeout protection (10-minute maximum)
   - Fixed email scan recovery mechanisms for stuck processes
+  - **AI Rate Limiting Fix (August 2025)**: Fixed AI classifier delay implementation
+    - Moved AI classifier instance outside processing loop to maintain delay state
+    - 10-second delay between AI requests now properly enforced
+    - Prevents rate limiting issues with OpenRouter API
   - **Scan Crash Recovery System (August 2025)**: Implemented comprehensive crash recovery
     - ScanRecoveryService automatically detects and resumes interrupted scans
     - Startup recovery check finds scans stuck in "processing" state for >30 minutes
