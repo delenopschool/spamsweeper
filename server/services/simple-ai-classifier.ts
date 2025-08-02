@@ -7,7 +7,7 @@ export interface SpamClassificationResult {
 
 export class SimpleAIClassifierService {
   private lastRequestTime = 0;
-  private readonly DELAY_BETWEEN_REQUESTS = 5000; // 5 seconds
+  private readonly DELAY_BETWEEN_REQUESTS = 20000; // 20 seconds
 
   async classifyEmail(sender: string, subject: string, body: string): Promise<SpamClassificationResult> {
     const classificationStartTime = Date.now();
@@ -19,7 +19,7 @@ export class SimpleAIClassifierService {
     
     if (timeSinceLastRequest < this.DELAY_BETWEEN_REQUESTS && this.lastRequestTime > 0) {
       const waitTime = this.DELAY_BETWEEN_REQUESTS - timeSinceLastRequest;
-      console.log(`⏱️ [AI] Waiting ${Math.ceil(waitTime/1000)}s before next request...`);
+      console.log(`⏱️ [AI] Waiting ${Math.ceil(waitTime/1000)}s before next request (rate limit protection)...`);
       await new Promise(resolve => setTimeout(resolve, waitTime));
     }
 

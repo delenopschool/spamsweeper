@@ -161,6 +161,11 @@ The application follows a modern full-stack architecture with clear separation b
     - Resume from exact point where scan was interrupted (skips already processed emails)
     - Keepalive heartbeat every 5 minutes to prevent Render service from sleeping
     - Users can now safely close computer/browser during long scans
+  - **AI Rate Limiting Fix (August 2025)**: Resolved OpenRouter API issues
+    - Updated to new working OpenRouter API key to fix 401 Unauthorized errors
+    - Increased delay between AI requests from 5 to 20 seconds to prevent 429 rate limit errors
+    - Fixed email preview functionality by implementing getAllSpamEmails() database method
+    - Enhanced email lookup system for proper preview display
   - All project functionality fully operational in standard Replit environment
 - **Complete Multi-language Implementation (August 2025)**: Finalized comprehensive internationalization system
   - Updated homepage with complete translation integration
