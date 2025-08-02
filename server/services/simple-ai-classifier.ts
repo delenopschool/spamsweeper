@@ -7,7 +7,7 @@ export interface SpamClassificationResult {
 
 export class SimpleAIClassifierService {
   private lastRequestTime = 0;
-  private readonly DELAY_BETWEEN_REQUESTS = 20000; // 20 seconds
+  private readonly DELAY_BETWEEN_REQUESTS = 10000; // 10 seconds
 
   async classifyEmail(sender: string, subject: string, body: string): Promise<SpamClassificationResult> {
     const classificationStartTime = Date.now();
