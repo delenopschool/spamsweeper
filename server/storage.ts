@@ -26,6 +26,7 @@ export interface IStorage {
   updateSpamEmail(id: number, updates: Partial<SpamEmail>): Promise<SpamEmail>;
   bulkUpdateSpamEmails(ids: number[], updates: Partial<SpamEmail>): Promise<void>;
   searchSpamEmails(scanId: number, query: string): Promise<SpamEmail[]>;
+  getAllSpamEmails(): Promise<SpamEmail[]>;
   
   // User learning data management
   createUserLearningData(data: InsertUserLearningData): Promise<UserLearningData>;
@@ -223,6 +224,10 @@ export class MemStorage implements IStorage {
       new Date(scan.createdAt) < thirtyMinutesAgo
     );
   }
+
+  async getAllSpamEmails(): Promise<SpamEmail[]> {
+    return Array.from(this.spamEmails.values());
+  }
 }
 
 // Database Storage Implementation
@@ -404,6 +409,14 @@ export class DatabaseStorage implements IStorage {
       .where(eq(userLearningData.id, id))
       .returning();
     return updated;
+  }
+
+  async getAllSpamEmails(): Promise<SpamEmail[]> {
+    return await db
+      .select()
+      .from(spamEmails)
+      .orderBy(desc(spamEmails.id))
+      .limit(1000); // Limit to prevent large queries
   }
 }
 

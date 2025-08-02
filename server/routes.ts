@@ -551,21 +551,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/email/:emailId", async (req, res) => {
     try {
       const emailId = parseInt(req.params.emailId);
+      console.log(`📧 [API] Getting email details for ID: ${emailId}`);
       
-      // Get all spam emails and find the one with matching ID
-      const allScans = await storage.getEmailScansByUser(1); // We'll need to get this from session later
-      let email = null;
-      
-      for (const scan of allScans) {
-        const scanEmails = await storage.getSpamEmailsByScan(scan.id);
-        email = scanEmails.find(e => e.id === emailId);
-        if (email) break;
-      }
+      // Find email by ID directly from spam emails table
+      const allEmails = await storage.getAllSpamEmails();
+      const email = allEmails.find(e => e.id === emailId);
       
       if (!email) {
+        console.log(`❌ [API] Email not found for ID: ${emailId}`);
         return res.status(404).json({ message: "Email not found" });
       }
 
+      console.log(`✅ [API] Email found: "${email.subject}" from ${email.sender}`);
       res.json(email);
     } catch (error) {
       console.error("Failed to get email details:", error);
