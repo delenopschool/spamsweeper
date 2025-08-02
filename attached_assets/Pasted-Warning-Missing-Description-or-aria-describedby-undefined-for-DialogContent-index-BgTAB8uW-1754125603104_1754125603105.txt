@@ -1,0 +1,341 @@
+client console:
+
+
+
+Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. index-BgTAB8uW.js:318:497
+Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. 2 index-BgTAB8uW.js:318:497
+Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. index-BgTAB8uW.js:318:497
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 0, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 0, status: "pending", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 0, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 0, status: "pending", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 4, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 4/204 = 1.9607843137254901% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 6, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 6/204 = 2.941176470588235% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 11, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 11/204 = 5.392156862745098% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 13, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 13/204 = 6.372549019607843% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 19, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 19/204 = 9.313725490196079% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 22, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 22/204 = 10.784313725490197% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 24, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 24/204 = 11.76470588235294% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 30, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 30/204 = 14.705882352941178% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 32, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 32/204 = 15.686274509803921% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 33, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 33/204 = 16.176470588235293% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 36, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 36/204 = 17.647058823529413% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 38, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 38/204 = 18.627450980392158% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 44, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 44/204 = 21.568627450980394% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 45, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 45/204 = 22.058823529411764% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 48, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 48/204 = 23.52941176470588% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 51, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 51/204 = 25% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 55, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 55/204 = 26.96078431372549% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 58, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 58/204 = 28.431372549019606% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 61, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 61/204 = 29.901960784313726% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 66, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 66/204 = 32.35294117647059% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 68, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 68/204 = 33.33333333333333% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 71, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 71/204 = 34.80392156862745% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 74, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 74/204 = 36.27450980392157% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 76, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 76/204 = 37.254901960784316% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 77, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 77/204 = 37.745098039215684% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 78, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 78/204 = 38.23529411764706% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 80, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 80/204 = 39.21568627450981% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 81, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 81/204 = 39.705882352941174% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 82, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 82/204 = 40.19607843137255% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 85, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 85/204 = 41.66666666666667% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 87, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 87/204 = 42.64705882352941% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 89, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 89/204 = 43.627450980392155% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 91, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 91/204 = 44.6078431372549% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 96, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 96/204 = 47.05882352941176% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 101, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 101/204 = 49.50980392156863% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 102, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 102/204 = 50% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 104, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 104/204 = 50.98039215686274% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 107, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 107/204 = 52.450980392156865% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 115, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 115/204 = 56.372549019607845% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 118, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 118/204 = 57.84313725490197% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 119, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 119/204 = 58.333333333333336% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 122, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 122/204 = 59.80392156862745% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 124, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 124/204 = 60.78431372549019% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 125, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 125/204 = 61.274509803921575% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 126, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 126/204 = 61.76470588235294% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 128, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 128/204 = 62.745098039215684% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 129, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 129/204 = 63.23529411764706% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 131, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 131/204 = 64.2156862745098% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 134, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 134/204 = 65.68627450980392% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 137, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 137/204 = 67.15686274509804% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 139, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 139/204 = 68.13725490196079% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 144, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 144/204 = 70.58823529411765% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 145, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 145/204 = 71.07843137254902% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 146, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 146/204 = 71.56862745098039% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 150, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 150/204 = 73.52941176470588% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 152, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 152/204 = 74.50980392156863% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 153, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 153/204 = 75% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 154, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 154/204 = 75.49019607843137% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 156, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 156/204 = 76.47058823529412% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 157, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 157/204 = 76.9607843137255% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 158, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 158/204 = 77.45098039215686% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 160, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 160/204 = 78.43137254901961% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 162, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 162/204 = 79.41176470588235% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 164, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 164/204 = 80.3921568627451% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 165, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 165/204 = 80.88235294117648% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 166, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 166/204 = 81.37254901960785% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 167, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 167/204 = 81.86274509803921% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 182, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 182/204 = 89.2156862745098% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 184, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 184/204 = 90.19607843137256% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 185, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 185/204 = 90.68627450980392% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 188, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 188/204 = 92.15686274509804% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 190, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 190/204 = 93.13725490196079% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 192, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 192/204 = 94.11764705882352% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 194, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 194/204 = 95.09803921568627% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 195, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 195/204 = 95.58823529411765% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 197, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 197/204 = 96.56862745098039% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 198, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 198/204 = 97.05882352941177% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 200, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 200/204 = 98.0392156862745% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 201, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 201/204 = 98.52941176470588% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 202, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 202/204 = 99.01960784313727% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 0, processed: 0, currentProgress: 204, status: "processing", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 204/204 = 100% 2 index-BgTAB8uW.js:323:3581
+🔄 Progress poll result: 
+Object { id: 19, userId: 2, totalScanned: 204, detectedSpam: 0, unsubscribeLinks: 67, processed: 0, currentProgress: 204, status: "completed", createdAt: "2025-08-02T08:59:16.085Z" }
+index-BgTAB8uW.js:323:2825
+📊 Progress: 204/204 = 100% 2 index-BgTAB8uW.js:323:3581
