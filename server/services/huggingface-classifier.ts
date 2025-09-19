@@ -16,7 +16,7 @@ export interface SpamClassificationResult {
 
 export class HuggingFaceClassifierService {
   private static instance: any = null;
-  private static readonly MODEL_NAME = 'Xenova/distilbert-base-uncased-finetuned-sst-2-english';
+  private static readonly MODEL_NAME = 'Xenova/toxic-bert';
   private readonly DELAY_BETWEEN_REQUESTS = 1000; // 1 second delay (much faster than OpenRouter)
 
   /**
@@ -64,35 +64,35 @@ export class HuggingFaceClassifierService {
       
       console.log(`📡 [HF] Response received in ${responseTime}ms:`, result);
       
-      // Process the result - this is a sentiment model, we'll use negative sentiment as spam indicator
+      // Process the result - this is a toxicity model, we'll use toxic content as spam indicator
       let isSpam: boolean;
       let confidence: number;
       let reasoning: string;
       
       if (Array.isArray(result) && result.length > 0) {
-        // Find sentiment predictions - this model returns POSITIVE/NEGATIVE labels
-        const negativeResult = result.find(r => r.label === 'NEGATIVE');
-        const positiveResult = result.find(r => r.label === 'POSITIVE');
+        // Find toxicity predictions - this model returns TOXIC/NOT_TOXIC labels
+        const toxicResult = result.find(r => r.label === 'TOXIC');
+        const notToxicResult = result.find(r => r.label === 'NOT_TOXIC');
         
-        if (negativeResult && negativeResult.score > 0.7) {
-          // High negative sentiment often indicates spam (aggressive marketing, scams, etc.)
+        if (toxicResult && toxicResult.score > 0.6) {
+          // High toxicity often indicates spam (aggressive marketing, scams, phishing, etc.)
           isSpam = true;
-          confidence = Math.round(negativeResult.score * 100);
-          reasoning = `Detected negative sentiment patterns often associated with spam (${confidence}% negative sentiment)`;
-        } else if (positiveResult && positiveResult.score > 0.8) {
-          // High positive sentiment is usually legitimate
+          confidence = Math.round(toxicResult.score * 100);
+          reasoning = `Detected toxic language patterns commonly found in spam emails (${confidence}% toxic content)`;
+        } else if (notToxicResult && notToxicResult.score > 0.7) {
+          // Low toxicity is usually legitimate
           isSpam = false;
-          confidence = Math.round(positiveResult.score * 100);
-          reasoning = `Detected positive sentiment indicating legitimate email (${confidence}% positive sentiment)`;
+          confidence = Math.round(notToxicResult.score * 100);
+          reasoning = `Clean language detected, indicating legitimate email (${confidence}% non-toxic content)`;
         } else {
-          // Neutral/mixed sentiment - conservative approach, lean towards not spam
+          // Borderline toxicity - conservative approach, lean towards not spam
           const topResult = result[0];
           isSpam = false; // Default to not spam for borderline cases
           confidence = Math.round(topResult.score * 100);
-          reasoning = `Mixed sentiment analysis, defaulting to legitimate (${topResult.label}: ${confidence}%)`;
+          reasoning = `Borderline toxicity analysis, defaulting to legitimate (${topResult.label}: ${confidence}%)`;
         }
       } else {
-        throw new Error('Invalid response format from sentiment classifier');
+        throw new Error('Invalid response format from toxicity classifier');
       }
 
       const totalTime = Date.now() - classificationStartTime;
