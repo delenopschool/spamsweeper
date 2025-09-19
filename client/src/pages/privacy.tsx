@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const privacyContent = {
   nl: {
     title: "Privacybeleid",
-    lastUpdated: "Laatst bijgewerkt: 31 juli 2025",
+    lastUpdated: "Laatst bijgewerkt: 19 september 2025",
     intro: "Bij Spam Sweeper nemen we uw privacy serieus. Dit privacybeleid legt uit hoe we uw gegevens verzamelen, gebruiken en beschermen.",
     sections: [
       {
@@ -27,9 +27,9 @@ const privacyContent = {
         title: "Hoe we uw gegevens gebruiken",
         icon: Eye,
         content: [
-          "Identificeren van spam e-mails met AI-technologie",
+          "Identificeren van spam e-mails met lokale AI-technologie (Hugging Face BERT)",
           "Vinden van uitschrijflinks in ongewenste e-mails",
-          "Verbeteren van onze AI-modellen op basis van uw feedback",
+          "Verbeteren van onze lokale AI-modellen op basis van uw feedback",
           "Tonen van uw scangeschiedenis en statistieken",
           "Technische ondersteuning en probleemoplossing"
         ]
@@ -39,10 +39,11 @@ const privacyContent = {
         icon: Lock,
         content: [
           "Alle gegevens worden versleuteld opgeslagen in een beveiligde Neon PostgreSQL database",
+          "AI-verwerking gebeurt volledig lokaal op onze servers zonder externe API calls",
           "We gebruiken OAuth 2.0 voor veilige authenticatie",
           "Toegangstokens worden veilig opgeslagen en regelmatig vernieuwd",
           "We delen uw gegevens nooit met derden voor marketing doeleinden",
-          "Onze servers draaien op betrouwbare cloud infrastructuur"
+          "Uw e-mailinhoud verlaat nooit onze beveiligde servers tijdens AI-analyse"
         ]
       },
       {
@@ -71,8 +72,9 @@ const privacyContent = {
         icon: Mail,
         content: [
           "We hebben alleen toegang tot uw spam/junk map, niet uw hoofdinbox",
-          "We lezen alleen e-mailmetadata, geen volledige e-mailinhoud",
+          "E-mailinhoud wordt lokaal verwerkt met BERT AI-model voor spam detectie",
           "Alle e-mail toegang gebeurt via officiële API's van providers",
+          "Geen e-mailinhoud wordt verstuurd naar externe AI-services",
           "U kunt de toegang op elk moment intrekken via uw account instellingen",
           "We slaan geen volledige e-mails op, alleen metadata en analysresultaten"
         ]
@@ -86,7 +88,7 @@ const privacyContent = {
   },
   de: {
     title: "Datenschutzrichtlinie",
-    lastUpdated: "Zuletzt aktualisiert: 31. Juli 2025",
+    lastUpdated: "Zuletzt aktualisiert: 19. September 2025",
     intro: "Bei Spam Sweeper nehmen wir Ihre Privatsphäre ernst. Diese Datenschutzrichtlinie erklärt, wie wir Ihre Daten sammeln, verwenden und schützen.",
     sections: [
       {
@@ -104,9 +106,9 @@ const privacyContent = {
         title: "Wie wir Ihre Daten verwenden",
         icon: Eye,
         content: [
-          "Identifizierung von Spam-E-Mails mit KI-Technologie",
+          "Identifizierung von Spam-E-Mails mit lokaler KI-Technologie (Hugging Face BERT)",
           "Finden von Abmelde-Links in unerwünschten E-Mails",
-          "Verbesserung unserer KI-Modelle basierend auf Ihrem Feedback",
+          "Verbesserung unserer lokalen KI-Modelle basierend auf Ihrem Feedback",
           "Anzeige Ihrer Scan-Historie und Statistiken",
           "Technischer Support und Fehlerbehebung"
         ]
@@ -116,10 +118,11 @@ const privacyContent = {
         icon: Lock,
         content: [
           "Alle Daten werden verschlüsselt in einer sicheren Neon PostgreSQL-Datenbank gespeichert",
+          "KI-Verarbeitung erfolgt vollständig lokal auf unseren Servern ohne externe API-Aufrufe",
           "Wir verwenden OAuth 2.0 für sichere Authentifizierung",
           "Zugangstoken werden sicher gespeichert und regelmäßig erneuert",
           "Wir teilen Ihre Daten niemals mit Dritten für Marketingzwecke",
-          "Unsere Server laufen auf vertrauenswürdiger Cloud-Infrastruktur"
+          "Ihre E-Mail-Inhalte verlassen niemals unsere sicheren Server während der KI-Analyse"
         ]
       },
       {
@@ -148,8 +151,9 @@ const privacyContent = {
         icon: Mail,
         content: [
           "Wir haben nur Zugriff auf Ihren Spam/Junk-Ordner, nicht auf Ihr Hauptpostfach",
-          "Wir lesen nur E-Mail-Metadaten, nicht den vollständigen E-Mail-Inhalt",
+          "E-Mail-Inhalte werden lokal mit BERT KI-Modell für Spam-Erkennung verarbeitet",
           "Aller E-Mail-Zugriff erfolgt über offizielle APIs der Anbieter",
+          "Keine E-Mail-Inhalte werden an externe KI-Services gesendet",
           "Sie können den Zugriff jederzeit über Ihre Kontoeinstellungen widerrufen",
           "Wir speichern keine vollständigen E-Mails, nur Metadaten und Analyseergebnisse"
         ]
@@ -163,7 +167,7 @@ const privacyContent = {
   },
   en: {
     title: "Privacy Policy",
-    lastUpdated: "Last updated: July 31, 2025",
+    lastUpdated: "Last updated: September 19, 2025",
     intro: "At Spam Sweeper, we take your privacy seriously. This privacy policy explains how we collect, use, and protect your data.",
     sections: [
       {
@@ -181,9 +185,9 @@ const privacyContent = {
         title: "How we use your data",
         icon: Eye,
         content: [
-          "Identify spam emails using AI technology",
+          "Identify spam emails using local AI technology (Hugging Face BERT)",
           "Find unsubscribe links in unwanted emails",
-          "Improve our AI models based on your feedback",
+          "Improve our local AI models based on your feedback",
           "Display your scan history and statistics",
           "Technical support and troubleshooting"
         ]
@@ -193,10 +197,11 @@ const privacyContent = {
         icon: Lock,
         content: [
           "All data is encrypted and stored in a secure Neon PostgreSQL database",
+          "AI processing happens entirely locally on our servers without external API calls",
           "We use OAuth 2.0 for secure authentication",
           "Access tokens are securely stored and regularly refreshed",
           "We never share your data with third parties for marketing purposes",
-          "Our servers run on trusted cloud infrastructure"
+          "Your email content never leaves our secure servers during AI analysis"
         ]
       },
       {
@@ -225,8 +230,9 @@ const privacyContent = {
         icon: Mail,
         content: [
           "We only access your spam/junk folder, not your main inbox",
-          "We only read email metadata, not full email content",
+          "Email content is processed locally with BERT AI model for spam detection",
           "All email access is through official provider APIs",
+          "No email content is sent to external AI services",
           "You can revoke access at any time through your account settings",
           "We don't store full emails, only metadata and analysis results"
         ]
@@ -240,7 +246,7 @@ const privacyContent = {
   },
   fr: {
     title: "Politique de confidentialité",
-    lastUpdated: "Dernière mise à jour : 31 juillet 2025",
+    lastUpdated: "Dernière mise à jour : 19 septembre 2025",
     intro: "Chez Spam Sweeper, nous prenons votre confidentialité au sérieux. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données.",
     sections: [
       {
@@ -258,9 +264,9 @@ const privacyContent = {
         title: "Comment nous utilisons vos données",
         icon: Eye,
         content: [
-          "Identifier les e-mails spam avec la technologie IA",
+          "Identifier les e-mails spam avec la technologie IA locale (Hugging Face BERT)",
           "Trouver des liens de désabonnement dans les e-mails indésirables",
-          "Améliorer nos modèles IA basés sur vos commentaires",
+          "Améliorer nos modèles IA locaux basés sur vos commentaires",
           "Afficher votre historique de scan et statistiques",
           "Support technique et dépannage"
         ]
@@ -270,10 +276,11 @@ const privacyContent = {
         icon: Lock,
         content: [
           "Toutes les données sont cryptées et stockées dans une base de données Neon PostgreSQL sécurisée",
+          "Le traitement IA se fait entièrement localement sur nos serveurs sans appels d'API externes",
           "Nous utilisons OAuth 2.0 pour l'authentification sécurisée",
           "Les jetons d'accès sont stockés en sécurité et régulièrement actualisés",
           "Nous ne partageons jamais vos données avec des tiers à des fins marketing",
-          "Nos serveurs fonctionnent sur une infrastructure cloud de confiance"
+          "Le contenu de vos e-mails ne quitte jamais nos serveurs sécurisés pendant l'analyse IA"
         ]
       },
       {
@@ -302,8 +309,9 @@ const privacyContent = {
         icon: Mail,
         content: [
           "Nous n'accédons qu'à votre dossier spam/indésirable, pas à votre boîte de réception principale",
-          "Nous ne lisons que les métadonnées d'e-mail, pas le contenu complet",
+          "Le contenu des e-mails est traité localement avec le modèle IA BERT pour la détection de spam",
           "Tout accès aux e-mails se fait via les APIs officielles des fournisseurs",
+          "Aucun contenu d'e-mail n'est envoyé vers des services IA externes",
           "Vous pouvez révoquer l'accès à tout moment via les paramètres de votre compte",
           "Nous ne stockons pas les e-mails complets, seulement les métadonnées et résultats d'analyse"
         ]
