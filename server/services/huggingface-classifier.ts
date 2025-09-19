@@ -4,6 +4,10 @@ import { pipeline, env } from '@huggingface/transformers';
 // Configure cache directory for models
 env.cacheDir = './.cache/huggingface';
 
+// Force CPU-only execution (no CUDA on Render)
+env.backends.onnx.wasm.numThreads = 1;
+env.onnxProxyExecutionProviders = ['CPUExecutionProvider'];
+
 export interface SpamClassificationResult {
   isSpam: boolean;
   confidence: number; // 0-100
@@ -27,7 +31,7 @@ export class HuggingFaceClassifierService {
           HuggingFaceClassifierService.MODEL_NAME,
           {
             revision: 'main',
-            device: 'auto', // Use GPU if available, fallback to CPU
+            device: 'cpu', // Force CPU execution (Render doesn't support CUDA)
           }
         );
         console.log(`✅ [HF] Classifier initialized successfully`);
