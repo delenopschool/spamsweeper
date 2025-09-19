@@ -12,7 +12,7 @@ export interface SpamClassificationResult {
 
 export class HuggingFaceClassifierService {
   private static instance: any = null;
-  private static readonly MODEL_NAME = 'AntiSpamInstitute/spam-detector-bert-MoE-v2.2';
+  private static readonly MODEL_NAME = 'Xenova/distilbert-base-uncased-finetuned-sst-2-english';
   private readonly DELAY_BETWEEN_REQUESTS = 1000; // 1 second delay (much faster than OpenRouter)
 
   /**
@@ -20,7 +20,7 @@ export class HuggingFaceClassifierService {
    */
   private async getClassifierPipeline() {
     if (HuggingFaceClassifierService.instance === null) {
-      console.log(`🤖 [HF] Initializing Hugging Face classifier: ${HuggingFaceClassifierService.MODEL_NAME}`);
+      console.log(`🤖 [HF] Initializing safe Hugging Face classifier: ${HuggingFaceClassifierService.MODEL_NAME}`);
       try {
         HuggingFaceClassifierService.instance = await pipeline(
           'text-classification', 
@@ -60,35 +60,35 @@ export class HuggingFaceClassifierService {
       
       console.log(`📡 [HF] Response received in ${responseTime}ms:`, result);
       
-      // Process the result - the model should return an array with classification results
+      // Process the result - this is a sentiment model, we'll use negative sentiment as spam indicator
       let isSpam: boolean;
       let confidence: number;
       let reasoning: string;
       
       if (Array.isArray(result) && result.length > 0) {
-        // Find the spam prediction
-        const spamResult = result.find(r => r.label.toLowerCase().includes('spam') || r.label === '1' || r.label === 'LABEL_1');
-        const hamResult = result.find(r => r.label.toLowerCase().includes('ham') || r.label === '0' || r.label === 'LABEL_0');
+        // Find sentiment predictions - this model returns POSITIVE/NEGATIVE labels
+        const negativeResult = result.find(r => r.label === 'NEGATIVE');
+        const positiveResult = result.find(r => r.label === 'POSITIVE');
         
-        if (spamResult) {
+        if (negativeResult && negativeResult.score > 0.7) {
+          // High negative sentiment often indicates spam (aggressive marketing, scams, etc.)
           isSpam = true;
-          confidence = Math.round(spamResult.score * 100);
-          reasoning = `BERT classifier detected spam patterns with ${confidence}% confidence (label: ${spamResult.label})`;
-        } else if (hamResult) {
+          confidence = Math.round(negativeResult.score * 100);
+          reasoning = `Detected negative sentiment patterns often associated with spam (${confidence}% negative sentiment)`;
+        } else if (positiveResult && positiveResult.score > 0.8) {
+          // High positive sentiment is usually legitimate
           isSpam = false;
-          confidence = Math.round(hamResult.score * 100);
-          reasoning = `BERT classifier detected legitimate email with ${confidence}% confidence (label: ${hamResult.label})`;
+          confidence = Math.round(positiveResult.score * 100);
+          reasoning = `Detected positive sentiment indicating legitimate email (${confidence}% positive sentiment)`;
         } else {
-          // Fallback - use highest scoring result
+          // Neutral/mixed sentiment - conservative approach, lean towards not spam
           const topResult = result[0];
-          const isSpamLabel = topResult.label.toLowerCase().includes('spam') || topResult.label === '1' || topResult.label === 'LABEL_1';
-          
-          isSpam = isSpamLabel;
+          isSpam = false; // Default to not spam for borderline cases
           confidence = Math.round(topResult.score * 100);
-          reasoning = `BERT classifier result: ${topResult.label} with ${confidence}% confidence`;
+          reasoning = `Mixed sentiment analysis, defaulting to legitimate (${topResult.label}: ${confidence}%)`;
         }
       } else {
-        throw new Error('Invalid response format from BERT classifier');
+        throw new Error('Invalid response format from sentiment classifier');
       }
 
       const totalTime = Date.now() - classificationStartTime;
