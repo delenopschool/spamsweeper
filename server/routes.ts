@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { microsoftGraphService } from "./services/microsoft-graph";
 import { gmailService } from "./services/gmail";
 import { yahooMailService } from "./services/yahoo-mail";
-import { GeminiClassifierService } from "./services/gemini-classifier.js";
+import { MistralClassifierService } from "./services/mistral-classifier.js";
 import { emailParserService } from "./services/email-parser";
 import { insertUserSchema, insertEmailScanSchema } from "@shared/schema";
 
@@ -796,7 +796,7 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
     console.log(`🔄 [Scan] Starting individual email processing...`);
     
     // Create AI classifier instance once, outside the loop to maintain delay state
-    const aiClassifier = new GeminiClassifierService();
+    const aiClassifier = new MistralClassifierService();
     
     for (let i = 0; i < emails.length; i++) {
       const email = emails[i];
