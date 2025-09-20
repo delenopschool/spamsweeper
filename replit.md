@@ -149,12 +149,13 @@ The application follows a modern full-stack architecture with clear separation b
   - **Enhanced Folder Selection Modal**: Added scrollable functionality to prevent modal from going off-screen, with flexible layout and proper scroll handling
 - **Replit Migration Complete (September 2025)**: Successfully migrated from Replit Agent to standard Replit environment
   - **Memory Optimization for Render Hosting (September 2025)**: Resolved critical memory limit issues
-    - Replaced HuggingFace toxic-bert model with lightweight pattern-based spam classifier
-    - Eliminated large model downloads that exceeded Render's memory constraints
-    - New classifier uses intelligent regex patterns for spam detection instead of 1GB+ ML models
-    - Maintains same classification interface and accuracy while using minimal memory
-    - Processing time reduced from seconds to milliseconds per email
+    - Replaced HuggingFace toxic-bert model with free Google Gemini 2.5 Flash API
+    - Eliminated large model downloads that exceeded Render's memory constraints  
+    - New Gemini classifier provides excellent accuracy with minimal memory usage
+    - Uses Google's latest Gemini 2.5 Flash model for fast and accurate spam classification
+    - Processing maintains high accuracy while reducing memory footprint significantly
     - Fully compatible with existing fallback mechanisms and error handling
+    - Integrated via Replit's official Google Gemini blueprint for secure API key management
   - Fixed OpenRouter AI timeout issues with 30-second timeout and better error handling
   - Added fallback classification when AI service fails to prevent scan interruptions
   - Improved error resilience for better user experience during email scanning
