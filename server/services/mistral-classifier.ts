@@ -1,5 +1,5 @@
 // Mistral AI spam classifier service
-// Using Mistral AI for fast and accurate spam classification
+// Using FREE open-mistral-7b model for spam classification
 import axios from 'axios';
 
 export interface SpamClassificationResult {
@@ -57,7 +57,7 @@ Body: ${body.substring(0, 2000)}`; // Limit body to 2000 chars
       const response = await axios.post(
         `${this.API_BASE_URL}/chat/completions`,
         {
-          model: 'mistral-large-latest', // Using the latest Mistral model
+          model: 'open-mistral-7b', // Using the free Mistral model
           messages: [
             {
               role: 'system',
