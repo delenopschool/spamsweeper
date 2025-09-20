@@ -1,6 +1,6 @@
 // Scan recovery service to resume interrupted scans
 import { storage } from "../storage.js";
-import { HuggingFaceClassifierService } from "./huggingface-classifier.js";
+import { SimpleAIClassifierService } from "./simple-ai-classifier.js";
 import { microsoftGraphService } from "./microsoft-graph.js";
 import { gmailService } from "./gmail.js";
 import { yahooMailService } from "./yahoo-mail.js";
@@ -140,7 +140,7 @@ export class ScanRecoveryService {
 
       console.log(`🔄 [Recovery] Resuming from email ${startIndex + 1}/${emails.length} (${remainingEmails.length} remaining)`);
 
-      const aiClassifier = new HuggingFaceClassifierService();
+      const aiClassifier = new SimpleAIClassifierService();
       let detectedSpam = processedEmails.filter(e => e.aiStatus === "classified" && e.aiConfidence > 0).length;
       let unsubscribeLinksFound = processedEmails.filter(e => e.hasUnsubscribeLink).length;
 

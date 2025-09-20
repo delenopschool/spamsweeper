@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { microsoftGraphService } from "./services/microsoft-graph";
 import { gmailService } from "./services/gmail";
 import { yahooMailService } from "./services/yahoo-mail";
-import { HuggingFaceClassifierService } from "./services/huggingface-classifier.js";
+import { SimpleAIClassifierService } from "./services/simple-ai-classifier.js";
 import { emailParserService } from "./services/email-parser";
 import { insertUserSchema, insertEmailScanSchema } from "@shared/schema";
 
@@ -796,7 +796,7 @@ async function processEmailScan(scanId: number, accessToken: string, provider: s
     console.log(`🔄 [Scan] Starting individual email processing...`);
     
     // Create AI classifier instance once, outside the loop to maintain delay state
-    const aiClassifier = new HuggingFaceClassifierService();
+    const aiClassifier = new SimpleAIClassifierService();
     
     for (let i = 0; i < emails.length; i++) {
       const email = emails[i];
